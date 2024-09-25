@@ -59,14 +59,14 @@ namespace Contorio
             _grounds.Add(ironOre.Name, ironOre);
 
             Ore copperOre = new Ore(
-            name: "copper",
-            sprite: new Sprite(new Pixel[3, 4]
-            {
-                            { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
-                            { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
-                            { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) }
-            }),
-            product: "copper-ore"
+                name: "copper",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                    { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
+                    { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
+                    { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) }
+                }),
+                product: "copper-ore"
             );
             _grounds.Add(copperOre.Name, copperOre);
 
@@ -129,9 +129,9 @@ namespace Contorio
                 name: "drill-MK2",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                                { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
-                                { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
-                                { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
+                    { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
+                    { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
+                    { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
                 }),
                 speed: 3,
                 energyInput: 2,
@@ -204,43 +204,43 @@ namespace Contorio
             _blocks.Add(smelterIron.Name, smelterIron);
 
             Factory smelterCopper = new Factory(
-            name: "smelter-copper",
-            sprite: new Sprite(new Pixel[3, 4]
-            {
-                            { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
-                            { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
-                            { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
-            }),
-            energyInput: 1,
-            recipe: new Recipe(
-                input: new Dictionary<string, int> { { "copper-ore", 1 } },
-                output: new Dictionary<string, int> { { "copper", 1 } }
+                name: "smelter-copper",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
+                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
+                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
+                }),
+                energyInput: 1,
+                recipe: new Recipe(
+                    input: new Dictionary<string, int> { { "copper-ore", 1 } },
+                    output: new Dictionary<string, int> { { "copper", 1 } }
                 ),
                 research: new Research(
                     "smelter-copper",
                     "factory",
                     null,
                     new Dictionary<string, int>() { { "RS", 1 } }
-                    )
+                )
             );
             _blocks.Add(smelterCopper.Name, smelterCopper);
 
             Cryptor cryptorRS = new Cryptor(
-            name: "cryptor-RS",
-            sprite: new Sprite(new Pixel[3, 4]
-            {
-                            { new Pixel('╔', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╗', ConsoleColor.DarkCyan) },
-                            { new Pixel('║', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('║', ConsoleColor.DarkCyan) },
-                            { new Pixel('╚', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╝', ConsoleColor.DarkCyan) }
-            }),
-            energyInput: 1,
-            outputToken: new Dictionary<string, int>() { { "RS", 1 } },
-            research: new Research(
-                "cryptor-RS",
-                "cryptors",
-                null,
-                new Dictionary<string, int>()
-                )
+                name: "cryptor-RS",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                    { new Pixel('╔', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╗', ConsoleColor.DarkCyan) },
+                    { new Pixel('║', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('║', ConsoleColor.DarkCyan) },
+                    { new Pixel('╚', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╝', ConsoleColor.DarkCyan) }
+                }),
+                energyInput: 1,
+                outputToken: new Dictionary<string, int>() { { "RS", 1 } },
+                research: new Research(
+                    "cryptor-RS",
+                    "cryptors",
+                    null,
+                    new Dictionary<string, int>()
+                    )
             );
             _blocks.Add(cryptorRS.Name, cryptorRS);
 

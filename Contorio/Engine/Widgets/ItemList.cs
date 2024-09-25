@@ -28,6 +28,16 @@ namespace Contorio.Engine.Widgets
         public string SelectedItem
         { 
             get { return _items[SelectedIndex]; }
+            set
+            {
+                int index = _items.FindIndex(a => a == value);
+                if (index != -1)
+                {
+                    _selectedIndex = index;
+                    EnsureItemVisible();
+                    UpdatePixels();
+                }
+            }
         }
 
         public ConsoleColor TextColor

@@ -100,6 +100,7 @@ namespace Contorio
                 }
             }
 
+            //Cryptor
             else if (block.Type == BlockType.CRYPTOR && ((CryptorState)blockState).EnergyPoint != null)
             {
                 if (planet.Energy < ((Cryptor)block).EnergyInput)

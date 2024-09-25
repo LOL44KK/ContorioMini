@@ -56,6 +56,7 @@ namespace Contorio
             //2 Planet size
             //3 ore
             //4 ore change
+            Dictionary<string, int> oreChance = new Dictionary<string, int>();
 
             //Map
             TileMap tileMap = new TileMap(
@@ -113,8 +114,8 @@ namespace Contorio
             Label labelEnterToResearch = new Label("Enter to research", ConsoleColor.White, new Point(28, 29), visible: false);
 
             //..Search planet
-            Label labelSearchPlanet = new Label("Search planet", ConsoleColor.White, new Point(75, 1), visible: false);
-            Label labelPlanetSize = new Label("Planet size: ", ConsoleColor.White, new Point(75, 3), visible: false);
+            Label labelSearchPlanet = new Label("SEARCH PLANET", ConsoleColor.White, new Point(75, 1), visible: false);
+            Label labelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(75, 3), visible: false);
             ItemList itemListPlanetSize = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
@@ -134,14 +135,16 @@ namespace Contorio
                 1,
                 visible: false
             );
+            oreChance.Clear();
             foreach (var ore in resourceManager.Grounds)
             {
                 if (ore.Value.Type == GroundType.ORE)
                 {
                     itemListOreName.AddItem(ore.Key);
+                    oreChance.Add(ore.Key, 5);
                 }
             }
-            Label labelOreChance = new Label("chance: ", ConsoleColor.White, new Point(75, 6), visible: false);
+            Label labelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(75, 6), visible: false);
             ItemList itemListOreChance = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
@@ -149,10 +152,12 @@ namespace Contorio
                 1,
                 visible: false
             );
-            for (int i = 16; i < 130; i += 2)
+            for (int i = 5; i < 100; i++)
             {
                 itemListOreChance.AddItem("" + i);
             }
+            Label labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
+            Label labelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible:false);
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -181,6 +186,8 @@ namespace Contorio
             _worldScene.AddSprite(itemListOreName);
             _worldScene.AddSprite(labelOreChance);
             _worldScene.AddSprite(itemListOreChance);
+            _worldScene.AddSprite(labelCostSearchPlanet);
+            _worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -227,6 +234,8 @@ namespace Contorio
                             itemListOreName.Visible = TAB;
                             labelOreChance.Visible = TAB;
                             itemListOreChance.Visible = TAB;
+                            labelCostSearchPlanet.Visible = TAB;
+                            labelPalkaPeredCostSearchPlanet.Visible = TAB;
 
                             if (researchSystem.CloseResearch.Count > 0)
                             {
@@ -364,10 +373,12 @@ namespace Contorio
                                 if (TABselectedItemList == 2)
                                 {
                                     itemListOreName.NextItem();
+                                    itemListOreChance.SelectedItem = oreChance[itemListOreName.SelectedItem].ToString();
                                 }
                                 if (TABselectedItemList == 3)
                                 {
                                     itemListOreChance.NextItem();
+                                    oreChance[itemListOreName.SelectedItem] = int.Parse(itemListOreChance.SelectedItem);
                                 }
                                 break;
                             case ConsoleKey.UpArrow:
@@ -383,10 +394,12 @@ namespace Contorio
                                 if (TABselectedItemList == 2)
                                 {
                                     itemListOreName.PreviousItem();
+                                    itemListOreChance.SelectedItem = oreChance[itemListOreName.SelectedItem].ToString();
                                 }
                                 if (TABselectedItemList == 3)
                                 {
                                     itemListOreChance.PreviousItem();
+                                    oreChance[itemListOreName.SelectedItem] = int.Parse(itemListOreChance.SelectedItem);
                                 }
                                 break;
                             case ConsoleKey.RightArrow:
@@ -515,6 +528,7 @@ namespace Contorio
                 if (TAB)
                 {
                     UpdateTokensInfo(world, labelTokensInfo);
+                    labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(oreChance, int.Parse(itemListPlanetSize.SelectedItem)) + " PL";
                 }
 
                 _engine.Render();
@@ -609,11 +623,21 @@ namespace Contorio
 
         static void UpdateTokensInfo(World world, Label tokensInfo)
         {
-            tokensInfo.Text = "Tokens\n";
+            tokensInfo.Text = "TOKENS\n";
             foreach (var token in world.Tokens)
             {
                 tokensInfo.Text += "  " + token.Key + ": " + token.Value + "\n";
             }
+        }
+
+        static int CalculateCostSearchPlanet(Dictionary<string, int> oreChance, int planetSize)
+        {
+            int cost = 0;
+            foreach (var ore in oreChance)
+            {
+                cost += ore.Value * planetSize;
+            }
+            return cost;
         }
     }
 }
