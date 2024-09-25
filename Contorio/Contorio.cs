@@ -421,7 +421,7 @@ namespace Contorio
                                 }
                                 break;
                             case ConsoleKey.LeftArrow:
-                                TABselectedItemList = (TABselectedItemList - 1) % 4;
+                                TABselectedItemList = (TABselectedItemList - 1 + 4) % 4;
                                 if (TABselectedItemList == 0)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.DarkBlue;
