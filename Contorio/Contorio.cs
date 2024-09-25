@@ -51,7 +51,11 @@ namespace Contorio
             string selectBlock = "drill";
             string selectCategory = "logic";
 
-            bool researchOrSearchPlanet = true;
+            int TABselectedItemList = 0; //1-4
+            //1 Research
+            //2 Planet size
+            //3 ore
+            //4 ore change
 
             //Map
             TileMap tileMap = new TileMap(
@@ -138,7 +142,17 @@ namespace Contorio
                 }
             }
             Label labelOreChance = new Label("chance: ", ConsoleColor.White, new Point(75, 6), visible: false);
-
+            ItemList itemListOreChance = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.White,
+                new Point(83, 6),
+                1,
+                visible: false
+            );
+            for (int i = 16; i < 130; i += 2)
+            {
+                itemListOreChance.AddItem("" + i);
+            }
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -166,6 +180,7 @@ namespace Contorio
             _worldScene.AddSprite(labelOreName);
             _worldScene.AddSprite(itemListOreName);
             _worldScene.AddSprite(labelOreChance);
+            _worldScene.AddSprite(itemListOreChance);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -211,6 +226,7 @@ namespace Contorio
                             labelOreName.Visible = TAB;
                             itemListOreName.Visible = TAB;
                             labelOreChance.Visible = TAB;
+                            itemListOreChance.Visible = TAB;
 
                             if (researchSystem.CloseResearch.Count > 0)
                             {
@@ -336,51 +352,103 @@ namespace Contorio
                         switch (keyInfo.Key)
                         {
                             case ConsoleKey.DownArrow:
-                                if (researchOrSearchPlanet)
+                                if (TABselectedItemList == 0)
                                 {
                                     itemListResearchList.NextItem();
                                     UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
                                 }
-                                else
+                                if (TABselectedItemList == 1)
                                 {
                                     itemListPlanetSize.NextItem();
                                 }
+                                if (TABselectedItemList == 2)
+                                {
+                                    itemListOreName.NextItem();
+                                }
+                                if (TABselectedItemList == 3)
+                                {
+                                    itemListOreChance.NextItem();
+                                }
                                 break;
                             case ConsoleKey.UpArrow:
-                                if (researchOrSearchPlanet)
+                                if (TABselectedItemList == 0)
                                 {
                                     itemListResearchList.PreviousItem();
                                     UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
                                 }
-                                else
+                                if (TABselectedItemList == 1)
                                 {
                                     itemListPlanetSize.PreviousItem();
                                 }
+                                if (TABselectedItemList == 2)
+                                {
+                                    itemListOreName.PreviousItem();
+                                }
+                                if (TABselectedItemList == 3)
+                                {
+                                    itemListOreChance.PreviousItem();
+                                }
                                 break;
                             case ConsoleKey.RightArrow:
-                                researchOrSearchPlanet = !researchOrSearchPlanet;
-                                if (researchOrSearchPlanet)
+                                TABselectedItemList = (TABselectedItemList + 1) % 4;
+                                if (TABselectedItemList == 0)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                else
+                                if (TABselectedItemList == 1)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
+                                }
+                                if (TABselectedItemList == 2)
+                                {
+                                    itemListResearchList.SelectedItemColor = ConsoleColor.Red;
+                                    itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.DarkBlue;
+                                }
+                                if (TABselectedItemList == 3)
+                                {
+                                    itemListResearchList.SelectedItemColor = ConsoleColor.Red;
+                                    itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.DarkBlue;
                                 }
                                 break;
                             case ConsoleKey.LeftArrow:
-                                researchOrSearchPlanet = !researchOrSearchPlanet;
-                                if (researchOrSearchPlanet)
+                                TABselectedItemList = (TABselectedItemList - 1) % 4;
+                                if (TABselectedItemList == 0)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                else
+                                if (TABselectedItemList == 1)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
+                                }
+                                if (TABselectedItemList == 2)
+                                {
+                                    itemListResearchList.SelectedItemColor = ConsoleColor.Red;
+                                    itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.DarkBlue;
+                                }
+                                if (TABselectedItemList == 3)
+                                {
+                                    itemListResearchList.SelectedItemColor = ConsoleColor.Red;
+                                    itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreName.SelectedItemColor = ConsoleColor.White;
+                                    itemListOreChance.SelectedItemColor = ConsoleColor.DarkBlue;
                                 }
                                 break;
                             case ConsoleKey.Enter:
