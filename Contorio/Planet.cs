@@ -68,6 +68,37 @@ namespace Contorio
             }
         }
 
+        public Planet(int size, Dictionary<string, int> oreChance)
+        {
+            _blocks = new Dictionary<Point, BlockState>();
+            _ground = new Dictionary<Point, GroundState>();
+            _resources = new Dictionary<string, int>();
+            _name = GenerateName();
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    _ground[new Point(x, y)] = new GroundState("dirt");
+                }
+            }
+
+            Random random = new Random();
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    foreach (var ore in oreChance.OrderBy(ore => ore.Value).Reverse())
+                    {
+                        if (random.Next(0, 100) < ore.Value)
+                        {
+                            _ground[new Point(x, y)] = new GroundState(ore.Key);
+                        }
+                    }
+                }
+            }
+        }
+
         private string GenerateName()
         {
             List<string> prefixes = new List<string>

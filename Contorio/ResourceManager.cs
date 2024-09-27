@@ -244,6 +244,25 @@ namespace Contorio
             );
             _blocks.Add(cryptorRS.Name, cryptorRS);
 
+            Cryptor cryptorPL = new Cryptor(
+                name: "cryptor-PL",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                                { new Pixel('╔', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╗', ConsoleColor.DarkYellow) },
+                                { new Pixel('║', ConsoleColor.DarkYellow), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('║', ConsoleColor.DarkYellow) },
+                                { new Pixel('╚', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╝', ConsoleColor.DarkYellow) }
+                }),
+                energyInput: 1,
+                outputToken: new Dictionary<string, int>() { { "PL", 1 } },
+                research: new Research(
+                    "cryptor-PL",
+                    "cryptors",
+                    null,
+                    new Dictionary<string, int>() { { "RS", 1} }
+                    )
+            );
+            _blocks.Add(cryptorPL.Name, cryptorPL);
+
             CreateTileSet();
         }
 

@@ -3,12 +3,6 @@ using Contorio.Engine.Widgets;
 using System.Diagnostics;
 using System.Drawing;
 
-//НА ЗАВТРА
-//Planet generator
-//planet size 16-128
-//resources spawn change
-//price token this planet
-
 //НА потом
 //Доделать выживание(чтобы тратились рескрсы при стройке)
 //
@@ -107,11 +101,11 @@ namespace Contorio
                 ConsoleColor.Red,
                 ConsoleColor.DarkBlue,
                 new Point(28, 16),
-                13,
+                12,
                 visible:false
             );
             Label labelResearchCost = new Label("Cost", ConsoleColor.White, new Point(45, 15), visible:false);
-            Label labelEnterToResearch = new Label("Enter to research", ConsoleColor.White, new Point(28, 29), visible: false);
+            Label labelEnterToResearch = new Label("Enter to research", ConsoleColor.White, new Point(28, 28), visible: false);
 
             //..Search planet
             Label labelSearchPlanet = new Label("SEARCH PLANET", ConsoleColor.White, new Point(75, 1), visible: false);
@@ -158,6 +152,7 @@ namespace Contorio
             }
             Label labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
             Label labelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible:false);
+            Label labelGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -188,6 +183,7 @@ namespace Contorio
             _worldScene.AddSprite(itemListOreChance);
             _worldScene.AddSprite(labelCostSearchPlanet);
             _worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
+            _worldScene.AddSprite(labelGtoSearchPlanet);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -236,6 +232,7 @@ namespace Contorio
                             itemListOreChance.Visible = TAB;
                             labelCostSearchPlanet.Visible = TAB;
                             labelPalkaPeredCostSearchPlanet.Visible = TAB;
+                            labelGtoSearchPlanet.Visible = TAB;
 
                             if (researchSystem.CloseResearch.Count > 0)
                             {
@@ -505,6 +502,15 @@ namespace Contorio
                                     labelResearch.Visible = false;
                                 }
                                 break;
+                            case ConsoleKey.G:
+                                int cost = CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance);
+                                if (world.Tokens["PL"] >= cost)
+                                {
+                                    world.Plantes.Add(new Planet(int.Parse(itemListPlanetSize.SelectedItem), oreChance));
+                                    UpdatePlanetList(itemListPlanetList, world);
+                                    world.Tokens["PL"] -= cost;
+                                }
+                                break;
                         }
                     }
                 }
@@ -528,7 +534,7 @@ namespace Contorio
                 if (TAB)
                 {
                     UpdateTokensInfo(world, labelTokensInfo);
-                    labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(oreChance, int.Parse(itemListPlanetSize.SelectedItem)) + " PL";
+                    labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance) + " PL";
                 }
 
                 _engine.Render();
@@ -630,7 +636,7 @@ namespace Contorio
             }
         }
 
-        static int CalculateCostSearchPlanet(Dictionary<string, int> oreChance, int planetSize)
+        static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)
         {
             int cost = 0;
             foreach (var ore in oreChance)
