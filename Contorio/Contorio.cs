@@ -70,15 +70,9 @@ namespace Contorio
             Label labelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
             Sprite blockPlayerCoord = new Sprite(resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
             Label labelPlayerResources = new Label("Resources", ConsoleColor.White, new Point(95, 15));
-            ItemList itemListPlayerResources = new ItemList(
-                ConsoleColor.White,
-                ConsoleColor.White,
-                new Point(95, 16),
-                15
-            );
 
             //Planets info
-            Label labelPlanetInfo = new Label(CreatePlanetInfo(world.Plantes[player.Planet]), ConsoleColor.White, new Point(0, 0));
+            Label labelPlanetInfo = new Label("Planet", ConsoleColor.White, new Point(0, 0));
             Label labelPlanetsLabel = new Label("PLANETS", ConsoleColor.White, new Point(0, 20));
             ItemList itemListPlanetList = new ItemList(
                 ConsoleColor.White,
@@ -177,7 +171,6 @@ namespace Contorio
             _worldScene.AddSprite(labelPlayerCoord);
             _worldScene.AddSprite(blockPlayerCoord);
             _worldScene.AddSprite(labelPlayerResources);
-            _worldScene.AddSprite(itemListPlayerResources);
 
             _worldScene.AddSprite(blockPlayerSelectedBlock);
             _worldScene.AddSprite(itemListBlockCategory);
@@ -239,7 +232,6 @@ namespace Contorio
                             itemListBlockList.Visible = buildingMode;
                             itemListBlockCategory.Visible = buildingMode;
                             labelPlayerResources.Visible = buildingMode;
-                            itemListPlayerResources.Visible = buildingMode;
                             break;
                         case ConsoleKey.Tab:
                             TAB = !TAB;
@@ -272,7 +264,6 @@ namespace Contorio
                             itemListBlockList.Visible = false;
                             itemListBlockCategory.Visible = false;
                             labelPlayerResources.Visible = false;
-                            itemListPlayerResources.Visible = false;
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
@@ -365,14 +356,14 @@ namespace Contorio
                                 player.Planet = itemListPlanetList.SelectedIndex;
                                 player.Coord = new Point(15, 15);
                                 loadMap(tileMap, world.Plantes[player.Planet]);
-                                labelPlanetInfo.Text = CreatePlanetInfo(world.Plantes[player.Planet]);
+                                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
                                 break;
                             case ConsoleKey.UpArrow:
                                 itemListPlanetList.PreviousItem();
                                 player.Planet = itemListPlanetList.SelectedIndex;
                                 player.Coord = new Point(15, 15);
                                 loadMap(tileMap, world.Plantes[player.Planet]);
-                                labelPlanetInfo.Text = CreatePlanetInfo(world.Plantes[player.Planet]);
+                                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
                                 break;
                         }
                     }
@@ -547,7 +538,8 @@ namespace Contorio
 
                 tileMap.UpdatePixels(player.Coord);
                 labelPlayerCoord.Text = player.Coord.X + "|" + player.Coord.Y;
-                labelPlanetInfo.Text = CreatePlanetInfo(world.Plantes[player.Planet]);
+                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
+                UpdatePlayerResourcesInfo(labelPlayerResources, player);
                 
                 if (world.Plantes[player.Planet].Ground.ContainsKey(player.Coord))
                 {
@@ -598,7 +590,26 @@ namespace Contorio
             }
         }
 
-        static string CreatePlanetInfo(Planet planet)
+        static void ShowMessage(Label message, ref double messageTimeAccumulator, string text, ConsoleColor color)
+        {
+            message.Text = text;
+            message.TextColor = color;
+            message.Position = new Point((120 / 2) - (text.Length / 2), 29);
+            message.Visible = true;
+            messageTimeAccumulator = 0;
+        }
+
+        static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        {
+            int cost = 0;
+            foreach (var ore in oreChance)
+            {
+                cost += ore.Value * planetSize;
+            }
+            return cost;
+        }
+
+        static void UpdatePlanetInfo(Label planetInfo, Planet planet)
         {
             string text = $"PLANET\n" +
                           $" Name: {planet.Name}\n" +
@@ -608,7 +619,7 @@ namespace Contorio
             {
                 text += "  "+ resource.Key + ": " + resource.Value + "\n";
             }
-            return text;
+            planetInfo.Text = text;
         }
 
         static void UpdatePlanetList(ItemList planetList, World world)
@@ -677,23 +688,13 @@ namespace Contorio
             }
         }
 
-        static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        static void UpdatePlayerResourcesInfo(Label playerResources, Player player)
         {
-            int cost = 0;
-            foreach (var ore in oreChance)
+            playerResources.Text = "RESOURCES\n";
+            foreach( var resource in player.Resources)
             {
-                cost += ore.Value * planetSize;
+                playerResources.Text += resource.Key + ": " + resource.Value + "\n";
             }
-            return cost;
-        }
-
-        static void ShowMessage(Label message, ref double messageTimeAccumulator, string text, ConsoleColor color)
-        {
-            message.Text = text;
-            message.TextColor = color;
-            message.Position = new Point((120 / 2) - (text.Length / 2), 29);
-            message.Visible = true;
-            messageTimeAccumulator = 0;
         }
     }
 }
