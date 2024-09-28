@@ -38,14 +38,14 @@ namespace Contorio
             WorldHandler worldHandler = new WorldHandler(world);
             Player player = new Player();
 
-            bool TAB = false;
+            bool researchMenu = false;
 
             bool buildingMode = true;
             bool categoryOrBlock = true;
             string selectBlock = "drill";
             string selectCategory = "logic";
 
-            int TABselectedItemList = 0; //1-4
+            int researchMenuSelectedItemList = 0; //1-4
             //1 Research
             //2 Planet size
             //3 ore
@@ -96,7 +96,7 @@ namespace Contorio
                 9
             );
 
-            //TAB
+            //Research Meny
             //..Tokens
             Label labelTokensInfo = new Label("Tokens", ConsoleColor.White, new Point(28, 1), visible: false);
 
@@ -233,31 +233,31 @@ namespace Contorio
                             itemListBlockCategory.Visible = buildingMode;
                             labelPlayerResources.Visible = buildingMode;
                             break;
-                        case ConsoleKey.Tab:
-                            TAB = !TAB;
-                            itemListResearchList.Visible = TAB;
-                            labelTokensInfo.Visible = TAB;
-                            labelSearchPlanet.Visible = TAB;
-                            itemListPlanetSize.Visible = TAB;
-                            labelPlanetSize.Visible = TAB;
-                            labelOreName.Visible = TAB;
-                            itemListOreName.Visible = TAB;
-                            labelOreChance.Visible = TAB;
-                            itemListOreChance.Visible = TAB;
-                            labelCostSearchPlanet.Visible = TAB;
-                            labelPalkaPeredCostSearchPlanet.Visible = TAB;
-                            labelGtoSearchPlanet.Visible = TAB;
+                        case ConsoleKey.R:
+                            researchMenu = !researchMenu;
+                            itemListResearchList.Visible = researchMenu;
+                            labelTokensInfo.Visible = researchMenu;
+                            labelSearchPlanet.Visible = researchMenu;
+                            itemListPlanetSize.Visible = researchMenu;
+                            labelPlanetSize.Visible = researchMenu;
+                            labelOreName.Visible = researchMenu;
+                            itemListOreName.Visible = researchMenu;
+                            labelOreChance.Visible = researchMenu;
+                            itemListOreChance.Visible = researchMenu;
+                            labelCostSearchPlanet.Visible = researchMenu;
+                            labelPalkaPeredCostSearchPlanet.Visible = researchMenu;
+                            labelGtoSearchPlanet.Visible = researchMenu;
 
                             if (researchSystem.CloseResearch.Count > 0)
                             {
-                                labelResearchCost.Visible = TAB;
-                                labelEnterToResearch.Visible = TAB;
-                                labelResearch.Visible = TAB;
+                                labelResearchCost.Visible = researchMenu;
+                                labelEnterToResearch.Visible = researchMenu;
+                                labelResearch.Visible = researchMenu;
                             }
 
-                            tileMap.Visible = !TAB;
-                            blockPlayerCoord.Visible = !TAB;
-                            labelPlayerCoord.Visible = !TAB;
+                            tileMap.Visible = !researchMenu;
+                            blockPlayerCoord.Visible = !researchMenu;
+                            labelPlayerCoord.Visible = !researchMenu;
 
                             buildingMode = false;
                             blockPlayerSelectedBlock.Visible = false;
@@ -347,7 +347,7 @@ namespace Contorio
                         }
                     }
 
-                    if (!buildingMode && !TAB)
+                    if (!buildingMode && !researchMenu)
                     {
                         switch (keyInfo.Key)
                         {
@@ -368,76 +368,76 @@ namespace Contorio
                         }
                     }
 
-                    if (TAB)
+                    if (researchMenu)
                     {
                         switch (keyInfo.Key)
                         {
                             case ConsoleKey.DownArrow:
-                                if (TABselectedItemList == 0)
+                                if (researchMenuSelectedItemList == 0)
                                 {
                                     itemListResearchList.NextItem();
                                     UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
                                 }
-                                if (TABselectedItemList == 1)
+                                if (researchMenuSelectedItemList == 1)
                                 {
                                     itemListPlanetSize.NextItem();
                                 }
-                                if (TABselectedItemList == 2)
+                                if (researchMenuSelectedItemList == 2)
                                 {
                                     itemListOreName.NextItem();
                                     itemListOreChance.SelectedItem = oreChance[itemListOreName.SelectedItem].ToString();
                                 }
-                                if (TABselectedItemList == 3)
+                                if (researchMenuSelectedItemList == 3)
                                 {
                                     itemListOreChance.NextItem();
                                     oreChance[itemListOreName.SelectedItem] = int.Parse(itemListOreChance.SelectedItem);
                                 }
                                 break;
                             case ConsoleKey.UpArrow:
-                                if (TABselectedItemList == 0)
+                                if (researchMenuSelectedItemList == 0)
                                 {
                                     itemListResearchList.PreviousItem();
                                     UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
                                 }
-                                if (TABselectedItemList == 1)
+                                if (researchMenuSelectedItemList == 1)
                                 {
                                     itemListPlanetSize.PreviousItem();
                                 }
-                                if (TABselectedItemList == 2)
+                                if (researchMenuSelectedItemList == 2)
                                 {
                                     itemListOreName.PreviousItem();
                                     itemListOreChance.SelectedItem = oreChance[itemListOreName.SelectedItem].ToString();
                                 }
-                                if (TABselectedItemList == 3)
+                                if (researchMenuSelectedItemList == 3)
                                 {
                                     itemListOreChance.PreviousItem();
                                     oreChance[itemListOreName.SelectedItem] = int.Parse(itemListOreChance.SelectedItem);
                                 }
                                 break;
                             case ConsoleKey.RightArrow:
-                                TABselectedItemList = (TABselectedItemList + 1) % 4;
-                                if (TABselectedItemList == 0)
+                                researchMenuSelectedItemList = (researchMenuSelectedItemList + 1) % 4;
+                                if (researchMenuSelectedItemList == 0)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
                                     itemListOreName.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                if (TABselectedItemList == 1)
+                                if (researchMenuSelectedItemList == 1)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListOreName.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                if (TABselectedItemList == 2)
+                                if (researchMenuSelectedItemList == 2)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                     itemListOreName.SelectedItemColor = ConsoleColor.DarkBlue;
                                 }
-                                if (TABselectedItemList == 3)
+                                if (researchMenuSelectedItemList == 3)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
@@ -446,29 +446,29 @@ namespace Contorio
                                 }
                                 break;
                             case ConsoleKey.LeftArrow:
-                                TABselectedItemList = (TABselectedItemList - 1 + 4) % 4;
-                                if (TABselectedItemList == 0)
+                                researchMenuSelectedItemList = (researchMenuSelectedItemList - 1 + 4) % 4;
+                                if (researchMenuSelectedItemList == 0)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
                                     itemListOreName.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                if (TABselectedItemList == 1)
+                                if (researchMenuSelectedItemList == 1)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.DarkBlue;
                                     itemListOreName.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                 }
-                                if (TABselectedItemList == 2)
+                                if (researchMenuSelectedItemList == 2)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
                                     itemListOreChance.SelectedItemColor = ConsoleColor.White;
                                     itemListOreName.SelectedItemColor = ConsoleColor.DarkBlue;
                                 }
-                                if (TABselectedItemList == 3)
+                                if (researchMenuSelectedItemList == 3)
                                 {
                                     itemListResearchList.SelectedItemColor = ConsoleColor.Red;
                                     itemListPlanetSize.SelectedItemColor = ConsoleColor.White;
@@ -553,7 +553,7 @@ namespace Contorio
                     }
                 }
 
-                if (TAB)
+                if (researchMenu)
                 {
                     UpdateTokensInfo(world, labelTokensInfo);
                     labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance) + " PL";
