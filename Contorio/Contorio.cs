@@ -52,6 +52,8 @@ namespace Contorio
             //4 ore change
             Dictionary<string, int> oreChance = new Dictionary<string, int>();
 
+            double messageTimeAccumulator = 0;
+
             //Map
             TileMap tileMap = new TileMap(
                 66,
@@ -63,8 +65,17 @@ namespace Contorio
             );
             tileMap.addLayer(0);
             tileMap.addLayer(1);
+
+            //Player
             Label labelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
             Sprite blockPlayerCoord = new Sprite(resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
+            Label labelPlayerResources = new Label("Resources", ConsoleColor.White, new Point(95, 15));
+            ItemList itemListPlayerResources = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.White,
+                new Point(95, 16),
+                15
+            );
 
             //Planets info
             Label labelPlanetInfo = new Label(CreatePlanetInfo(world.Plantes[player.Planet]), ConsoleColor.White, new Point(0, 0));
@@ -78,17 +89,17 @@ namespace Contorio
 
             //Building
             Sprite blockPlayerSelectedBlock = new Sprite(resourceManager.TileSet.Tiles[3].Pixels, position: new Point(102, 1));
-            ItemList ItemListBlockCategory = new ItemList(
+            ItemList itemListBlockCategory = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
                 new Point(95, 5),
-                10
+                9
             );
-            ItemList ItemListBlockList = new ItemList(
+            ItemList itemListBlockList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
                 new Point(105, 5),
-                10
+                9
             );
 
             //TAB
@@ -157,13 +168,20 @@ namespace Contorio
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
+            //Message
+            Label labelMessage = new Label("MESSAGE", ConsoleColor.White, new Point(60, 29), visible: false);
+
+
             _worldScene.AddSprite(tileMap);
+
             _worldScene.AddSprite(labelPlayerCoord);
             _worldScene.AddSprite(blockPlayerCoord);
+            _worldScene.AddSprite(labelPlayerResources);
+            _worldScene.AddSprite(itemListPlayerResources);
 
             _worldScene.AddSprite(blockPlayerSelectedBlock);
-            _worldScene.AddSprite(ItemListBlockCategory);
-            _worldScene.AddSprite(ItemListBlockList);
+            _worldScene.AddSprite(itemListBlockCategory);
+            _worldScene.AddSprite(itemListBlockList);
 
             _worldScene.AddSprite(labelPlanetInfo);
             _worldScene.AddSprite(labelPlanetsLabel);
@@ -187,16 +205,18 @@ namespace Contorio
 
             _worldScene.AddSprite(labelFPS);
 
+            _worldScene.AddSprite(labelMessage);
+
             loadMap(tileMap, world.Plantes[player.Planet]);
             UpdatePlanetList(itemListPlanetList, world);
-            UpdateBlockCategory(researchSystem, ItemListBlockCategory);
-            UpdateBlockList(researchSystem, ItemListBlockList, ItemListBlockCategory.SelectedItem);
+            UpdateBlockCategory(researchSystem, itemListBlockCategory);
+            UpdateBlockList(researchSystem, itemListBlockList, itemListBlockCategory.SelectedItem);
             UpdateResearchList(researchSystem, itemListResearchList);
             UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
             player.Coord = new Point(15, 15);
 
-            selectCategory = ItemListBlockCategory.SelectedItem;
-            selectBlock = ItemListBlockList.SelectedItem;
+            selectCategory = itemListBlockCategory.SelectedItem;
+            selectBlock = itemListBlockList.SelectedItem;
             blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
 
             Stopwatch sw = new Stopwatch();
@@ -216,8 +236,10 @@ namespace Contorio
                         case ConsoleKey.B:
                             buildingMode = !buildingMode;
                             blockPlayerSelectedBlock.Visible = buildingMode;
-                            ItemListBlockList.Visible = buildingMode;
-                            ItemListBlockCategory.Visible = buildingMode;
+                            itemListBlockList.Visible = buildingMode;
+                            itemListBlockCategory.Visible = buildingMode;
+                            labelPlayerResources.Visible = buildingMode;
+                            itemListPlayerResources.Visible = buildingMode;
                             break;
                         case ConsoleKey.Tab:
                             TAB = !TAB;
@@ -247,8 +269,10 @@ namespace Contorio
 
                             buildingMode = false;
                             blockPlayerSelectedBlock.Visible = false;
-                            ItemListBlockList.Visible = false;
-                            ItemListBlockCategory.Visible = false;
+                            itemListBlockList.Visible = false;
+                            itemListBlockCategory.Visible = false;
+                            labelPlayerResources.Visible = false;
+                            itemListPlayerResources.Visible = false;
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
@@ -282,52 +306,52 @@ namespace Contorio
                             case ConsoleKey.DownArrow:
                                 if (categoryOrBlock)
                                 {
-                                    ItemListBlockCategory.NextItem();
-                                    selectCategory = ItemListBlockCategory.SelectedItem;
-                                    UpdateBlockList(researchSystem, ItemListBlockList, selectCategory);
+                                    itemListBlockCategory.NextItem();
+                                    selectCategory = itemListBlockCategory.SelectedItem;
+                                    UpdateBlockList(researchSystem, itemListBlockList, selectCategory);
                                 }
                                 else
                                 {
-                                    ItemListBlockList.NextItem();
+                                    itemListBlockList.NextItem();
                                 }
-                                selectBlock = ItemListBlockList.SelectedItem;
+                                selectBlock = itemListBlockList.SelectedItem;
                                 blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
                                 break;
                             case ConsoleKey.UpArrow:
                                 if (categoryOrBlock)
                                 {
-                                    ItemListBlockCategory.PreviousItem();
-                                    selectCategory = ItemListBlockCategory.SelectedItem;
-                                    UpdateBlockList(researchSystem, ItemListBlockList, selectCategory);
+                                    itemListBlockCategory.PreviousItem();
+                                    selectCategory = itemListBlockCategory.SelectedItem;
+                                    UpdateBlockList(researchSystem, itemListBlockList, selectCategory);
                                 }
                                 else
                                 {
-                                    ItemListBlockList.PreviousItem();
+                                    itemListBlockList.PreviousItem();
                                 }
-                                selectBlock = ItemListBlockList.SelectedItem;
+                                selectBlock = itemListBlockList.SelectedItem;
                                 blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
                                 break;
                             case ConsoleKey.LeftArrow:
                                 categoryOrBlock = !categoryOrBlock;
                                 if (categoryOrBlock)
                                 {
-                                    ItemListBlockCategory.SelectedItemColor = ConsoleColor.DarkBlue;
-                                    ItemListBlockList.SelectedItemColor = ConsoleColor.Blue;
+                                    itemListBlockCategory.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListBlockList.SelectedItemColor = ConsoleColor.Blue;
                                     break;
                                 }
-                                ItemListBlockCategory.SelectedItemColor = ConsoleColor.Blue;
-                                ItemListBlockList.SelectedItemColor = ConsoleColor.DarkBlue;
+                                itemListBlockCategory.SelectedItemColor = ConsoleColor.Blue;
+                                itemListBlockList.SelectedItemColor = ConsoleColor.DarkBlue;
                                 break;
                             case ConsoleKey.RightArrow:
                                 categoryOrBlock = !categoryOrBlock;
                                 if (categoryOrBlock)
                                 {
-                                    ItemListBlockCategory.SelectedItemColor = ConsoleColor.DarkBlue;
-                                    ItemListBlockList.SelectedItemColor = ConsoleColor.Blue;
+                                    itemListBlockCategory.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListBlockList.SelectedItemColor = ConsoleColor.Blue;
                                     break;
                                 }
-                                ItemListBlockCategory.SelectedItemColor = ConsoleColor.Blue;
-                                ItemListBlockList.SelectedItemColor = ConsoleColor.DarkBlue;
+                                itemListBlockCategory.SelectedItemColor = ConsoleColor.Blue;
+                                itemListBlockList.SelectedItemColor = ConsoleColor.DarkBlue;
                                 break;
                         }
                     }
@@ -470,6 +494,7 @@ namespace Contorio
                                         if (world.Tokens.GetValueOrDefault(token.Key, 0) < token.Value)
                                         {
                                             ok = false;
+                                            ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough " + token.Key, ConsoleColor.DarkRed);
                                         }
                                     }
                                     if (researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch != null)
@@ -477,6 +502,7 @@ namespace Contorio
                                         if (!researchSystem.OpenResearch.ContainsKey(researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch))
                                         {
                                             ok = false;
+                                            ShowMessage(labelMessage, ref messageTimeAccumulator, "not studied " + researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch, ConsoleColor.DarkRed);
                                         }
                                     }
                                     if (ok)
@@ -487,8 +513,8 @@ namespace Contorio
                                         }
                                         researchSystem.UnlockResearch(itemListResearchList.SelectedItem);
                                         UpdateResearchList(researchSystem, itemListResearchList);
-                                        UpdateBlockCategory(researchSystem, ItemListBlockCategory);
-                                        UpdateBlockList(researchSystem, ItemListBlockList, selectCategory);
+                                        UpdateBlockCategory(researchSystem, itemListBlockCategory);
+                                        UpdateBlockList(researchSystem, itemListBlockList, selectCategory);
                                     }
                                 }
                                 if (researchSystem.CloseResearch.Count > 0)
@@ -504,11 +530,15 @@ namespace Contorio
                                 break;
                             case ConsoleKey.G:
                                 int cost = CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance);
-                                if (world.Tokens["PL"] >= cost)
+                                if (world.Tokens.GetValueOrDefault("PL", 0) >= cost)
                                 {
                                     world.Plantes.Add(new Planet(int.Parse(itemListPlanetSize.SelectedItem), oreChance));
                                     UpdatePlanetList(itemListPlanetList, world);
                                     world.Tokens["PL"] -= cost;
+                                }
+                                else
+                                {
+                                    ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough PL", ConsoleColor.Red);
                                 }
                                 break;
                         }
@@ -537,7 +567,18 @@ namespace Contorio
                     labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance) + " PL";
                 }
 
+                if (labelMessage.Visible)
+                {
+                    messageTimeAccumulator += sw.Elapsed.TotalMilliseconds;
+                    if (messageTimeAccumulator > 1000)
+                    {
+                        messageTimeAccumulator = 0;
+                        labelMessage.Visible = false;
+                    }
+                }
+
                 _engine.Render();
+
                 labelFPS.Text = "FPS: " + ((int)(1000 / sw.Elapsed.TotalMilliseconds)).ToString();
             }
         }
@@ -644,6 +685,15 @@ namespace Contorio
                 cost += ore.Value * planetSize;
             }
             return cost;
+        }
+
+        static void ShowMessage(Label message, ref double messageTimeAccumulator, string text, ConsoleColor color)
+        {
+            message.Text = text;
+            message.TextColor = color;
+            message.Position = new Point((120 / 2) - (text.Length / 2), 29);
+            message.Visible = true;
+            messageTimeAccumulator = 0;
         }
     }
 }

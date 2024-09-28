@@ -84,7 +84,8 @@ namespace Contorio
                     "logic",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1} }
                 );
             _blocks.Add(droneStation.Name, droneStation);
 
@@ -102,7 +103,8 @@ namespace Contorio
                     "energy",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
                 );
             _blocks.Add(energyPoint.Name, energyPoint);
 
@@ -121,7 +123,8 @@ namespace Contorio
                     "mining",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
                 );
             _blocks.Add(drill.Name, drill);
 
@@ -140,26 +143,28 @@ namespace Contorio
                     "mining",
                     "drill",
                     new Dictionary<string, int>() { {"RS", 10000} }
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
                 );
             _blocks.Add(drill_MK2.Name, drill_MK2);
 
             Drill drill_MK3 = new Drill(
-            name: "drill-MK3",
-            sprite: new Sprite(new Pixel[3, 4]
-            {
-                { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
-                { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
-                { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
-            }),
-            speed: 8,
-            energyInput: 5,
-            research: new Research(
-                "drill-MK3",
-                "mining",
-                "drill-MK2",
-                new Dictionary<string, int>() { { "RS", 10000000 } }
-                )
+                name: "drill-MK3",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                    { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
+                    { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
+                    { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
+                }),
+                speed: 8,
+                energyInput: 5,
+                research: new Research(
+                    "drill-MK3",
+                    "mining",
+                    "drill-MK2",
+                    new Dictionary<string, int>() { { "RS", 10000000 } }
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
             _blocks.Add(drill_MK3.Name, drill_MK3);
 
@@ -177,7 +182,8 @@ namespace Contorio
                     "energy",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
                 );
             _blocks.Add(solarPanel.Name, solarPanel);
 
@@ -199,7 +205,8 @@ namespace Contorio
                     "factory",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
                 );
             _blocks.Add(smelterIron.Name, smelterIron);
 
@@ -221,7 +228,8 @@ namespace Contorio
                     "factory",
                     null,
                     new Dictionary<string, int>() { { "RS", 1 } }
-                )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
             _blocks.Add(smelterCopper.Name, smelterCopper);
 
@@ -240,7 +248,8 @@ namespace Contorio
                     "cryptors",
                     null,
                     new Dictionary<string, int>()
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
             _blocks.Add(cryptorRS.Name, cryptorRS);
 
@@ -259,7 +268,8 @@ namespace Contorio
                     "cryptors",
                     null,
                     new Dictionary<string, int>() { { "RS", 1} }
-                    )
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
             _blocks.Add(cryptorPL.Name, cryptorPL);
 

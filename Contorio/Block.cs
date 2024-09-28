@@ -19,18 +19,22 @@ namespace Contorio
         private string _name;
         private Sprite _sprite;
         private Research _research;
+        private Dictionary<string, int> _cost;
 
         public BlockType Type => _type;
         public string Name => _name;
         public Sprite Sprite => _sprite;
         public Research Research => _research;
 
-        public Block(BlockType type, string name, Sprite sprite, Research research)
+        public Dictionary<string, int> Cost => _cost;
+
+        public Block(BlockType type, string name, Sprite sprite, Research research, Dictionary<string, int> cost)
         {
             _type = type;
             _name = name;
             _sprite = sprite;
             _research = research;
+            _cost = cost;
         }
     }
 
@@ -55,7 +59,7 @@ namespace Contorio
 
         public int Range => _range;
 
-        public DroneStation(string name, Sprite sprite, Research research, int range) : base(BlockType.DRONE_STATION, name, sprite, research)
+        public DroneStation(string name, Sprite sprite, Research research, int range, Dictionary<string, int> cost) : base(BlockType.DRONE_STATION, name, sprite, research, cost)
         {
             _range = range;
         }
@@ -67,7 +71,7 @@ namespace Contorio
 
         public int Range => _range;
 
-        public EnergyPoint(string name, Sprite sprite, Research research, int range) : base(BlockType.ENERGY_POINT, name, sprite, research)
+        public EnergyPoint(string name, Sprite sprite, Research research, int range, Dictionary<string, int> cost) : base(BlockType.ENERGY_POINT, name, sprite, research, cost)
         {
             _range = range;
         }
@@ -82,7 +86,7 @@ namespace Contorio
 
         public int EnergyInput => _energyInput;
 
-        public Drill(string name, Sprite sprite, Research research, int speed, int energyInput) : base(BlockType.DRILL, name, sprite, research)
+        public Drill(string name, Sprite sprite, Research research, int speed, int energyInput, Dictionary<string, int> cost) : base(BlockType.DRILL, name, sprite, research, cost)
         {
             _speed = speed;
             _energyInput = energyInput;
@@ -95,7 +99,7 @@ namespace Contorio
 
         public int EnergyOutput => _energyOutput;
 
-        public SolarPanel(string name, Sprite sprite, Research research, int energyOutput) : base(BlockType.SOLAR_PANEL, name, sprite, research)
+        public SolarPanel(string name, Sprite sprite, Research research, int energyOutput, Dictionary<string, int> cost) : base(BlockType.SOLAR_PANEL, name, sprite, research, cost)
         {
             _energyOutput = energyOutput;
         }
@@ -110,7 +114,7 @@ namespace Contorio
 
         public Recipe Recipe => _recipe;
 
-        public Factory(string name, Sprite sprite, Research research, int energyInput, Recipe recipe) : base(BlockType.FACTORY, name, sprite, research)
+        public Factory(string name, Sprite sprite, Research research, int energyInput, Recipe recipe, Dictionary<string, int> cost) : base(BlockType.FACTORY, name, sprite, research, cost)
         {
             _energyInput = energyInput;
             _recipe = recipe;
@@ -124,7 +128,7 @@ namespace Contorio
         public int EnergyInput => _energyInput;
         public IReadOnlyDictionary<string, int> OutputToken => _outputToken;
 
-        public Cryptor(string name, Sprite sprite, Research research, int energyInput, Dictionary<string, int> outputToken) : base(BlockType.CRYPTOR, name, sprite, research)
+        public Cryptor(string name, Sprite sprite, Research research, int energyInput, Dictionary<string, int> outputToken, Dictionary<string, int> cost) : base(BlockType.CRYPTOR, name, sprite, research, cost)
         {
             _energyInput = energyInput;
             _outputToken = outputToken;
