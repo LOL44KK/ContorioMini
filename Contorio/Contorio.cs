@@ -95,8 +95,9 @@ namespace Contorio
                 new Point(105, 5),
                 9
             );
+            Label labelCostBuilding = new Label("COST", ConsoleColor.White, new Point(108, 0));
 
-            //Research Meny
+            //Research Menu
             //..Tokens
             Label labelTokensInfo = new Label("Tokens", ConsoleColor.White, new Point(28, 1), visible: false);
 
@@ -157,7 +158,10 @@ namespace Contorio
             }
             Label labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
             Label labelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible:false);
-            Label labelGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
+            Label labelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
+            
+            //TAB
+
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -175,6 +179,7 @@ namespace Contorio
             _worldScene.AddSprite(blockPlayerSelectedBlock);
             _worldScene.AddSprite(itemListBlockCategory);
             _worldScene.AddSprite(itemListBlockList);
+            _worldScene.AddSprite(labelCostBuilding);
 
             _worldScene.AddSprite(labelPlanetInfo);
             _worldScene.AddSprite(labelPlanetsLabel);
@@ -194,7 +199,7 @@ namespace Contorio
             _worldScene.AddSprite(itemListOreChance);
             _worldScene.AddSprite(labelCostSearchPlanet);
             _worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
-            _worldScene.AddSprite(labelGtoSearchPlanet);
+            _worldScene.AddSprite(labelPressGtoSearchPlanet);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -211,6 +216,9 @@ namespace Contorio
             selectCategory = itemListBlockCategory.SelectedItem;
             selectBlock = itemListBlockList.SelectedItem;
             blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
+
+            UpdateCostBuilding(labelCostBuilding, selectBlock);
+
 
             Stopwatch sw = new Stopwatch();
             
@@ -232,6 +240,7 @@ namespace Contorio
                             itemListBlockList.Visible = buildingMode;
                             itemListBlockCategory.Visible = buildingMode;
                             labelPlayerResources.Visible = buildingMode;
+                            labelCostBuilding.Visible = buildingMode;
                             break;
                         case ConsoleKey.R:
                             researchMenu = !researchMenu;
@@ -246,7 +255,7 @@ namespace Contorio
                             itemListOreChance.Visible = researchMenu;
                             labelCostSearchPlanet.Visible = researchMenu;
                             labelPalkaPeredCostSearchPlanet.Visible = researchMenu;
-                            labelGtoSearchPlanet.Visible = researchMenu;
+                            labelPressGtoSearchPlanet.Visible = researchMenu;
 
                             if (researchSystem.CloseResearch.Count > 0)
                             {
@@ -264,6 +273,7 @@ namespace Contorio
                             itemListBlockList.Visible = false;
                             itemListBlockCategory.Visible = false;
                             labelPlayerResources.Visible = false;
+                            labelCostBuilding.Visible = false;
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
@@ -307,6 +317,7 @@ namespace Contorio
                                 }
                                 selectBlock = itemListBlockList.SelectedItem;
                                 blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
+                                UpdateCostBuilding(labelCostBuilding, selectBlock);
                                 break;
                             case ConsoleKey.UpArrow:
                                 if (categoryOrBlock)
@@ -321,6 +332,7 @@ namespace Contorio
                                 }
                                 selectBlock = itemListBlockList.SelectedItem;
                                 blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
+                                UpdateCostBuilding(labelCostBuilding, selectBlock);
                                 break;
                             case ConsoleKey.LeftArrow:
                                 categoryOrBlock = !categoryOrBlock;
@@ -529,7 +541,7 @@ namespace Contorio
                                 }
                                 else
                                 {
-                                    ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough PL", ConsoleColor.Red);
+                                    ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough PL", ConsoleColor.DarkRed);
                                 }
                                 break;
                         }
@@ -694,6 +706,17 @@ namespace Contorio
             foreach( var resource in player.Resources)
             {
                 playerResources.Text += resource.Key + ": " + resource.Value + "\n";
+            }
+        }
+
+        static void UpdateCostBuilding(Label costBuilding, string name)
+        {
+            Block block = ResourceManager.Instance.Blocks[name];
+
+            costBuilding.Text = "COST\n";
+            foreach (var resource in block.Cost)
+            {
+                costBuilding.Text += resource.Key + ": " + resource.Value + "\n";
             }
         }
     }
