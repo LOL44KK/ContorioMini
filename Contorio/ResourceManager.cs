@@ -104,7 +104,7 @@ namespace Contorio
                     null,
                     new Dictionary<string, int>()
                 ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                cost: new Dictionary<string, int>() { { "copper", 5 } }
                 );
             _blocks.Add(energyPoint.Name, energyPoint);
 
@@ -183,7 +183,7 @@ namespace Contorio
                     null,
                     new Dictionary<string, int>()
                 ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } }
                 );
             _blocks.Add(solarPanel.Name, solarPanel);
 

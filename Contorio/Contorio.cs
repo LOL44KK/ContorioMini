@@ -39,6 +39,7 @@ namespace Contorio
             Player player = new Player();
 
             bool researchMenu = false;
+            bool TAB = false;
 
             bool buildingMode = true;
             bool categoryOrBlock = true;
@@ -162,7 +163,6 @@ namespace Contorio
             
             //TAB
 
-
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
@@ -220,6 +220,49 @@ namespace Contorio
             UpdateCostBuilding(labelCostBuilding, selectBlock);
 
 
+            void SetVisibleMap(bool visible)
+            {
+                tileMap.Visible = visible;
+                blockPlayerCoord.Visible = visible;
+                labelPlayerCoord.Visible = visible;
+            }
+
+            void SetBuildingMode(bool mode)
+            {
+                buildingMode = mode;
+                blockPlayerSelectedBlock.Visible = mode;
+                itemListBlockList.Visible = mode;
+                itemListBlockCategory.Visible = mode;
+                labelPlayerResources.Visible = mode;
+                labelCostBuilding.Visible = mode;
+            }
+
+            void setVisibleResearchMenu(bool visible)
+            {
+                SetBuildingMode(false);
+
+                researchMenu = visible;
+                itemListResearchList.Visible = visible;
+                labelTokensInfo.Visible = visible;
+                labelSearchPlanet.Visible = visible;
+                itemListPlanetSize.Visible = visible;
+                labelPlanetSize.Visible = visible;
+                labelOreName.Visible = visible;
+                itemListOreName.Visible = visible;
+                labelOreChance.Visible = visible;
+                itemListOreChance.Visible = visible;
+                labelCostSearchPlanet.Visible = visible;
+                labelPalkaPeredCostSearchPlanet.Visible = visible;
+                labelPressGtoSearchPlanet.Visible = visible;
+
+                if (researchSystem.CloseResearch.Count > 0)
+                {
+                    labelResearchCost.Visible = visible;
+                    labelEnterToResearch.Visible = visible;
+                    labelResearch.Visible = visible;
+                }
+            }
+
             Stopwatch sw = new Stopwatch();
             
             while (true)
@@ -235,45 +278,17 @@ namespace Contorio
                     switch (keyInfo.Key)
                     {
                         case ConsoleKey.B:
-                            buildingMode = !buildingMode;
-                            blockPlayerSelectedBlock.Visible = buildingMode;
-                            itemListBlockList.Visible = buildingMode;
-                            itemListBlockCategory.Visible = buildingMode;
-                            labelPlayerResources.Visible = buildingMode;
-                            labelCostBuilding.Visible = buildingMode;
+                            SetBuildingMode(!buildingMode);
                             break;
                         case ConsoleKey.R:
-                            researchMenu = !researchMenu;
-                            itemListResearchList.Visible = researchMenu;
-                            labelTokensInfo.Visible = researchMenu;
-                            labelSearchPlanet.Visible = researchMenu;
-                            itemListPlanetSize.Visible = researchMenu;
-                            labelPlanetSize.Visible = researchMenu;
-                            labelOreName.Visible = researchMenu;
-                            itemListOreName.Visible = researchMenu;
-                            labelOreChance.Visible = researchMenu;
-                            itemListOreChance.Visible = researchMenu;
-                            labelCostSearchPlanet.Visible = researchMenu;
-                            labelPalkaPeredCostSearchPlanet.Visible = researchMenu;
-                            labelPressGtoSearchPlanet.Visible = researchMenu;
-
-                            if (researchSystem.CloseResearch.Count > 0)
-                            {
-                                labelResearchCost.Visible = researchMenu;
-                                labelEnterToResearch.Visible = researchMenu;
-                                labelResearch.Visible = researchMenu;
-                            }
-
-                            tileMap.Visible = !researchMenu;
-                            blockPlayerCoord.Visible = !researchMenu;
-                            labelPlayerCoord.Visible = !researchMenu;
-
-                            buildingMode = false;
-                            blockPlayerSelectedBlock.Visible = false;
-                            itemListBlockList.Visible = false;
-                            itemListBlockCategory.Visible = false;
-                            labelPlayerResources.Visible = false;
-                            labelCostBuilding.Visible = false;
+                            setVisibleResearchMenu(!researchMenu);
+                            SetVisibleMap(!researchMenu);
+                            SetBuildingMode(false);
+                            break;
+                        case ConsoleKey.Tab:
+                            TAB = !TAB;
+                            SetBuildingMode(false);
+                            SetVisibleMap(!TAB);
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
