@@ -160,8 +160,16 @@ namespace Contorio
             Label labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
             Label labelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible:false);
             Label labelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
-            
+
             //TAB
+            Label labelResourcesToPlayer = new Label("Resources", ConsoleColor.White, new Point(27, 1), visible:false);
+            ItemList itemListResourcesToPlayer = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.DarkBlue,
+                new Point(27, 2),
+                15,
+                visible: false
+            );
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -200,6 +208,9 @@ namespace Contorio
             _worldScene.AddSprite(labelCostSearchPlanet);
             _worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
             _worldScene.AddSprite(labelPressGtoSearchPlanet);
+
+            _worldScene.AddSprite(labelResourcesToPlayer);
+            _worldScene.AddSprite(itemListResourcesToPlayer);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -240,6 +251,7 @@ namespace Contorio
             void setVisibleResearchMenu(bool visible)
             {
                 SetBuildingMode(false);
+                SetVisibleMap(!visible);
 
                 researchMenu = visible;
                 itemListResearchList.Visible = visible;
@@ -263,6 +275,16 @@ namespace Contorio
                 }
             }
 
+            void SetVisibleTABMenu(bool visible)
+            {
+                TAB = visible;
+                SetBuildingMode(false);
+                SetVisibleMap(!visible);
+
+                labelResourcesToPlayer.Visible = visible;
+                itemListResourcesToPlayer.Visible = visible;
+            }
+
             Stopwatch sw = new Stopwatch();
             
             while (true)
@@ -282,13 +304,9 @@ namespace Contorio
                             break;
                         case ConsoleKey.R:
                             setVisibleResearchMenu(!researchMenu);
-                            SetVisibleMap(!researchMenu);
-                            SetBuildingMode(false);
                             break;
                         case ConsoleKey.Tab:
-                            TAB = !TAB;
-                            SetBuildingMode(false);
-                            SetVisibleMap(!TAB);
+                            SetVisibleTABMenu(!TAB);
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
@@ -586,6 +604,11 @@ namespace Contorio
                     labelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance) + " PL";
                 }
 
+                if (TAB)
+                {
+                    UpdateResourcesToPlayer(itemListResourcesToPlayer, world.Plantes[player.Planet]);
+                }
+
                 if (labelMessage.Visible)
                 {
                     messageTimeAccumulator += sw.Elapsed.TotalMilliseconds;
@@ -732,6 +755,22 @@ namespace Contorio
             foreach (var resource in block.Cost)
             {
                 costBuilding.Text += resource.Key + ": " + resource.Value + "\n";
+            }
+        }
+
+        static void UpdateResourcesToPlayer(ItemList resourcesToPlayer, Planet planet)
+        {
+            
+            string? selectedItem = null;
+            if (resourcesToPlayer.Items.Count > 0)
+            {
+                selectedItem = resourcesToPlayer.SelectedItem;
+            }
+            resourcesToPlayer.ClearItems();
+
+            foreach (var resource in planet.Resources)
+            {
+                resourcesToPlayer.AddItem(resource.Key);
             }
         }
     }

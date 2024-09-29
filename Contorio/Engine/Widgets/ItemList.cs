@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace Contorio.Engine.Widgets
 {
@@ -58,6 +59,11 @@ namespace Contorio.Engine.Widgets
                 _selectedItemColor = value;
                 UpdatePixels();
             }
+        }
+
+        public ReadOnlyCollection<string> Items
+        {
+            get { return new ReadOnlyCollection<string>(_items); }
         }
 
         public ItemList(ConsoleColor textColor, ConsoleColor selectedItemColor, Point position, int visibleItemCount, int layer = 0, bool visible = true)
