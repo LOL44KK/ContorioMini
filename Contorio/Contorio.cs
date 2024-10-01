@@ -46,6 +46,8 @@ namespace Contorio
             string selectBlock = "drill";
             string selectCategory = "logic";
 
+            bool nameOrCount = true;
+
             int researchMenuSelectedItemList = 0; //1-4
             //1 Research
             //2 Planet size
@@ -162,7 +164,7 @@ namespace Contorio
             Label labelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
 
             //TAB
-            Label labelResourcesToPlayer = new Label("Resources", ConsoleColor.White, new Point(27, 1), visible:false);
+            Label labelResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1), visible:false);
             ItemList itemListResourcesToPlayer = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
@@ -170,6 +172,18 @@ namespace Contorio
                 15,
                 visible: false
             );
+            Label labelCountResource = new Label("Count: 0", ConsoleColor.White, new Point(45, 2), visible: false);
+            ItemList itemListResourcesToPlayerCount = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.Blue,
+                new Point(45, 3),
+                1,
+                visible: false
+            );
+            for (int i = 1; i < 10000; i *= 2)
+            {
+                itemListResourcesToPlayerCount.AddItem("" + i);
+            }
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -211,6 +225,8 @@ namespace Contorio
 
             _worldScene.AddSprite(labelResourcesToPlayer);
             _worldScene.AddSprite(itemListResourcesToPlayer);
+            _worldScene.AddSprite(labelCountResource);
+            _worldScene.AddSprite(itemListResourcesToPlayerCount);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -283,6 +299,8 @@ namespace Contorio
 
                 labelResourcesToPlayer.Visible = visible;
                 itemListResourcesToPlayer.Visible = visible;
+                labelCountResource.Visible = visible;
+                itemListResourcesToPlayerCount.Visible = visible;
             }
 
             Stopwatch sw = new Stopwatch();
@@ -392,7 +410,7 @@ namespace Contorio
                         }
                     }
 
-                    if (!buildingMode && !researchMenu)
+                    if (!buildingMode && !researchMenu && !TAB)
                     {
                         switch (keyInfo.Key)
                         {
@@ -413,7 +431,53 @@ namespace Contorio
                         }
                     }
 
-                    if (researchMenu)
+                    //TAB
+                    if (TAB && !researchMenu && !buildingMode)
+                    {
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.DownArrow:
+                                if (nameOrCount)
+                                {
+                                    itemListResourcesToPlayer.NextItem();
+                                    break;
+                                }
+                                itemListResourcesToPlayerCount.NextItem();
+                                break;
+                            case ConsoleKey.UpArrow:
+                                if (nameOrCount)
+                                {
+                                    itemListResourcesToPlayer.PreviousItem();
+                                    break;
+                                }
+                                itemListResourcesToPlayerCount.PreviousItem();
+                                break;
+                            case ConsoleKey.RightArrow:
+                                nameOrCount = !nameOrCount;
+                                if (nameOrCount)
+                                {
+                                    itemListResourcesToPlayer.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListResourcesToPlayerCount.SelectedItemColor = ConsoleColor.Blue;
+                                    break;
+                                }
+                                itemListResourcesToPlayer.SelectedItemColor = ConsoleColor.Blue;
+                                itemListResourcesToPlayerCount.SelectedItemColor = ConsoleColor.DarkBlue;
+                                break;
+                            case ConsoleKey.LeftArrow:
+                                nameOrCount = !nameOrCount;
+                                if (nameOrCount)
+                                {
+                                    itemListResourcesToPlayer.SelectedItemColor = ConsoleColor.DarkBlue;
+                                    itemListResourcesToPlayerCount.SelectedItemColor = ConsoleColor.Blue;
+                                    break;
+                                }
+                                itemListResourcesToPlayer.SelectedItemColor = ConsoleColor.Blue;
+                                itemListResourcesToPlayerCount.SelectedItemColor = ConsoleColor.DarkBlue;
+                                break;
+                        }
+                    }
+
+                    if (researchMenu && !TAB)
                     {
                         switch (keyInfo.Key)
                         {
@@ -607,6 +671,10 @@ namespace Contorio
                 if (TAB)
                 {
                     UpdateResourcesToPlayer(itemListResourcesToPlayer, world.Plantes[player.Planet]);
+                    if (itemListResourcesToPlayer.Items.Count > 0)
+                    {
+                        labelCountResource.Text = "Count: " + world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem];
+                    }
                 }
 
                 if (labelMessage.Visible)
@@ -760,7 +828,6 @@ namespace Contorio
 
         static void UpdateResourcesToPlayer(ItemList resourcesToPlayer, Planet planet)
         {
-            
             string? selectedItem = null;
             if (resourcesToPlayer.Items.Count > 0)
             {
@@ -771,6 +838,11 @@ namespace Contorio
             foreach (var resource in planet.Resources)
             {
                 resourcesToPlayer.AddItem(resource.Key);
+            }
+
+            if (selectedItem != null)
+            {
+                resourcesToPlayer.SelectedItem = selectedItem;
             }
         }
     }
