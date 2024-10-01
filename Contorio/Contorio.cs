@@ -16,6 +16,8 @@ namespace Contorio
         private Engine.Engine _engine;
         private Scene _worldScene;
 
+
+
         public Contorio()
         {
             _engine = new Engine.Engine(120, 30);
@@ -47,6 +49,8 @@ namespace Contorio
             string selectCategory = "logic";
 
             bool nameOrCount = true;
+
+            bool godMode = false;
 
             int researchMenuSelectedItemList = 0; //1-4
             //1 Research
@@ -172,11 +176,12 @@ namespace Contorio
                 15,
                 visible: false
             );
-            Label labelCountResource = new Label("Count: 0", ConsoleColor.White, new Point(45, 2), visible: false);
+            Label labelCountResource = new Label("Count: 0", ConsoleColor.White, new Point(45, 1), visible: false);
+            Label labelTransfer = new Label("transfer: ", ConsoleColor.White, new Point(45, 2), visible: false);
             ItemList itemListResourcesToPlayerCount = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
-                new Point(45, 3),
+                new Point(55, 2),
                 1,
                 visible: false
             );
@@ -184,6 +189,7 @@ namespace Contorio
             {
                 itemListResourcesToPlayerCount.AddItem("" + i);
             }
+            Label labelPreesEToTransfer = new Label("Prees E to transfer", ConsoleColor.White, new Point(45, 3), visible: false);
 
             //F3
             Label labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
@@ -226,7 +232,9 @@ namespace Contorio
             _worldScene.AddSprite(labelResourcesToPlayer);
             _worldScene.AddSprite(itemListResourcesToPlayer);
             _worldScene.AddSprite(labelCountResource);
+            _worldScene.AddSprite(labelTransfer);
             _worldScene.AddSprite(itemListResourcesToPlayerCount);
+            _worldScene.AddSprite(labelPreesEToTransfer);
 
             _worldScene.AddSprite(labelFPS);
 
@@ -300,7 +308,10 @@ namespace Contorio
                 labelResourcesToPlayer.Visible = visible;
                 itemListResourcesToPlayer.Visible = visible;
                 labelCountResource.Visible = visible;
+                labelTransfer.Visible = visible;
                 itemListResourcesToPlayerCount.Visible = visible;
+                labelPreesEToTransfer.Visible = visible;
+                labelPlayerResources.Visible = visible;
             }
 
             Stopwatch sw = new Stopwatch();
@@ -329,6 +340,9 @@ namespace Contorio
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
                             break;
+                        case ConsoleKey.G:
+                            godMode = !godMode;
+                            break;
                         case ConsoleKey.W:
                             player.Coord.Y -= 1;
                             break;
@@ -343,17 +357,56 @@ namespace Contorio
                             break;
                     }
 
+                    //Building
                     if (buildingMode)
                     {
                         switch (keyInfo.Key)
                         {
                             case ConsoleKey.Enter:
-                                world.Plantes[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
-                                tileMap.SetCell(1, player.Coord, resourceManager.TileIds[selectBlock]);
+                                if (godMode)
+                                {
+                                    world.Plantes[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
+                                    tileMap.SetCell(1, player.Coord, resourceManager.TileIds[selectBlock]);
+                                    break;
+                                }
+
+                                bool ok = true;
+                                foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
+                                {
+                                    if (player.Resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
+                                    {
+                                        ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough " + resource.Key, ConsoleColor.DarkRed);
+                                        ok = false;
+                                        break;
+                                    }
+                                }
+                                if (ok)
+                                {
+                                    foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
+                                    {
+                                        player.Resources[resource.Key] -= resource.Value;
+                                    }
+                                    world.Plantes[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
+                                    tileMap.SetCell(1, player.Coord, resourceManager.TileIds[selectBlock]);
+                                }
                                 break;
                             case ConsoleKey.E:
-                                world.Plantes[player.Planet].RemoveBlock(player.Coord);
-                                tileMap.RemoveCell(1, player.Coord);
+                                if (godMode)
+                                {
+                                    world.Plantes[player.Planet].RemoveBlock(player.Coord);
+                                    tileMap.RemoveCell(1, player.Coord);
+                                    break;
+                                }
+
+                                if (world.Plantes[player.Planet].Blocks.GetValueOrDefault(player.Coord, null) != null)
+                                {
+                                    foreach (var resource in resourceManager.Blocks[world.Plantes[player.Planet].Blocks[player.Coord].Name].Cost)
+                                    {
+                                        player.Resources[resource.Key] = player.Resources.GetValueOrDefault(resource.Key, 0) + resource.Value;
+                                    }
+                                    world.Plantes[player.Planet].RemoveBlock(player.Coord);
+                                    tileMap.RemoveCell(1, player.Coord);
+                                }
                                 break;
                             case ConsoleKey.DownArrow:
                                 if (categoryOrBlock)
@@ -410,6 +463,7 @@ namespace Contorio
                         }
                     }
 
+                    //Planet
                     if (!buildingMode && !researchMenu && !TAB)
                     {
                         switch (keyInfo.Key)
@@ -474,9 +528,18 @@ namespace Contorio
                                 itemListResourcesToPlayer.SelectedItemColor = ConsoleColor.Blue;
                                 itemListResourcesToPlayerCount.SelectedItemColor = ConsoleColor.DarkBlue;
                                 break;
+                            case ConsoleKey.E:
+                                int count = int.Parse(itemListResourcesToPlayerCount.SelectedItem);
+                                if (world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] >= count)
+                                {
+                                    world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] -= count;
+                                    player.Resources[itemListResourcesToPlayer.SelectedItem] = player.Resources.GetValueOrDefault(itemListResourcesToPlayer.SelectedItem, 0) + count;
+                                }
+                                break;
                         }
                     }
 
+                    //ResearchMenu
                     if (researchMenu && !TAB)
                     {
                         switch (keyInfo.Key)
