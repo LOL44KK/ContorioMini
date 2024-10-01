@@ -3,11 +3,6 @@ using Contorio.Engine.Widgets;
 using System.Diagnostics;
 using System.Drawing;
 
-//НА потом
-//Доделать выживание(чтобы тратились рескрсы при стройке)
-//
-//
-//
 
 namespace Contorio
 {
@@ -50,7 +45,7 @@ namespace Contorio
 
             bool nameOrCount = true;
 
-            bool godMode = false;
+            bool godMode = true;
 
             int researchMenuSelectedItemList = 0; //1-4
             //1 Research
