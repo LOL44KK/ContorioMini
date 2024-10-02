@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace Contorio
 {
@@ -10,12 +11,14 @@ namespace Contorio
         private Dictionary<string, int> _resources;
         private int _energy;
 
-        public IReadOnlyDictionary<Point, BlockState> Blocks
+        [JsonConverter(typeof(PointDictionaryConverter<BlockState>))]
+        public Dictionary<Point, BlockState> Blocks
         {
             get { return _blocks; }
         }
 
-        public IReadOnlyDictionary<Point, GroundState> Ground
+        [JsonConverter(typeof(PointDictionaryConverter<GroundState>))]
+        public Dictionary<Point, GroundState> Ground
         {
             get { return _ground; }
         }

@@ -29,7 +29,7 @@ namespace Contorio
 
         public void Handle()
         {
-            foreach (Planet planet in _world.Plantes)
+            foreach (Planet planet in _world.Planets)
             {
                 foreach (var pair in planet.Blocks)
                 {

@@ -5,7 +5,7 @@
         private List<Planet> _planets;
         private Dictionary<string, int> _tokens;
 
-        public List<Planet> Plantes
+        public List<Planet> Planets
         {
             get { return _planets; }
         }

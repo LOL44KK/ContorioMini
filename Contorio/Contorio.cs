@@ -235,7 +235,7 @@ namespace Contorio
 
             _worldScene.AddSprite(labelMessage);
 
-            loadMap(tileMap, world.Plantes[player.Planet]);
+            loadMap(tileMap, world.Planets[player.Planet]);
             UpdatePlanetList(itemListPlanetList, world);
             UpdateBlockCategory(researchSystem, itemListBlockCategory);
             UpdateBlockList(researchSystem, itemListBlockList, itemListBlockCategory.SelectedItem);
@@ -360,7 +360,7 @@ namespace Contorio
                             case ConsoleKey.Enter:
                                 if (godMode)
                                 {
-                                    world.Plantes[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
+                                    world.Planets[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
                                     tileMap.SetCell(1, player.Coord, resourceManager.TileIds[selectBlock]);
                                     break;
                                 }
@@ -381,25 +381,25 @@ namespace Contorio
                                     {
                                         player.Resources[resource.Key] -= resource.Value;
                                     }
-                                    world.Plantes[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
+                                    world.Planets[player.Planet].SetBlock(player.Coord, resourceManager.Blocks[selectBlock]);
                                     tileMap.SetCell(1, player.Coord, resourceManager.TileIds[selectBlock]);
                                 }
                                 break;
                             case ConsoleKey.E:
                                 if (godMode)
                                 {
-                                    world.Plantes[player.Planet].RemoveBlock(player.Coord);
+                                    world.Planets[player.Planet].RemoveBlock(player.Coord);
                                     tileMap.RemoveCell(1, player.Coord);
                                     break;
                                 }
 
-                                if (world.Plantes[player.Planet].Blocks.GetValueOrDefault(player.Coord, null) != null)
+                                if (world.Planets[player.Planet].Blocks.GetValueOrDefault(player.Coord, null) != null)
                                 {
-                                    foreach (var resource in resourceManager.Blocks[world.Plantes[player.Planet].Blocks[player.Coord].Name].Cost)
+                                    foreach (var resource in resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Cost)
                                     {
                                         player.Resources[resource.Key] = player.Resources.GetValueOrDefault(resource.Key, 0) + resource.Value;
                                     }
-                                    world.Plantes[player.Planet].RemoveBlock(player.Coord);
+                                    world.Planets[player.Planet].RemoveBlock(player.Coord);
                                     tileMap.RemoveCell(1, player.Coord);
                                 }
                                 break;
@@ -467,15 +467,15 @@ namespace Contorio
                                 itemListPlanetList.NextItem();
                                 player.Planet = itemListPlanetList.SelectedIndex;
                                 player.Coord = new Point(15, 15);
-                                loadMap(tileMap, world.Plantes[player.Planet]);
-                                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
+                                loadMap(tileMap, world.Planets[player.Planet]);
+                                UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
                                 break;
                             case ConsoleKey.UpArrow:
                                 itemListPlanetList.PreviousItem();
                                 player.Planet = itemListPlanetList.SelectedIndex;
                                 player.Coord = new Point(15, 15);
-                                loadMap(tileMap, world.Plantes[player.Planet]);
-                                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
+                                loadMap(tileMap, world.Planets[player.Planet]);
+                                UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
                                 break;
                         }
                     }
@@ -525,9 +525,9 @@ namespace Contorio
                                 break;
                             case ConsoleKey.E:
                                 int count = int.Parse(itemListResourcesToPlayerCount.SelectedItem);
-                                if (world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] >= count)
+                                if (world.Planets[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] >= count)
                                 {
-                                    world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] -= count;
+                                    world.Planets[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem] -= count;
                                     player.Resources[itemListResourcesToPlayer.SelectedItem] = player.Resources.GetValueOrDefault(itemListResourcesToPlayer.SelectedItem, 0) + count;
                                 }
                                 break;
@@ -690,7 +690,7 @@ namespace Contorio
                                 int cost = CalculateCostSearchPlanet(int.Parse(itemListPlanetSize.SelectedItem), oreChance);
                                 if (world.Tokens.GetValueOrDefault("PL", 0) >= cost)
                                 {
-                                    world.Plantes.Add(new Planet(int.Parse(itemListPlanetSize.SelectedItem), oreChance));
+                                    world.Planets.Add(new Planet(int.Parse(itemListPlanetSize.SelectedItem), oreChance));
                                     UpdatePlanetList(itemListPlanetList, world);
                                     world.Tokens["PL"] -= cost;
                                 }
@@ -705,18 +705,18 @@ namespace Contorio
 
                 tileMap.UpdatePixels(player.Coord);
                 labelPlayerCoord.Text = player.Coord.X + "|" + player.Coord.Y;
-                UpdatePlanetInfo(labelPlanetInfo, world.Plantes[player.Planet]);
+                UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
                 UpdatePlayerResourcesInfo(labelPlayerResources, player);
                 
-                if (world.Plantes[player.Planet].Ground.ContainsKey(player.Coord))
+                if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
                 {
-                    if (world.Plantes[player.Planet].Blocks.ContainsKey(player.Coord))
+                    if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
                     {
-                        blockPlayerCoord.Pixels = resourceManager.Blocks[world.Plantes[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
+                        blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
                     }
                     else
                     {
-                        blockPlayerCoord.Pixels = resourceManager.Grounds[world.Plantes[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
+                        blockPlayerCoord.Pixels = resourceManager.Grounds[world.Planets[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
                     }
                 }
 
@@ -728,10 +728,10 @@ namespace Contorio
 
                 if (TAB)
                 {
-                    UpdateResourcesToPlayer(itemListResourcesToPlayer, world.Plantes[player.Planet]);
+                    UpdateResourcesToPlayer(itemListResourcesToPlayer, world.Planets[player.Planet]);
                     if (itemListResourcesToPlayer.Items.Count > 0)
                     {
-                        labelCountResource.Text = "Count: " + world.Plantes[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem];
+                        labelCountResource.Text = "Count: " + world.Planets[player.Planet].Resources[itemListResourcesToPlayer.SelectedItem];
                     }
                 }
 
@@ -801,7 +801,7 @@ namespace Contorio
         static void UpdatePlanetList(ItemList planetList, World world)
         {
             planetList.ClearItems();
-            foreach (var planet in world.Plantes)
+            foreach (var planet in world.Planets)
             {
                 planetList.AddItem(planet.Name);
             }
