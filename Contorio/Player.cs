@@ -2,17 +2,41 @@
 
 namespace Contorio
 {
-    public struct Player
+    public class Player
     {
-        public Point Coord;
-        public int Planet;
-        public Dictionary<string, int> Resources;
+        private Point _coord;
+        private int _planet;
+        private Dictionary<string, int> _resources;
+
+        public Point Coord 
+        { 
+            get {  return _coord; }
+            set { _coord = value; }
+        }
+
+        public int Planet 
+        { 
+            get { return _planet; }
+            set { _planet = value; }
+        }
+
+        public Dictionary<string, int> Resources 
+        {
+            get {  return _resources; }
+            set { _resources = value; }
+        }
 
         public Player()
         {
-            Coord = new Point(0, 0);
-            Planet = 0;
-            Resources = new Dictionary<string, int>();
+            _coord = new Point(0, 0);
+            _planet = 0;
+            _resources = new Dictionary<string, int>();
+        }
+
+        public void Move(int x, int y)
+        {
+            _coord.X += x;
+            _coord.Y += y;
         }
     }
 }

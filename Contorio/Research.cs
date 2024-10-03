@@ -10,18 +10,25 @@
         public string Name
         {
             get { return _name; }
+            init { _name = value; }
         }
+
         public string Category
         {
             get { return _category; }
+            init { _category = value; }
         }
+
         public string? RequiredResearch
         {
             get { return _requiredResearch; }
+            init { _requiredResearch = value; }
         }
+
         public Dictionary<string, int> ResearchCost
         {
             get { return _researchCost; }
+            init { _researchCost = value; }
         }
 
         public Research(string name, string category, string requiredResearch, Dictionary<string, int> researchCost)

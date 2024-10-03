@@ -7,6 +7,11 @@ namespace Contorio
         private static JsonSerializerOptions _options = new JsonSerializerOptions
         {
             TypeInfoResolver = MyJsonContext.Default.Options.TypeInfoResolver,
+            Converters = 
+            {
+                new PointDictionaryConverter<GroundState>(),
+                new PointDictionaryConverter<BlockState>(),
+            }
         };
 
         public static void SaveWorld(string path, World world)

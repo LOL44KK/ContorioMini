@@ -2,8 +2,6 @@
 using Contorio.Engine.Widgets;
 using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.Serialization;
-using System.Text.Json;
 
 namespace Contorio
 {
@@ -29,16 +27,10 @@ namespace Contorio
         public void WorldScene(World world)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
-            
-            List<Research> tempResearcheList = new List<Research>();
-            foreach (var item in resourceManager.Blocks)
-            {
-                tempResearcheList.Add(item.Value.Research);
-            }
-            ResearchSystem researchSystem = new ResearchSystem(tempResearcheList);
 
+            Player player = world.Player;
             WorldHandler worldHandler = new WorldHandler(world);
-            Player player = new Player();
+            ResearchSystem researchSystem = world.ResearchSystem;
 
             bool researchMenu = false;
             bool TAB = false;
@@ -60,6 +52,7 @@ namespace Contorio
             Dictionary<string, int> oreChance = new Dictionary<string, int>();
 
             double messageTimeAccumulator = 0;
+
 
             //Map
             TileMap tileMap = new TileMap(
@@ -240,21 +233,6 @@ namespace Contorio
 
             worldScene.AddSprite(labelMessage);
 
-            loadMap(tileMap, world.Planets[player.Planet]);
-            UpdatePlanetList(itemListPlanetList, world);
-            UpdateBlockCategory(researchSystem, itemListBlockCategory);
-            UpdateBlockList(researchSystem, itemListBlockList, itemListBlockCategory.SelectedItem);
-            UpdateResearchList(researchSystem, itemListResearchList);
-            UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
-            player.Coord = new Point(15, 15);
-
-            selectCategory = itemListBlockCategory.SelectedItem;
-            selectBlock = itemListBlockList.SelectedItem;
-            blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
-
-            UpdateCostBuilding(labelCostBuilding, selectBlock);
-
-
             void SetVisibleMap(bool visible)
             {
                 tileMap.Visible = visible;
@@ -314,6 +292,19 @@ namespace Contorio
                 labelPlayerResources.Visible = visible;
             }
 
+            loadMap(tileMap, world.Planets[player.Planet]);
+            UpdatePlanetList(itemListPlanetList, world);
+            UpdateBlockCategory(researchSystem, itemListBlockCategory);
+            UpdateBlockList(researchSystem, itemListBlockList, itemListBlockCategory.SelectedItem);
+            UpdateResearchList(researchSystem, itemListResearchList);
+            UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost);
+
+            selectCategory = itemListBlockCategory.SelectedItem;
+            selectBlock = itemListBlockList.SelectedItem;
+            blockPlayerSelectedBlock.Pixels = resourceManager.Blocks[selectBlock].Sprite.Pixels;
+
+            UpdateCostBuilding(labelCostBuilding, selectBlock);
+
             Stopwatch sw = new Stopwatch();
             
             while (true)
@@ -344,16 +335,16 @@ namespace Contorio
                             godMode = !godMode;
                             break;
                         case ConsoleKey.W:
-                            player.Coord.Y -= 1;
+                            player.Move(0, -1);
                             break;
                         case ConsoleKey.S:
-                            player.Coord.Y += 1;
+                            player.Move(0, 1);
                             break;
                         case ConsoleKey.A:
-                            player.Coord.X -= 1;
+                            player.Move(-1, 0);
                             break;
                         case ConsoleKey.D:
-                            player.Coord.X += 1;
+                            player.Move(1, 0);
                             break;
                         case ConsoleKey.H:
                             SaveManager.SaveWorld("save.json", world);

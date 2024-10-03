@@ -22,7 +22,7 @@ namespace Contorio
                     return dictionary;
                 }
 
-                string key = reader.GetString();
+                string? key = reader.GetString();
                 string[] parts = key.Split(',');
                 Point point = new Point(int.Parse(parts[0]), int.Parse(parts[1]));
 
@@ -51,8 +51,12 @@ namespace Contorio
         }
     }
 
+    [JsonSerializable(typeof(Point))]
     [JsonSerializable(typeof(World))]
     [JsonSerializable(typeof(Planet))]
+    [JsonSerializable(typeof(Player))]
+    [JsonSerializable(typeof(Research))]
+    [JsonSerializable(typeof(ResearchSystem))]
     [JsonSerializable(typeof(Dictionary<Point, BlockState>))]
     [JsonSerializable(typeof(Dictionary<Point, GroundState>))]
     public partial class MyJsonContext : JsonSerializerContext

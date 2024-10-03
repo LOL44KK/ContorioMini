@@ -5,13 +5,22 @@
         private Dictionary<string, Research> _openResearch;
         private Dictionary<string, Research> _closeResearch;
 
-        public IReadOnlyDictionary<string, Research> OpenResearch
+        public Dictionary<string, Research> OpenResearch
         {
             get { return _openResearch; }
+            init { _openResearch = value; }
         }
-        public IReadOnlyDictionary<string, Research> CloseResearch
+
+        public Dictionary<string, Research> CloseResearch
         {
             get { return _closeResearch; }
+            init { _closeResearch = value; }
+        }
+
+        public ResearchSystem()
+        {
+            _openResearch = new Dictionary<string, Research>();
+            _closeResearch = new Dictionary<string, Research>();
         }
 
         public ResearchSystem(List<Research> closeResearch, List<Research>? openResearch=null)
