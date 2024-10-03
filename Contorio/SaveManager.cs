@@ -11,7 +11,8 @@ namespace Contorio
             {
                 new PointDictionaryConverter<GroundState>(),
                 new PointDictionaryConverter<BlockState>(),
-            }
+            },
+            IncludeFields = true,
         };
 
         public static void SaveWorld(string path, World world)

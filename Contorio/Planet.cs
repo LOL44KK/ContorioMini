@@ -179,9 +179,9 @@ namespace Contorio
                 if (ResourceManager.Instance.Blocks[block.Value.Name].Type == BlockType.DRILL)
                 {
                     DrillState drillState = (DrillState)block.Value;
-                    if (type == BlockType.DRONE_STATION && drillState.DroneSation == coord)
+                    if (type == BlockType.DRONE_STATION && drillState.DroneStation == coord)
                     {
-                        drillState.DroneSation = SearchDroneStation(block.Key);
+                        drillState.DroneStation = SearchDroneStation(block.Key);
                     }
                     else if (type == BlockType.ENERGY_POINT && drillState.EnergyPoint == coord)
                     {
@@ -191,9 +191,9 @@ namespace Contorio
                 else if (ResourceManager.Instance.Blocks[block.Value.Name].Type == BlockType.FACTORY)
                 {
                     FactoryState factoryState = (FactoryState)block.Value;
-                    if (type == BlockType.DRONE_STATION && factoryState.DroneSation == coord)
+                    if (type == BlockType.DRONE_STATION && factoryState.DroneStation == coord)
                     {
-                        factoryState.DroneSation = SearchDroneStation(block.Key);
+                        factoryState.DroneStation = SearchDroneStation(block.Key);
                     }
                     else if (type == BlockType.ENERGY_POINT && factoryState.EnergyPoint == coord)
                     {
@@ -296,7 +296,7 @@ namespace Contorio
                         DrillState drillState = (DrillState)block.Value;
                         if (type == BlockType.DRONE_STATION)
                         {
-                            drillState.DroneSation = coord;
+                            drillState.DroneStation = coord;
                         }
                         else if (type == BlockType.ENERGY_POINT)
                         {
@@ -308,7 +308,7 @@ namespace Contorio
                         FactoryState factoryState = (FactoryState)block.Value;
                         if (type == BlockType.DRONE_STATION)
                         {
-                            factoryState.DroneSation = coord;
+                            factoryState.DroneStation = coord;
                         }
                         else if (type == BlockType.ENERGY_POINT)
                         {

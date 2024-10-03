@@ -55,7 +55,7 @@ namespace Contorio
             }
 
             //Drill
-            else if (block.Type == BlockType.DRILL && ((DrillState)blockState).DroneSation != null && ((DrillState)blockState).EnergyPoint != null)
+            else if (block.Type == BlockType.DRILL && ((DrillState)blockState).DroneStation != null && ((DrillState)blockState).EnergyPoint != null)
             {
                 GroundState? groundState;
                 if (planet.Ground.TryGetValue(blockCoord, out groundState))
@@ -70,7 +70,7 @@ namespace Contorio
             }
 
             //Factory
-            else if (block.Type == BlockType.FACTORY && ((FactoryState)blockState).DroneSation != null && ((FactoryState)blockState).EnergyPoint != null)
+            else if (block.Type == BlockType.FACTORY && ((FactoryState)blockState).DroneStation != null && ((FactoryState)blockState).EnergyPoint != null)
             {
                 if (planet.Energy < ((Factory)block).EnergyInput)
                 {

@@ -5,9 +5,9 @@ namespace Contorio
 {
 
     [JsonDerivedType(typeof(DrillState), "DrillState")]
-    [JsonDerivedType(typeof(SolarPanelState), "SolarPanelState")]
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]
+    [JsonDerivedType(typeof(SolarPanelState), "SolarPanelState")]
     public class BlockState
     {
         private string _name;
@@ -25,16 +25,16 @@ namespace Contorio
         private Point? _droneStation;
         private Point? _energyPoint;
 
-        public Point? DroneSation
-        {
-            get { return _droneStation; }
-            set { _droneStation = value; }
-        }
-
         public Point? EnergyPoint
         {
             get { return _energyPoint; }
             set { _energyPoint = value; }
+        }
+
+        public Point? DroneStation
+        {
+            get { return _droneStation; }
+            set { _droneStation = value; }
         }
 
         public DrillState(string name, Point? droneStation = null, Point? energyPoint = null) : base(name)
@@ -65,7 +65,7 @@ namespace Contorio
         private Point? _droneStation;
         private Point? _energyPoint;
 
-        public Point? DroneSation
+        public Point? DroneStation
         {
             get { return _droneStation; }
             set { _droneStation = value; }
