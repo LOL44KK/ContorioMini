@@ -1,7 +1,13 @@
 ﻿using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace Contorio
 {
+
+    [JsonDerivedType(typeof(DrillState), "DrillState")]
+    [JsonDerivedType(typeof(SolarPanelState), "SolarPanelState")]
+    [JsonDerivedType(typeof(FactoryState), "FactoryState")]
+    [JsonDerivedType(typeof(CryptorState), "CryptorState")]
     public class BlockState
     {
         private string _name;

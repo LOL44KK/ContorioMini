@@ -22,15 +22,13 @@ namespace Contorio
                     return dictionary;
                 }
 
-                // Читаем ключ как строку и преобразуем в Point
                 string key = reader.GetString();
                 string[] parts = key.Split(',');
                 Point point = new Point(int.Parse(parts[0]), int.Parse(parts[1]));
 
-                // Читаем значение
                 reader.Read();
                 TValue value = JsonSerializer.Deserialize<TValue>(ref reader, options);
-
+                
                 dictionary[point] = value;
             }
 
@@ -43,7 +41,6 @@ namespace Contorio
 
             foreach (var kvp in value)
             {
-                // Преобразуем Point в строку "x,y"
                 string key = $"{kvp.Key.X},{kvp.Key.Y}";
                 writer.WritePropertyName(key);
 

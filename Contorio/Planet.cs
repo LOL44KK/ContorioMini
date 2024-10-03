@@ -11,27 +11,30 @@ namespace Contorio
         private Dictionary<string, int> _resources;
         private int _energy;
 
+        public string Name
+        {
+            get { return _name; }
+            init { _name = value; }
+        }
+
         [JsonConverter(typeof(PointDictionaryConverter<BlockState>))]
         public Dictionary<Point, BlockState> Blocks
         {
             get { return _blocks; }
+            init { _blocks = value; }
         }
 
         [JsonConverter(typeof(PointDictionaryConverter<GroundState>))]
         public Dictionary<Point, GroundState> Ground
         {
             get { return _ground; }
+            init { _ground = value; }
         }
 
         public Dictionary<string, int> Resources
         {
             get { return _resources; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
+            set { _resources = value; }
         }
 
         public int Energy

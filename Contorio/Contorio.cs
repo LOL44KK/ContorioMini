@@ -2,25 +2,31 @@
 using Contorio.Engine.Widgets;
 using System.Diagnostics;
 using System.Drawing;
-
+using System.Runtime.Serialization;
+using System.Text.Json;
 
 namespace Contorio
 {
     public class Contorio
     {
-        private Engine.Engine _engine;
-        private Scene _worldScene;
-
-
+        private Engine.Engine engine;
+        private Scene worldScene;
 
         public Contorio()
         {
-            _engine = new Engine.Engine(120, 30);
-            _worldScene = new Scene();
-            _engine.SetScene(_worldScene);
+            engine = new Engine.Engine(120, 30);
+            worldScene = new Scene();
+            engine.SetScene(worldScene);
         }
 
         public void Run()
+        {
+            //World world = new World();
+            //SaveManager.SaveWorld("save.json", world);
+            WorldScene(SaveManager.LoadWorld("save.json") ?? new World());
+        }
+
+        public void WorldScene(World world)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
             
@@ -31,7 +37,6 @@ namespace Contorio
             }
             ResearchSystem researchSystem = new ResearchSystem(tempResearcheList);
 
-            World world = new World();
             WorldHandler worldHandler = new WorldHandler(world);
             Player player = new Player();
 
@@ -193,47 +198,47 @@ namespace Contorio
             Label labelMessage = new Label("MESSAGE", ConsoleColor.White, new Point(60, 29), visible: false);
 
 
-            _worldScene.AddSprite(tileMap);
+            worldScene.AddSprite(tileMap);
 
-            _worldScene.AddSprite(labelPlayerCoord);
-            _worldScene.AddSprite(blockPlayerCoord);
-            _worldScene.AddSprite(labelPlayerResources);
+            worldScene.AddSprite(labelPlayerCoord);
+            worldScene.AddSprite(blockPlayerCoord);
+            worldScene.AddSprite(labelPlayerResources);
 
-            _worldScene.AddSprite(blockPlayerSelectedBlock);
-            _worldScene.AddSprite(itemListBlockCategory);
-            _worldScene.AddSprite(itemListBlockList);
-            _worldScene.AddSprite(labelCostBuilding);
+            worldScene.AddSprite(blockPlayerSelectedBlock);
+            worldScene.AddSprite(itemListBlockCategory);
+            worldScene.AddSprite(itemListBlockList);
+            worldScene.AddSprite(labelCostBuilding);
 
-            _worldScene.AddSprite(labelPlanetInfo);
-            _worldScene.AddSprite(labelPlanetsLabel);
-            _worldScene.AddSprite(itemListPlanetList);
+            worldScene.AddSprite(labelPlanetInfo);
+            worldScene.AddSprite(labelPlanetsLabel);
+            worldScene.AddSprite(itemListPlanetList);
 
-            _worldScene.AddSprite(labelTokensInfo);
-            _worldScene.AddSprite(labelResearch);
-            _worldScene.AddSprite(itemListResearchList);
-            _worldScene.AddSprite(labelResearchCost);
-            _worldScene.AddSprite(labelEnterToResearch);
-            _worldScene.AddSprite(labelSearchPlanet);
-            _worldScene.AddSprite(itemListPlanetSize);
-            _worldScene.AddSprite(labelPlanetSize);
-            _worldScene.AddSprite(labelOreName);
-            _worldScene.AddSprite(itemListOreName);
-            _worldScene.AddSprite(labelOreChance);
-            _worldScene.AddSprite(itemListOreChance);
-            _worldScene.AddSprite(labelCostSearchPlanet);
-            _worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
-            _worldScene.AddSprite(labelPressGtoSearchPlanet);
+            worldScene.AddSprite(labelTokensInfo);
+            worldScene.AddSprite(labelResearch);
+            worldScene.AddSprite(itemListResearchList);
+            worldScene.AddSprite(labelResearchCost);
+            worldScene.AddSprite(labelEnterToResearch);
+            worldScene.AddSprite(labelSearchPlanet);
+            worldScene.AddSprite(itemListPlanetSize);
+            worldScene.AddSprite(labelPlanetSize);
+            worldScene.AddSprite(labelOreName);
+            worldScene.AddSprite(itemListOreName);
+            worldScene.AddSprite(labelOreChance);
+            worldScene.AddSprite(itemListOreChance);
+            worldScene.AddSprite(labelCostSearchPlanet);
+            worldScene.AddSprite(labelPalkaPeredCostSearchPlanet);
+            worldScene.AddSprite(labelPressGtoSearchPlanet);
 
-            _worldScene.AddSprite(labelResourcesToPlayer);
-            _worldScene.AddSprite(itemListResourcesToPlayer);
-            _worldScene.AddSprite(labelCountResource);
-            _worldScene.AddSprite(labelTransfer);
-            _worldScene.AddSprite(itemListResourcesToPlayerCount);
-            _worldScene.AddSprite(labelPreesEToTransfer);
+            worldScene.AddSprite(labelResourcesToPlayer);
+            worldScene.AddSprite(itemListResourcesToPlayer);
+            worldScene.AddSprite(labelCountResource);
+            worldScene.AddSprite(labelTransfer);
+            worldScene.AddSprite(itemListResourcesToPlayerCount);
+            worldScene.AddSprite(labelPreesEToTransfer);
 
-            _worldScene.AddSprite(labelFPS);
+            worldScene.AddSprite(labelFPS);
 
-            _worldScene.AddSprite(labelMessage);
+            worldScene.AddSprite(labelMessage);
 
             loadMap(tileMap, world.Planets[player.Planet]);
             UpdatePlanetList(itemListPlanetList, world);
@@ -349,6 +354,9 @@ namespace Contorio
                             break;
                         case ConsoleKey.D:
                             player.Coord.X += 1;
+                            break;
+                        case ConsoleKey.H:
+                            SaveManager.SaveWorld("save.json", world);
                             break;
                     }
 
@@ -745,7 +753,7 @@ namespace Contorio
                     }
                 }
 
-                _engine.Render();
+                engine.Render();
 
                 labelFPS.Text = "FPS: " + ((int)(1000 / sw.Elapsed.TotalMilliseconds)).ToString();
             }

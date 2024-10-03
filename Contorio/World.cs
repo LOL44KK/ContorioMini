@@ -4,10 +4,11 @@
     {
         private List<Planet> _planets;
         private Dictionary<string, int> _tokens;
-
+        
         public List<Planet> Planets
         {
             get { return _planets; }
+            init { _planets = value; }
         }
 
         public Dictionary<string, int> Tokens
