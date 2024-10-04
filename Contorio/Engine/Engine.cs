@@ -16,6 +16,18 @@ namespace Contorio.Engine
             get { return _scene; }
         }
 
+        public int ScreenWidth
+        {
+            get { return _screenWidth; }
+            set { _screenWidth = value; }
+        }
+
+        public int ScreenHeight
+        {
+            get { return _screenHeight; }
+            set { _screenHeight = value; }
+        }
+
         public int FPS { get { return (int)(1000 / _ms); } }
 
         public Engine(int screenWidth, int screenHeight)
@@ -49,6 +61,7 @@ namespace Contorio.Engine
             {
                 stopwatch.Restart();
 
+                InputManager.Instance.Tick();
                 Render();
 
                 _ms = stopwatch.Elapsed.TotalMilliseconds;

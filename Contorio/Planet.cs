@@ -5,6 +5,7 @@ namespace Contorio
     public class Planet
     {
         private string _name;
+        private int _size;
         private Dictionary<Point, BlockState> _blocks;
         private Dictionary<Point, GroundState> _ground;
         private Dictionary<string, int> _resources;
@@ -14,6 +15,12 @@ namespace Contorio
         {
             get { return _name; }
             init { _name = value; }
+        }
+
+        public int Size
+        {
+            get { return _size; }
+            init { _size = value; }
         }
 
         public Dictionary<Point, BlockState> Blocks
@@ -46,6 +53,7 @@ namespace Contorio
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
             _name = GenerateName();
+            _size = 33;
 
             for (int y = 0; y < 33; y++)
             {
@@ -77,6 +85,7 @@ namespace Contorio
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
             _name = GenerateName();
+            _size = size;
 
             for (int y = 0; y < size; y++)
             {
