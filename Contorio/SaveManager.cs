@@ -20,9 +20,14 @@ namespace Contorio
             File.WriteAllText(path, JsonSerializer.Serialize(world, _options));
         }
 
-        public static World? LoadWorld(string path)
+        public static World LoadWorld(string path)
         {
-            return JsonSerializer.Deserialize<World>(File.ReadAllText(path), _options);
+            World? world = JsonSerializer.Deserialize<World>(File.ReadAllText(path), _options);
+            if (world == null)
+            {
+                throw new Exception("KAK?");
+            }
+            return world;
         }
     }
 }

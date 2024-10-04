@@ -4,9 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 
 
-
-
-
 namespace Contorio
 {
     public class Contorio
@@ -26,20 +23,26 @@ namespace Contorio
         public void Run()
         {
             engine.SetScene(menuScene);
-            int choice = MenuScene();
+            string choice = MenuScene();
 
             switch (choice)
             {
-                case -1: //Quit
+                case null:  //quit
                     return;
-                case 1:  //Play
+                case "new": //new game
+                    World world = new World();
+                    SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                     engine.SetScene(worldScene);
-                    WorldScene(SaveManager.LoadWorld("save.json"));
+                    WorldScene(world);
+                    break;
+                default:    //load game
+                    engine.SetScene(worldScene);
+                    WorldScene(SaveManager.LoadWorld(choice));
                     break;
             }
         }
 
-        public int MenuScene()
+        public string MenuScene()
         {
             Sprite contorioSprite = new Sprite(
                 pixels: new Pixel[6, 70]
@@ -53,6 +56,7 @@ namespace Contorio
                 }
             );
             contorioSprite.Position = new Point(engine.ScreenWidth / 2 - (contorioSprite.Width / 2), 0);
+            
             ItemList itemListMenu = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkGreen,
@@ -63,8 +67,17 @@ namespace Contorio
             itemListMenu.AddItem("LOAD GAME");
             itemListMenu.AddItem("QUIT");
 
+            ItemList itemListSavesList = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.DarkBlue,
+                new Point(55, 13),
+                10,
+                visible:false
+            );
+
             menuScene.AddSprite(contorioSprite);
             menuScene.AddSprite(itemListMenu);
+            menuScene.AddSprite(itemListSavesList);
 
             while (true)
             {
@@ -75,28 +88,61 @@ namespace Contorio
                     switch (keyInfo.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            itemListMenu.PreviousItem();
+                            if (itemListMenu.Visible)
+                            {
+                                itemListMenu.PreviousItem();
+                            }
+                            else if (itemListSavesList.Visible)
+                            {
+                                itemListSavesList.PreviousItem();
+                            }
                             break;
                         case ConsoleKey.DownArrow:
-                            itemListMenu.NextItem();
+                            if (itemListMenu.Visible)
+                            {
+                                itemListMenu.NextItem();
+                            }
+                            else if (itemListSavesList.Visible)
+                            {
+                                itemListSavesList.NextItem();
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            itemListMenu.Visible = true;
+                            itemListSavesList.Visible = false;
                             break;
                         case ConsoleKey.Enter:
-                            if (itemListMenu.SelectedItem == "NEW GAME")
-                            {
-                                return 1;
-                            }
-                            if (itemListMenu.SelectedItem == "LAOD GAME")
-                            {
-                                return 1;
-                            }
                             if (itemListMenu.SelectedItem == "QUIT")
                             {
-                                return -1;
+                                return null;
+                            }
+                            else if (itemListMenu.SelectedItem == "NEW GAME")
+                            {
+                                return "new";
+                            }
+                            else if (itemListMenu.SelectedItem == "LOAD GAME")
+                            {
+                                if (itemListSavesList.Visible)
+                                {
+                                    return itemListSavesList.SelectedItem;
+                                }
+                                else if (itemListMenu.Visible)
+                                {
+                                    itemListMenu.Visible = false;
+                                    itemListSavesList.Visible = true;
+                                    
+                                    itemListSavesList.ClearItems();
+                                    string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.ctsave");
+                                    foreach (string file in files)
+                                    {
+                                        itemListSavesList.AddItem(Path.GetFileName(file));
+                                    }
+                                    itemListSavesList.Position = new Point((engine.ScreenWidth / 2) - (itemListSavesList.Width / 2), 13);
+                                }
                             }
                             break;
                     }
                 }
-
                 engine.Render();
             }
         }
@@ -425,7 +471,7 @@ namespace Contorio
                             player.Move(1, 0);
                             break;
                         case ConsoleKey.H:
-                            SaveManager.SaveWorld("save.json", world);
+                            SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                             break;
                     }
 
