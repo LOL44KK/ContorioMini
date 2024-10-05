@@ -17,7 +17,6 @@ namespace Contorio
             engine = new Engine.Engine(120, 30);
             worldScene = new Scene();
             menuScene = new Scene();
-
         }
 
         public void Run()
@@ -458,25 +457,32 @@ namespace Contorio
                         case ConsoleKey.G:
                             godMode = !godMode;
                             break;
-                        case ConsoleKey.W:
-                            player.Move(0, -1);
-                            break;
-                        case ConsoleKey.S:
-                            player.Move(0, 1);
-                            break;
-                        case ConsoleKey.A:
-                            player.Move(-1, 0);
-                            break;
-                        case ConsoleKey.D:
-                            player.Move(1, 0);
-                            break;
                         case ConsoleKey.H:
                             SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                             break;
                     }
 
+                    if (tileMap.Visible)
+                    {
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.W:
+                                player.Move(0, -1);
+                                break;
+                            case ConsoleKey.S:
+                                player.Move(0, 1);
+                                break;
+                            case ConsoleKey.A:
+                                player.Move(-1, 0);
+                                break;
+                            case ConsoleKey.D:
+                                player.Move(1, 0);
+                                break;
+                        }
+                    }
+
                     //Building
-                    if (buildingMode)
+                    if (tileMap.Visible && buildingMode)
                     {
                         switch (keyInfo.Key)
                         {
