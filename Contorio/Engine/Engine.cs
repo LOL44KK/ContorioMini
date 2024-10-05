@@ -102,6 +102,7 @@ namespace Contorio.Engine
                 }
             }
 
+            ConsoleColor prevColor = Console.ForegroundColor;
             for (int y = 0; y < _screenHeight; y++)
             {
                 for (int x = 0; x < _screenWidth; x++)
@@ -111,7 +112,11 @@ namespace Contorio.Engine
                     if (currentPixel.C != previousPixel.C || currentPixel.Color != previousPixel.Color)
                     {
                         Console.SetCursorPosition(x, y);
-                        Console.ForegroundColor = currentPixel.Color;
+                        if (prevColor != currentPixel.Color)
+                        {
+                            Console.ForegroundColor = currentPixel.Color;
+                            prevColor = currentPixel.Color;
+                        }
                         Console.Write(currentPixel.C);
                     }
                 }
