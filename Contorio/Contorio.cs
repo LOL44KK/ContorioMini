@@ -466,6 +466,7 @@ namespace Contorio
                             return;
                     }
 
+                    //Map
                     if (tileMap.Visible)
                     {
                         switch (keyInfo.Key)
@@ -499,6 +500,11 @@ namespace Contorio
                                 }
 
                                 bool ok = true;
+                                if (world.Planets[player.Planet].Ground.GetValueOrDefault(player.Coord, null) == null)
+                                {
+                                    ShowMessage(labelMessage, ref messageTimeAccumulator, "No building here", ConsoleColor.DarkRed);
+                                    break;
+                                }
                                 foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
                                 {
                                     if (player.Resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
