@@ -9,40 +9,38 @@ namespace Contorio
     public class Contorio
     {
         private Engine.Engine engine;
-        private Scene worldScene;
-        private Scene menuScene;
-
         public Contorio()
         {
             engine = new Engine.Engine(120, 30);
-            worldScene = new Scene();
-            menuScene = new Scene();
         }
 
         public void Run()
         {
-            engine.SetScene(menuScene);
-            string choice = MenuScene();
-
-            switch (choice)
+            while (true)
             {
-                case null:  //quit
-                    return;
-                case "new": //new game
-                    World world = new World();
-                    SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
-                    engine.SetScene(worldScene);
-                    WorldScene(world);
-                    break;
-                default:    //load game
-                    engine.SetScene(worldScene);
-                    WorldScene(SaveManager.LoadWorld(choice));
-                    break;
+                string choice = MenuScene();
+
+                switch (choice)
+                {
+                    case null:  //quit
+                        return;
+                    case "new": //new game
+                        World world = new World();
+                        SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
+                        WorldScene(world);
+                        break;
+                    default:    //load game
+                        WorldScene(SaveManager.LoadWorld(choice));
+                        break;
+                }
             }
         }
 
         public string MenuScene()
         {
+            Scene menuScene = new Scene();
+            engine.SetScene(menuScene);
+
             Sprite contorioSprite = new Sprite(
                 pixels: new Pixel[6, 70]
                 {
@@ -148,6 +146,9 @@ namespace Contorio
 
         public void WorldScene(World world)
         {
+            Scene worldScene = new Scene();
+            engine.SetScene(worldScene);
+
             ResourceManager resourceManager = ResourceManager.Instance;
             
             Player player = world.Player;
@@ -460,6 +461,9 @@ namespace Contorio
                         case ConsoleKey.H:
                             SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                             break;
+                        case ConsoleKey.Escape:
+                            SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
+                            return;
                     }
 
                     if (tileMap.Visible)
