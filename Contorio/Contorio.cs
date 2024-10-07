@@ -8,10 +8,10 @@ namespace Contorio
 {
     public class Contorio
     {
-        private CharGraphics.Renderer engine;
+        private Renderer renderer;
         public Contorio()
         {
-            engine = new CharGraphics.Renderer(120, 30);
+            renderer = new Renderer(120, 30);
         }
 
         public void Run()
@@ -39,7 +39,7 @@ namespace Contorio
         public string MenuScene()
         {
             Scene menuScene = new Scene();
-            engine.SetScene(menuScene);
+            renderer.SetScene(menuScene);
 
             Sprite contorioSprite = new Sprite(
                 pixels: new Pixel[6, 70]
@@ -52,7 +52,7 @@ namespace Contorio
                     { new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
                 }
             );
-            contorioSprite.Position = new Point(engine.ScreenWidth / 2 - (contorioSprite.Width / 2), 0);
+            contorioSprite.Position = new Point(renderer.ScreenWidth / 2 - (contorioSprite.Width / 2), 0);
             
             ItemList itemListMenu = new ItemList(
                 ConsoleColor.White,
@@ -144,8 +144,8 @@ namespace Contorio
                                     }
 
                                     labelCountSave.Text = (itemListSavesList.SelectedIndex + 1) + "/" + savesPath.Count();
-                                    itemListSavesList.Position = new Point((engine.ScreenWidth / 2) - (itemListSavesList.Width / 2), 13);
-                                    labelCountSave.Position = new Point((engine.ScreenWidth / 2) - (itemListSavesList.Width / 2), 12);
+                                    itemListSavesList.Position = new Point((renderer.ScreenWidth / 2) - (itemListSavesList.Width / 2), 13);
+                                    labelCountSave.Position = new Point((renderer.ScreenWidth / 2) - (itemListSavesList.Width / 2), 12);
                                 }
                             }
                             break;
@@ -159,14 +159,14 @@ namespace Contorio
                 {
                     itemListMenu.SelectedItemColor = ConsoleColor.DarkGreen;
                 }
-                engine.Render();
+                renderer.Render();
             }
         }
 
         public void WorldScene(World world)
         {
             Scene worldScene = new Scene();
-            engine.SetScene(worldScene);
+            renderer.SetScene(worldScene);
 
             ResourceManager resourceManager = ResourceManager.Instance;
             
@@ -913,7 +913,7 @@ namespace Contorio
                     }
                 }
 
-                engine.Render();
+                renderer.Render();
 
                 labelFPS.Text = "FPS: " + ((int)(1000 / sw.Elapsed.TotalMilliseconds)).ToString();
             }
