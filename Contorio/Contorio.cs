@@ -537,6 +537,14 @@ namespace Contorio
                                 }
                                 if (ok)
                                 {
+                                    if (world.Planets[player.Planet].Blocks.GetValueOrDefault(player.Coord, null) != null)
+                                    {
+                                        foreach (var resource in resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Cost)
+                                        {
+                                            player.Resources[resource.Key] = player.Resources.GetValueOrDefault(resource.Key, 0) + resource.Value;
+                                        }
+                                        world.Planets[player.Planet].RemoveBlock(player.Coord);
+                                    }
                                     foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
                                     {
                                         player.Resources[resource.Key] -= resource.Value;
