@@ -388,15 +388,11 @@ namespace Contorio
                 blockPlayerSelectedBlock.Visible = mode;
                 itemListBlockList.Visible = mode;
                 itemListBlockCategory.Visible = mode;
-                labelPlayerResources.Visible = mode;
                 labelCostBuilding.Visible = mode;
             }
 
             void setVisibleResearchMenu(bool visible)
             {
-                SetBuildingMode(false);
-                SetVisibleMap(!visible);
-
                 researchMenu = visible;
                 itemListResearchList.Visible = visible;
                 labelTokensInfo.Visible = visible;
@@ -422,8 +418,6 @@ namespace Contorio
             void SetVisibleTABMenu(bool visible)
             {
                 TABmenu = visible;
-                SetBuildingMode(false);
-                SetVisibleMap(!visible);
 
                 labelResourcesToPlayer.Visible = visible;
                 itemListResourcesToPlayer.Visible = visible;
@@ -431,7 +425,6 @@ namespace Contorio
                 labelTransfer.Visible = visible;
                 itemListResourcesToPlayerCount.Visible = visible;
                 labelPreesEToTransfer.Visible = visible;
-                labelPlayerResources.Visible = visible;
             }
 
             loadMap(tileMap, world.Planets[player.Planet]);
@@ -463,13 +456,22 @@ namespace Contorio
                     switch (keyInfo.Key)
                     {
                         case ConsoleKey.B:
-                            SetBuildingMode(!buildingMode);
+                            if (!TABmenu && !researchMenu)
+                            {
+                                SetBuildingMode(!buildingMode);
+                            }
                             break;
                         case ConsoleKey.R:
                             setVisibleResearchMenu(!researchMenu);
+                            SetVisibleMap(!researchMenu);
+                            SetVisibleTABMenu(false);
+                            SetBuildingMode(false);
                             break;
                         case ConsoleKey.Tab:
                             SetVisibleTABMenu(!TABmenu);
+                            SetVisibleMap(!TABmenu);
+                            setVisibleResearchMenu(false);
+                            SetBuildingMode(false);
                             break;
                         case ConsoleKey.F3:
                             labelFPS.Visible = !labelFPS.Visible;
