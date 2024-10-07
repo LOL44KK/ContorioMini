@@ -14,7 +14,7 @@ namespace Contorio
             },
             IncludeFields = true,
         };
-
+        
         public static void SaveWorld(string path, World world)
         {
             File.WriteAllText(path, JsonSerializer.Serialize(world, _options));
