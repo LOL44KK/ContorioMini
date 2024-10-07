@@ -2,7 +2,6 @@
 
 namespace Contorio
 {
-
     public enum GroundType
     {
         BARRIER,

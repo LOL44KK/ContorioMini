@@ -1,8 +1,7 @@
-﻿using Contorio.CharGraphics;
-using Contorio.CharGraphics.Widgets;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
-
+using Contorio.CharGraphics;
+using Contorio.CharGraphics.Widgets;
 
 namespace Contorio
 {

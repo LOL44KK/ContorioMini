@@ -21,6 +21,7 @@ namespace Contorio
 
         private Dictionary<string, Block> _blocks;
         private Dictionary<string, Ground> _grounds;
+        
         private TileSet _tileSet;
         private Dictionary<string, int> _tileIds;
 

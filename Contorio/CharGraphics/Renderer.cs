@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Contorio.CharGraphics
+﻿namespace Contorio.CharGraphics
 {
     public class Renderer
     {
