@@ -19,7 +19,7 @@ namespace Contorio
             while (true)
             {
                 string choice = MenuScene();
-
+                
                 switch (choice)
                 {
                     case null:  //quit
@@ -64,6 +64,8 @@ namespace Contorio
             itemListMenu.AddItem("LOAD GAME");
             itemListMenu.AddItem("QUIT");
 
+            Label labelCountSave = new Label("0/0", ConsoleColor.White, new Point(55 ,12), visible:false);
+
             ItemList itemListSavesList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
@@ -74,7 +76,10 @@ namespace Contorio
 
             menuScene.AddSprite(contorioSprite);
             menuScene.AddSprite(itemListMenu);
+            menuScene.AddSprite(labelCountSave);
             menuScene.AddSprite(itemListSavesList);
+
+            string[] savesPath = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.ctsave");
 
             while (true)
             {
@@ -92,6 +97,7 @@ namespace Contorio
                             else if (itemListSavesList.Visible)
                             {
                                 itemListSavesList.PreviousItem();
+                                labelCountSave.Text = (itemListSavesList.SelectedIndex + 1) +  "/" + savesPath.Count();
                             }
                             break;
                         case ConsoleKey.DownArrow:
@@ -102,11 +108,13 @@ namespace Contorio
                             else if (itemListSavesList.Visible)
                             {
                                 itemListSavesList.NextItem();
+                                labelCountSave.Text = (itemListSavesList.SelectedIndex + 1) + "/" + savesPath.Count();
                             }
                             break;
                         case ConsoleKey.Escape:
                             itemListMenu.Visible = true;
                             itemListSavesList.Visible = false;
+                            labelCountSave.Visible = false;
                             break;
                         case ConsoleKey.Enter:
                             if (itemListMenu.SelectedItem == "QUIT")
@@ -123,22 +131,33 @@ namespace Contorio
                                 {
                                     return itemListSavesList.SelectedItem;
                                 }
-                                else if (itemListMenu.Visible)
+                                else if (itemListMenu.Visible && savesPath.Length > 0)
                                 {
                                     itemListMenu.Visible = false;
                                     itemListSavesList.Visible = true;
+                                    labelCountSave.Visible = true;
                                     
                                     itemListSavesList.ClearItems();
-                                    string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.ctsave");
-                                    foreach (string file in files)
+                                    foreach (string file in savesPath)
                                     {
                                         itemListSavesList.AddItem(Path.GetFileName(file));
                                     }
+
+                                    labelCountSave.Text = (itemListSavesList.SelectedIndex + 1) + "/" + savesPath.Count();
                                     itemListSavesList.Position = new Point((engine.ScreenWidth / 2) - (itemListSavesList.Width / 2), 13);
+                                    labelCountSave.Position = new Point((engine.ScreenWidth / 2) - (itemListSavesList.Width / 2), 12);
                                 }
                             }
                             break;
                     }
+                }
+                if (savesPath.Length == 0 && itemListMenu.SelectedItem == "LOAD GAME")
+                {
+                    itemListMenu.SelectedItemColor = ConsoleColor.DarkRed;
+                }
+                else
+                {
+                    itemListMenu.SelectedItemColor = ConsoleColor.DarkGreen;
                 }
                 engine.Render();
             }
