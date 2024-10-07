@@ -1,4 +1,4 @@
-﻿namespace Contorio.Engine
+﻿namespace Contorio.CharGraphics
 {
     public class TileSet
     {

@@ -1,5 +1,5 @@
-﻿using Contorio.Engine;
-using Contorio.Engine.Widgets;
+﻿using Contorio.CharGraphics;
+using Contorio.CharGraphics.Widgets;
 using System.Diagnostics;
 using System.Drawing;
 
@@ -8,10 +8,10 @@ namespace Contorio
 {
     public class Contorio
     {
-        private Engine.Engine engine;
+        private CharGraphics.Renderer engine;
         public Contorio()
         {
-            engine = new Engine.Engine(120, 30);
+            engine = new CharGraphics.Renderer(120, 30);
         }
 
         public void Run()

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contorio.Engine
+namespace Contorio.CharGraphics
 {
     public class Sprite
     {

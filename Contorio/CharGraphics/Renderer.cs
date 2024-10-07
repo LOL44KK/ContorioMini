@@ -1,15 +1,13 @@
 ﻿using System.Diagnostics;
 
-namespace Contorio.Engine
+namespace Contorio.CharGraphics
 {
-    public class Engine
+    public class Renderer
     {
         private Scene _scene;
         private int _screenWidth;
         private int _screenHeight;
         private Pixel[,] _previousFrame;
-
-        private double _ms;
 
         public Scene Scene 
         { 
@@ -28,9 +26,7 @@ namespace Contorio.Engine
             set { _screenHeight = value; }
         }
 
-        public int FPS { get { return (int)(1000 / _ms); } }
-
-        public Engine(int screenWidth, int screenHeight)
+        public Renderer(int screenWidth, int screenHeight)
         {
             _scene = new Scene();
             _screenWidth = screenWidth;
@@ -50,22 +46,6 @@ namespace Contorio.Engine
         public void SetScene(Scene scene)
         {
             _scene = scene;
-        }
-
-        //???
-        public void Run()
-        {
-            Stopwatch stopwatch = new Stopwatch();
-
-            while (true)
-            {
-                stopwatch.Restart();
-
-                InputManager.Instance.Tick();
-                Render();
-
-                _ms = stopwatch.Elapsed.TotalMilliseconds;
-            }
         }
 
         public void Render()

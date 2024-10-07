@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contorio.Engine.Widgets
+namespace Contorio.CharGraphics.Widgets
 {
     public class Label : Sprite
     {
