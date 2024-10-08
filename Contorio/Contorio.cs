@@ -877,7 +877,6 @@ namespace Contorio
                 
                 if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
                 {
-                    blockPlayerCoord.Visible = true;
                     if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
                     {
                         blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
@@ -889,7 +888,7 @@ namespace Contorio
                 }
                 else
                 {
-                    blockPlayerCoord.Visible = false;
+                    blockPlayerCoord.Pixels = new Pixel[0, 0];
                 }
 
                 if (researchMenu)
