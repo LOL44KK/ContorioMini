@@ -26,9 +26,16 @@ namespace Contorio.CharGraphics.Widgets
             }
         }
 
-        public string SelectedItem
+        public string? SelectedItem
         { 
-            get { return _items[SelectedIndex]; }
+            get 
+            {
+                if (_items.Count == 0)
+                {
+                    return null;
+                }
+                return _items[_selectedIndex];
+            }
             set
             {
                 int index = _items.FindIndex(a => a == value);

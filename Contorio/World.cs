@@ -1,4 +1,6 @@
-﻿namespace Contorio
+﻿using System.Drawing;
+
+namespace Contorio
 {
     public class World
     {
@@ -45,6 +47,7 @@
                 tempResearcheList.Add(item.Value.Research);
             }
             _researchSystem = new ResearchSystem(tempResearcheList);
+            _player.Coord = new Point(_planets[0].Size / 2, _planets[0].Size / 2);
         }
 
         public static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using Contorio.CharGraphics;
@@ -225,7 +226,8 @@ namespace Contorio
         private Label labelCountResource;
         private Label labelTransfer;
         private ItemList itemListResourcesToPlayerCount;
-        private Label labelPreesEToTransfer;
+        private Label labelPreesEToTransferPlayer;
+        private Label labelPreesFToTransferPlanet;
 
         // F3 UI
         private Label labelFPS;
@@ -311,6 +313,23 @@ namespace Contorio
                     UpdatePlanetResourcesToPlayer(itemListPlanetResourcesToPlayer, world.Planets[player.Planet]);
                     UpdatePlayerResourcesToPlanet();
                     UpdateCountTransferResources();
+                    
+                    if (itemListPlanetResourcesToPlayer.Items.Count > 0)
+                    {
+                        labelPreesEToTransferPlayer.Visible = true;
+                    }
+                    else
+                    {
+                        labelPreesEToTransferPlayer.Visible = false;
+                    }
+                    if (itemListPlayerResourcesToPlanet.Items.Count > 0)
+                    {
+                        labelPreesFToTransferPlanet.Visible = true;
+                    }
+                    else
+                    {
+                        labelPreesFToTransferPlanet.Visible = false;
+                    }
                 }
 
                 //Message
@@ -464,8 +483,8 @@ namespace Contorio
             {
                 itemListResourcesToPlayerCount.AddItem("" + i);
             }
-            labelPreesEToTransfer = new Label("Prees E to transfer", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees E to transfer".Length / 2), 3), visible: false);
-
+            labelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees E to transfer to player".Length / 2), 3), visible: false);
+            labelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees F to transfer to planet".Length / 2), 4), visible: false);
             labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
             labelMessage = new Label("MESSAGE", ConsoleColor.White, new Point(60, 29), visible: false);
@@ -508,7 +527,8 @@ namespace Contorio
             scene.AddSprite(labelCountResource);
             scene.AddSprite(labelTransfer);
             scene.AddSprite(itemListResourcesToPlayerCount);
-            scene.AddSprite(labelPreesEToTransfer);
+            scene.AddSprite(labelPreesEToTransferPlayer);
+            scene.AddSprite(labelPreesFToTransferPlanet);
 
             scene.AddSprite(labelFPS);
 
@@ -549,16 +569,16 @@ namespace Contorio
                         }
                         break;
                     case ConsoleKey.R:
-                        setVisibleResearchMenu(!researchMenu);
-                        SetVisibleMap(!researchMenu);
                         SetVisibleTABMenu(false);
                         SetBuildingMode(false);
+                        SetVisibleMap(researchMenu);
+                        setVisibleResearchMenu(!researchMenu);
                         break;
                     case ConsoleKey.Tab:
-                        SetVisibleTABMenu(!TABmenu);
-                        SetVisibleMap(!TABmenu);
                         setVisibleResearchMenu(false);
                         SetBuildingMode(false);
+                        SetVisibleMap(TABmenu);
+                        SetVisibleTABMenu(!TABmenu);
                         break;
                     case ConsoleKey.F3:
                         labelFPS.Visible = !labelFPS.Visible;
@@ -771,11 +791,29 @@ namespace Contorio
                     UpdateSelectedItemList();
                     break;
                 case ConsoleKey.E:
-                    int count = int.Parse(itemListResourcesToPlayerCount.SelectedItem);
-                    if (world.Planets[player.Planet].Resources[itemListPlanetResourcesToPlayer.SelectedItem] >= count)
+                    if (itemListPlanetResourcesToPlayer.Items.Count == 0)
                     {
-                        world.Planets[player.Planet].Resources[itemListPlanetResourcesToPlayer.SelectedItem] -= count;
-                        player.Resources[itemListPlanetResourcesToPlayer.SelectedItem] = player.Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem, 0) + count;
+                        break;
+                    }
+
+                    int countplanet = int.Parse(itemListResourcesToPlayerCount.SelectedItem);
+                    if (world.Planets[player.Planet].Resources[itemListPlanetResourcesToPlayer.SelectedItem] >= countplanet)
+                    {
+                        world.Planets[player.Planet].Resources[itemListPlanetResourcesToPlayer.SelectedItem] -= countplanet;
+                        player.Resources[itemListPlanetResourcesToPlayer.SelectedItem] = player.Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem, 0) + countplanet;
+                    }
+                    break;
+                case ConsoleKey.F:
+                    if (itemListPlayerResourcesToPlanet.Items.Count == 0)
+                    {
+                        break;
+                    }
+
+                    int countplayer = int.Parse(itemListResourcesToPlayerCount.SelectedItem);
+                    if (player.Resources[itemListPlayerResourcesToPlanet.SelectedItem] >= countplayer)
+                    {
+                        player.Resources[itemListPlayerResourcesToPlanet.SelectedItem] -= countplayer;
+                        world.Planets[player.Planet].Resources[itemListPlayerResourcesToPlanet.SelectedItem] = world.Planets[player.Planet].Resources.GetValueOrDefault(itemListPlayerResourcesToPlanet.SelectedItem, 0) + countplayer;
                     }
                     break;
             }
@@ -887,6 +925,11 @@ namespace Contorio
             itemListBlockList.Visible = mode;
             itemListBlockCategory.Visible = mode;
             labelCostBuilding.Visible = mode;
+
+            if (tileMap.Visible)
+            {
+                labelPlayerResources.Visible = true;
+            }
         }
 
         void setVisibleResearchMenu(bool visible)
@@ -904,6 +947,8 @@ namespace Contorio
             labelCostSearchPlanet.Visible = visible;
             labelPalkaPeredCostSearchPlanet.Visible = visible;
             labelPressGtoSearchPlanet.Visible = visible;
+
+            labelPlayerResources.Visible = !visible;
 
             if (researchSystem.CloseResearch.Count > 0)
             {
@@ -924,7 +969,10 @@ namespace Contorio
             labelCountResource.Visible = visible;
             labelTransfer.Visible = visible;
             itemListResourcesToPlayerCount.Visible = visible;
-            labelPreesEToTransfer.Visible = visible;
+            labelPreesEToTransferPlayer.Visible = visible;
+            labelPreesFToTransferPlanet.Visible = visible;
+
+            labelPlayerResources.Visible = !visible;
         }
 
         private static void loadMap(TileMap tileMap, Planet planet)
@@ -1081,7 +1129,7 @@ namespace Contorio
 
         private void UpdateCountTransferResources()
         {
-            labelCountResource.Text = world.Planets[player.Planet].Resources[itemListPlanetResourcesToPlayer.SelectedItem] + "|" + player.Resources[itemListPlayerResourcesToPlanet.SelectedItem];
+            labelCountResource.Text = world.Planets[player.Planet].Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem ?? "", 0) + "|" + player.Resources.GetValueOrDefault(itemListPlayerResourcesToPlanet.SelectedItem ?? "", 0);
             labelCountResource.Position = new Point((renderer.ScreenWidth / 2) - (labelCountResource.Width / 2), labelCountResource.Position.Y);
         }
     }
