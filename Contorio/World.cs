@@ -46,5 +46,51 @@
             }
             _researchSystem = new ResearchSystem(tempResearcheList);
         }
+
+        public static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        {
+            int cost = 0;
+            foreach (var ore in oreChance)
+            {
+                cost += ore.Value * planetSize;
+            }
+            return cost;
+        }
+
+        public bool SearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        {
+            int cost = CalculateCostSearchPlanet(planetSize, oreChance);
+            if (_tokens.GetValueOrDefault("PL", 0) >= cost)
+            {
+                _planets.Add(new Planet(planetSize, oreChance));
+                _tokens["PL"] -= cost;
+                return true;
+            }
+            return false;
+        }
+
+        public bool StudyResearch(string researchName)
+        {
+            foreach (var token in _researchSystem.CloseResearch[researchName].ResearchCost)
+            {
+                if (_tokens.GetValueOrDefault(token.Key, 0) < token.Value)
+                {
+                    return false;
+                }
+            }
+            if (_researchSystem.CloseResearch[researchName].RequiredResearch != null)
+            {
+                if (!_researchSystem.OpenResearch.ContainsKey(_researchSystem.CloseResearch[researchName].RequiredResearch))
+                {
+                    return false;
+                }
+            }
+            foreach (var token in _researchSystem.CloseResearch[researchName].ResearchCost)
+            {
+                _tokens[token.Key] -= token.Value;
+            }
+            _researchSystem.UnlockResearch(researchName);
+            return true;
+        }
     }
 }

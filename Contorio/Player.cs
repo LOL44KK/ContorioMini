@@ -7,6 +7,7 @@ namespace Contorio
         private Point _coord;
         private int _planet;
         private Dictionary<string, int> _resources;
+        private bool _godMode;
 
         public Point Coord 
         { 
@@ -26,11 +27,18 @@ namespace Contorio
             set { _resources = value; }
         }
 
+        public bool GodMode
+        {
+            get { return _godMode; }
+            set { _godMode = value; }
+        }
+
         public Player()
         {
             _coord = new Point(0, 0);
             _planet = 0;
             _resources = new Dictionary<string, int>();
+            _godMode = false;
         }
 
         public void Move(int x, int y)
