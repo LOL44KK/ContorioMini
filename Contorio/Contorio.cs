@@ -586,6 +586,7 @@ namespace Contorio
                         break;
                     case ConsoleKey.H:
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
+                        ShowMessage("Successfully saved", ConsoleColor.DarkGreen);
                         break;
                     case ConsoleKey.Escape:
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
@@ -672,14 +673,14 @@ namespace Contorio
                     bool ok = true;
                     if (world.Planets[player.Planet].Ground.GetValueOrDefault(player.Coord, null) == null)
                     {
-                        ShowMessage(labelMessage, ref messageTimeAccumulator, "No building here", ConsoleColor.DarkRed);
+                        ShowMessage("No building here", ConsoleColor.DarkRed);
                         break;
                     }
                     foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
                     {
                         if (player.Resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
                         {
-                            ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough " + resource.Key, ConsoleColor.DarkRed);
+                            ShowMessage("not enough " + resource.Key, ConsoleColor.DarkRed);
                             ok = false;
                             break;
                         }
@@ -858,14 +859,14 @@ namespace Contorio
                         {
                             if (world.Tokens.GetValueOrDefault(token.Key, 0) < token.Value)
                             {
-                                ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough " + token.Key, ConsoleColor.DarkRed);
+                                ShowMessage("not enough " + token.Key, ConsoleColor.DarkRed);
                             }
                         }
                         if (researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch != null)
                         {
                             if (!researchSystem.OpenResearch.ContainsKey(researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch))
                             {
-                                ShowMessage(labelMessage, ref messageTimeAccumulator, "not studied " + researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch, ConsoleColor.DarkRed);
+                                ShowMessage("not studied " + researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch, ConsoleColor.DarkRed);
                             }
                         }
                         if (world.StudyResearch(itemListResearchList.SelectedItem))
@@ -893,19 +894,19 @@ namespace Contorio
                     }
                     else
                     {
-                        ShowMessage(labelMessage, ref messageTimeAccumulator, "not enough PL", ConsoleColor.DarkRed);
+                        ShowMessage("not enough PL", ConsoleColor.DarkRed);
                     }
                     break;
             }
         }
 
         //UI
-        static void ShowMessage(Label message, ref double messageTimeAccumulator, string text, ConsoleColor color)
+        void ShowMessage(string text, ConsoleColor color)
         {
-            message.Text = text;
-            message.TextColor = color;
-            message.Position = new Point((120 / 2) - (text.Length / 2), 29);
-            message.Visible = true;
+            labelMessage.Text = text;
+            labelMessage.TextColor = color;
+            labelMessage.Position = new Point((120 / 2) - (text.Length / 2), 29);
+            labelMessage.Visible = true;
             messageTimeAccumulator = 0;
         }
 
