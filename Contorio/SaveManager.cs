@@ -14,7 +14,7 @@ namespace Contorio
             },
             IncludeFields = true,
         };
-        
+
         public static void SaveWorld(string path, World world)
         {
             File.WriteAllText(path, JsonSerializer.Serialize(world, _options));
@@ -25,7 +25,7 @@ namespace Contorio
             World? world = JsonSerializer.Deserialize<World>(File.ReadAllText(path), _options);
             if (world == null)
             {
-                throw new Exception("KAK?");
+                throw new Exception("Куда залез?");
             }
             return world;
         }
