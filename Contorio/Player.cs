@@ -37,7 +37,7 @@ namespace Contorio
         {
             _coord = new Point(0, 0);
             _planet = 0;
-            _resources = new Dictionary<string, int>();
+            _resources = new Dictionary<string, int>() { { "copper", 10 }, { "iron", 10 } };
             _godMode = false;
         }
 
