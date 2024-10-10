@@ -120,6 +120,7 @@ namespace Contorio
             _recipe = recipe;
         }
     }
+
     public class Cryptor : Block
     {
         private int _energyInput;
