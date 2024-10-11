@@ -231,7 +231,7 @@ namespace Contorio
         private Label labelFPS;
 
         // Message UI
-        private Label labelMessage;
+        private Message messageMessage;
 
 
         // State variables
@@ -244,7 +244,6 @@ namespace Contorio
         private int researchMenuSelectedItemList = 0;
         private int TABMenuSelectedItemList = 0;
         private Dictionary<string, int> oreChance = new Dictionary<string, int>();
-        private double messageTimeAccumulator = 0;
 
 
         public ContorioWorld(Renderer renderer)
@@ -307,15 +306,7 @@ namespace Contorio
                 }
 
                 //Message
-                if (labelMessage.Visible)
-                {
-                    messageTimeAccumulator += sw.Elapsed.TotalMilliseconds;
-                    if (messageTimeAccumulator > 1000)
-                    {
-                        messageTimeAccumulator = 0;
-                        labelMessage.Visible = false;
-                    }
-                }
+                messageMessage.Tick();
 
                 labelFPS.Text = "FPS: " + ((int)(1000 / ms)).ToString();
 
@@ -461,7 +452,7 @@ namespace Contorio
             labelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees F to transfer to planet".Length / 2), 4), visible: false);
             labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
-            labelMessage = new Label("MESSAGE", ConsoleColor.White, new Point(60, 29), visible: false);
+            messageMessage = new Message(renderer.ScreenWidth / 2, 29);
 
             scene.AddSprite(tileMap);
 
@@ -506,7 +497,7 @@ namespace Contorio
 
             scene.AddSprite(labelFPS);
 
-            scene.AddSprite(labelMessage);
+            scene.AddSprite(messageMessage);
         }
 
         private void SetupInitialState()
@@ -562,7 +553,7 @@ namespace Contorio
                         break;
                     case ConsoleKey.H:
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
-                        ShowMessage("Successfully saved", ConsoleColor.DarkGreen);
+                        messageMessage.Show("Successfully saved", ConsoleColor.DarkGreen);
                         break;
                     case ConsoleKey.Escape:
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
@@ -649,14 +640,14 @@ namespace Contorio
                     bool ok = true;
                     if (world.Planets[player.Planet].Ground.GetValueOrDefault(player.Coord, null) == null)
                     {
-                        ShowMessage("No building here", ConsoleColor.DarkRed);
+                        messageMessage.Show("No building here", ConsoleColor.DarkRed);
                         break;
                     }
                     foreach (var resource in resourceManager.Blocks[selectBlock].Cost)
                     {
                         if (player.Resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
                         {
-                            ShowMessage("not enough " + resource.Key, ConsoleColor.DarkRed);
+                            messageMessage.Show("not enough " + resource.Key, ConsoleColor.DarkRed);
                             ok = false;
                             break;
                         }
@@ -835,14 +826,14 @@ namespace Contorio
                         {
                             if (world.Tokens.GetValueOrDefault(token.Key, 0) < token.Value)
                             {
-                                ShowMessage("not enough " + token.Key, ConsoleColor.DarkRed);
+                                messageMessage.Show("not enough " + token.Key, ConsoleColor.DarkRed);
                             }
                         }
                         if (researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch != null)
                         {
                             if (!researchSystem.OpenResearch.ContainsKey(researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch))
                             {
-                                ShowMessage("not studied " + researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch, ConsoleColor.DarkRed);
+                                messageMessage.Show("not studied " + researchSystem.CloseResearch[itemListResearchList.SelectedItem].RequiredResearch, ConsoleColor.DarkRed);
                             }
                         }
                         if (world.StudyResearch(itemListResearchList.SelectedItem))
@@ -870,22 +861,13 @@ namespace Contorio
                     }
                     else
                     {
-                        ShowMessage("not enough PL", ConsoleColor.DarkRed);
+                        messageMessage.Show("not enough PL", ConsoleColor.DarkRed);
                     }
                     break;
             }
         }
 
         //UI
-        void ShowMessage(string text, ConsoleColor color)
-        {
-            labelMessage.Text = text;
-            labelMessage.TextColor = color;
-            labelMessage.Position = new Point((120 / 2) - (text.Length / 2), 29);
-            labelMessage.Visible = true;
-            messageTimeAccumulator = 0;
-        }
-
         void SetVisibleMap(bool visible)
         {
             tileMap.Visible = visible;
@@ -950,6 +932,89 @@ namespace Contorio
             labelPlayerResources.Visible = !visible;
         }
 
+        private void UpdatePlanetResourcesToPlayer()
+        {
+            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
+            {
+                itemListPlanetResourcesToPlayer.Visible = true;
+            }
+            else
+            {
+                labelPreesEToTransferPlayer.Visible = false;
+            }
+
+            string? selectedItem = null;
+            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
+            {
+                selectedItem = itemListPlanetResourcesToPlayer.SelectedItem;
+            }
+            itemListPlanetResourcesToPlayer.ClearItems();
+
+            foreach (var resource in world.Planets[player.Planet].Resources)
+            {
+                itemListPlanetResourcesToPlayer.AddItem(resource.Key);
+            }
+
+            if (selectedItem != null)
+            {
+                itemListPlanetResourcesToPlayer.SelectedItem = selectedItem;
+            }
+        }
+
+        private void UpdatePlayerResourcesToPlanet()
+        {
+            if (itemListPlayerResourcesToPlanet.Items.Count > 0)
+            {
+                labelPreesFToTransferPlanet.Visible = true;
+            }
+            else
+            {
+                labelPreesFToTransferPlanet.Visible = false;
+            }
+
+            string? selectedItem = null;
+            if (itemListPlayerResourcesToPlanet.Items.Count > 0)
+            {
+                selectedItem = itemListPlayerResourcesToPlanet.SelectedItem;
+            }
+            itemListPlayerResourcesToPlanet.ClearItems();
+            foreach (var resource in player.Resources)
+            {
+                itemListPlayerResourcesToPlanet.AddItem(resource.Key);
+            }
+            if (selectedItem != null)
+            {
+                itemListPlayerResourcesToPlanet.SelectedItem = selectedItem;
+            }
+        }
+
+        private void UpdateCountTransferResources()
+        {
+            labelCountResource.Text = world.Planets[player.Planet].Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem ?? "", 0) + "|" + player.Resources.GetValueOrDefault(itemListPlayerResourcesToPlanet.SelectedItem ?? "", 0);
+            labelCountResource.Position = new Point((renderer.ScreenWidth / 2) - (labelCountResource.Width / 2), labelCountResource.Position.Y);
+        }
+
+        private void UpdateSpritePlayerCoordBlock()
+        {
+            if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
+            {
+                if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
+                {
+                    blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
+                }
+                else
+                {
+                    blockPlayerCoord.Pixels = resourceManager.Grounds[world.Planets[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
+                }
+            }
+            else
+            {
+                blockPlayerCoord.Pixels = new Pixel[0, 0];
+
+            }
+        }
+
+        //old method
         private static void loadMap(TileMap tileMap, Planet planet)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
@@ -1061,88 +1126,6 @@ namespace Contorio
             foreach (var resource in block.Cost)
             {
                 costBuilding.Text += resource.Key + ": " + resource.Value + "\n";
-            }
-        }
-
-        private void UpdatePlanetResourcesToPlayer()
-        {
-            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
-            {
-                itemListPlanetResourcesToPlayer.Visible = true;
-            }
-            else
-            {
-                labelPreesEToTransferPlayer.Visible = false;
-            }
-
-            string? selectedItem = null;
-            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
-            {
-                selectedItem = itemListPlanetResourcesToPlayer.SelectedItem;
-            }
-            itemListPlanetResourcesToPlayer.ClearItems();
-
-            foreach (var resource in world.Planets[player.Planet].Resources)
-            {
-                itemListPlanetResourcesToPlayer.AddItem(resource.Key);
-            }
-
-            if (selectedItem != null)
-            {
-                itemListPlanetResourcesToPlayer.SelectedItem = selectedItem;
-            }
-        }
-
-        private void UpdatePlayerResourcesToPlanet()
-        {
-            if (itemListPlayerResourcesToPlanet.Items.Count > 0)
-            {
-                labelPreesFToTransferPlanet.Visible = true;
-            }
-            else
-            {
-                labelPreesFToTransferPlanet.Visible = false;
-            }
-
-            string? selectedItem = null;
-            if (itemListPlayerResourcesToPlanet.Items.Count > 0)
-            {
-                selectedItem = itemListPlayerResourcesToPlanet.SelectedItem;
-            }
-            itemListPlayerResourcesToPlanet.ClearItems();
-            foreach (var resource in player.Resources)
-            {
-                itemListPlayerResourcesToPlanet.AddItem(resource.Key);
-            }
-            if (selectedItem != null)
-            {
-                itemListPlayerResourcesToPlanet.SelectedItem = selectedItem;
-            }
-        }
-
-        private void UpdateCountTransferResources()
-        {
-            labelCountResource.Text = world.Planets[player.Planet].Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem ?? "", 0) + "|" + player.Resources.GetValueOrDefault(itemListPlayerResourcesToPlanet.SelectedItem ?? "", 0);
-            labelCountResource.Position = new Point((renderer.ScreenWidth / 2) - (labelCountResource.Width / 2), labelCountResource.Position.Y);
-        }
-
-        private void UpdateSpritePlayerCoordBlock()
-        {
-            if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
-            {
-                if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
-                {
-                    blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
-                }
-                else
-                {
-                    blockPlayerCoord.Pixels = resourceManager.Grounds[world.Planets[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
-                }
-            }
-            else
-            {
-                blockPlayerCoord.Pixels = new Pixel[0, 0];
-
             }
         }
     }
