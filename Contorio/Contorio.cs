@@ -290,15 +290,8 @@ namespace Contorio
                 {
                     tileMap.UpdatePixels(player.Coord);
                     labelPlayerCoord.Text = player.Coord.X + "|" + player.Coord.Y;
+                    UpdateSpritePlayerCoordBlock();
                 }
-
-                if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
-                    if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
-                        blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
-                    else
-                        blockPlayerCoord.Pixels = resourceManager.Grounds[world.Planets[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
-                else
-                    blockPlayerCoord.Pixels = new Pixel[0, 0];
 
                 if (researchMenu)
                 {
@@ -308,26 +301,9 @@ namespace Contorio
 
                 if (TABmenu)
                 {
-                    UpdatePlanetResourcesToPlayer(itemListPlanetResourcesToPlayer, world.Planets[player.Planet]);
+                    UpdatePlanetResourcesToPlayer();
                     UpdatePlayerResourcesToPlanet();
                     UpdateCountTransferResources();
-                    
-                    if (itemListPlanetResourcesToPlayer.Items.Count > 0)
-                    {
-                        labelPreesEToTransferPlayer.Visible = true;
-                    }
-                    else
-                    {
-                        labelPreesEToTransferPlayer.Visible = false;
-                    }
-                    if (itemListPlayerResourcesToPlanet.Items.Count > 0)
-                    {
-                        labelPreesFToTransferPlanet.Visible = true;
-                    }
-                    else
-                    {
-                        labelPreesFToTransferPlanet.Visible = false;
-                    }
                 }
 
                 //Message
@@ -1088,28 +1064,46 @@ namespace Contorio
             }
         }
 
-        private static void UpdatePlanetResourcesToPlayer(ItemList resourcesToPlayer, Planet planet)
+        private void UpdatePlanetResourcesToPlayer()
         {
-            string? selectedItem = null;
-            if (resourcesToPlayer.Items.Count > 0)
+            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
             {
-                selectedItem = resourcesToPlayer.SelectedItem;
+                itemListPlanetResourcesToPlayer.Visible = true;
             }
-            resourcesToPlayer.ClearItems();
-
-            foreach (var resource in planet.Resources)
+            else
             {
-                resourcesToPlayer.AddItem(resource.Key);
+                labelPreesEToTransferPlayer.Visible = false;
+            }
+
+            string? selectedItem = null;
+            if (itemListPlanetResourcesToPlayer.Items.Count > 0)
+            {
+                selectedItem = itemListPlanetResourcesToPlayer.SelectedItem;
+            }
+            itemListPlanetResourcesToPlayer.ClearItems();
+
+            foreach (var resource in world.Planets[player.Planet].Resources)
+            {
+                itemListPlanetResourcesToPlayer.AddItem(resource.Key);
             }
 
             if (selectedItem != null)
             {
-                resourcesToPlayer.SelectedItem = selectedItem;
+                itemListPlanetResourcesToPlayer.SelectedItem = selectedItem;
             }
         }
 
         private void UpdatePlayerResourcesToPlanet()
         {
+            if (itemListPlayerResourcesToPlanet.Items.Count > 0)
+            {
+                labelPreesFToTransferPlanet.Visible = true;
+            }
+            else
+            {
+                labelPreesFToTransferPlanet.Visible = false;
+            }
+
             string? selectedItem = null;
             if (itemListPlayerResourcesToPlanet.Items.Count > 0)
             {
@@ -1130,6 +1124,26 @@ namespace Contorio
         {
             labelCountResource.Text = world.Planets[player.Planet].Resources.GetValueOrDefault(itemListPlanetResourcesToPlayer.SelectedItem ?? "", 0) + "|" + player.Resources.GetValueOrDefault(itemListPlayerResourcesToPlanet.SelectedItem ?? "", 0);
             labelCountResource.Position = new Point((renderer.ScreenWidth / 2) - (labelCountResource.Width / 2), labelCountResource.Position.Y);
+        }
+
+        private void UpdateSpritePlayerCoordBlock()
+        {
+            if (world.Planets[player.Planet].Ground.ContainsKey(player.Coord))
+            {
+                if (world.Planets[player.Planet].Blocks.ContainsKey(player.Coord))
+                {
+                    blockPlayerCoord.Pixels = resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name].Sprite.Pixels;
+                }
+                else
+                {
+                    blockPlayerCoord.Pixels = resourceManager.Grounds[world.Planets[player.Planet].Ground[player.Coord].Name].Sprite.Pixels;
+                }
+            }
+            else
+            {
+                blockPlayerCoord.Pixels = new Pixel[0, 0];
+
+            }
         }
     }
 }
