@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using Contorio.CharGraphics.Widgets;
+using System.Drawing;
+using System.Numerics;
+using System.Resources;
 
 namespace Contorio
 {
@@ -45,6 +48,50 @@ namespace Contorio
         {
             _coord.X += x;
             _coord.Y += y;
+        }
+
+        public bool BuildBlock(Point coord, Block block, Planet planet)
+        {
+            if (_godMode)
+            {
+                planet.SetBlock(coord, block);
+                return true;
+            }
+
+            if (!planet.Ground.ContainsKey(coord))
+            {
+                return false;
+            }
+
+            foreach (var resource in block.Cost)
+            {
+                if (_resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
+                {
+                    return false;
+                }
+            }
+            
+            DestroyBlock(coord, planet);
+
+            foreach (var resource in block.Cost)
+            {
+                _resources[resource.Key] -= resource.Value;
+            }
+            planet.SetBlock(coord, block);
+            return true;
+        }
+
+        public void DestroyBlock(Point coord, Planet planet)
+        {
+            if (planet.Blocks.ContainsKey(coord))
+            {
+                Block block = ResourceManager.Instance.Blocks[planet.Blocks[coord].Name];
+                foreach (var resource in block.Cost)
+                {
+                    _resources[resource.Key] = _resources.GetValueOrDefault(resource.Key, 0) + resource.Value;
+                }
+                planet.RemoveBlock(coord);
+            }
         }
     }
 }
