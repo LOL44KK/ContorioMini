@@ -12,7 +12,11 @@ namespace Contorio
     {
         private string _name;
 
-        public string Name => _name;
+        public string Name 
+        { 
+            get { return _name; }
+            init { _name = value; }
+        }
            
         public BlockState(string name)
         {

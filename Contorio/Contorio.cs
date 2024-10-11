@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using Contorio.CharGraphics;
-using Contorio.CharGraphics.Widgets;
+﻿using Contorio.CharGraphics;
 using Contorio.Scenes;
 
 namespace Contorio
