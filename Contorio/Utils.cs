@@ -24,10 +24,11 @@ namespace Contorio
 
                 string? key = reader.GetString();
                 string[] parts = key.Split(',');
+                
                 Point point = new Point(int.Parse(parts[0]), int.Parse(parts[1]));
 
                 reader.Read();
-                TValue value = JsonSerializer.Deserialize<TValue>(ref reader, options);
+                TValue? value = JsonSerializer.Deserialize<TValue>(ref reader, options);
                 
                 dictionary[point] = value;
             }
@@ -38,15 +39,12 @@ namespace Contorio
         public override void Write(Utf8JsonWriter writer, Dictionary<Point, TValue> value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-
             foreach (var kvp in value)
             {
                 string key = $"{kvp.Key.X},{kvp.Key.Y}";
                 writer.WritePropertyName(key);
-
                 JsonSerializer.Serialize(writer, kvp.Value, options);
             }
-
             writer.WriteEndObject();
         }
     }
