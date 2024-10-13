@@ -68,8 +68,11 @@ namespace Contorio.Scenes
         private Label labelPreesEToTransferPlayer;
         private Label labelPreesFToTransferPlanet;
 
-        private ItemList itemListPlanetsTransfer;
-
+        //Block transferBeacon UI
+        private Label labelTransferBeacon;
+        private ItemList itemListTransferBeaconMenuResourcesList;
+        private ItemList itemListTransferBeaconMenuCount;
+        private Label LabelListTransferBeaconMenuPreesEnterToBack;
 
         // F3 UI
         private Label labelFPS;
@@ -294,6 +297,23 @@ namespace Contorio.Scenes
             }
             labelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees E to transfer to player".Length / 2), 3), visible: false);
             labelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees F to transfer to planet".Length / 2), 4), visible: false);
+
+            labelTransferBeacon = new Label("Transfer Beacon MENU", ConsoleColor.White, new Point(60, 10), visible: false);
+            labelTransferBeacon.Position = new Point((renderer.ScreenWidth / 2) - (labelTransferBeacon.Width / 2), labelTransferBeacon.Position.Y);
+            itemListTransferBeaconMenuResourcesList = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.DarkBlue,
+                new Point(60, 11),
+                1,
+                visible: false
+            );
+            itemListTransferBeaconMenuCount = new ItemList(ConsoleColor.White,
+                ConsoleColor.DarkBlue,
+                new Point(60, 12),
+                1,
+                visible: false
+            );
+
             labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
             messageMessage = new Message(renderer.ScreenWidth / 2, 29);
@@ -339,6 +359,10 @@ namespace Contorio.Scenes
             scene.AddSprite(labelPreesEToTransferPlayer);
             scene.AddSprite(labelPreesFToTransferPlanet);
 
+            scene.AddSprite(labelTransferBeacon);
+            scene.AddSprite(itemListTransferBeaconMenuResourcesList);
+            scene.AddSprite(itemListTransferBeaconMenuCount);
+
             scene.AddSprite(labelFPS);
 
             scene.AddSprite(messageMessage);
@@ -380,14 +404,28 @@ namespace Contorio.Scenes
                     case ConsoleKey.R:
                         SetVisibleTABMenu(false);
                         SetBuildingMode(false);
+                        SetVisibleTransferBeaconMenu(false);
                         SetVisibleMap(researchMenu);
                         setVisibleResearchMenu(!researchMenu);
                         break;
                     case ConsoleKey.Tab:
                         setVisibleResearchMenu(false);
                         SetBuildingMode(false);
+                        SetVisibleTransferBeaconMenu(false);
                         SetVisibleMap(TABmenu);
                         SetVisibleTABMenu(!TABmenu);
+                        break;
+                    case ConsoleKey.Enter:
+                        if (tileMap.Visible && !buildingMode)
+                        {
+                            SetVisibleTABMenu(false);
+                            SetBuildingMode(false);
+                            setVisibleResearchMenu(false);
+                            SetVisibleMap(labelTransferBeacon.Visible);
+                            SetVisibleTransferBeaconMenu(!labelTransferBeacon.Visible);
+
+                            UpdateItemListTransferBeaconMenuResourcesList();
+                        }
                         break;
                     case ConsoleKey.F3:
                         labelFPS.Visible = !labelFPS.Visible;
@@ -429,6 +467,20 @@ namespace Contorio.Scenes
                 {
                     HandleKeyPressTABMenu(keyInfo);
                 }
+
+                if (labelTransferBeacon.Visible)
+                {
+
+                }
+            }
+        }
+
+
+        void HandleKeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
+        {
+            switch (keyInfo.Key)
+            {
+
             }
         }
 
@@ -746,6 +798,13 @@ namespace Contorio.Scenes
             labelPlayerResources.Visible = !visible;
         }
 
+        void SetVisibleTransferBeaconMenu(bool visible)
+        {
+            labelTransferBeacon.Visible = visible;
+            itemListTransferBeaconMenuResourcesList.Visible = visible;
+            itemListTransferBeaconMenuCount.Visible = visible;
+        }
+
         private void UpdatePlanetResourcesToPlayer()
         {
             if (itemListPlanetResourcesToPlayer.Items.Count > 0)
@@ -828,6 +887,16 @@ namespace Contorio.Scenes
             }
         }
 
+        private void UpdateItemListTransferBeaconMenuResourcesList()
+        {
+            itemListTransferBeaconMenuResourcesList.ClearItems();
+            foreach (var resource in world.Planets[player.Planet].Resources)
+            {
+                itemListTransferBeaconMenuResourcesList.AddItem(resource.Key);
+            }
+            itemListTransferBeaconMenuResourcesList.SelectedItem = ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Resource;
+        }
+
         //old method
         private static void loadMap(TileMap tileMap, Planet planet)
         {
@@ -852,7 +921,10 @@ namespace Contorio.Scenes
                           $" Resources\n";
             foreach (var resource in planet.Resources)
             {
-                text += "  " + resource.Key + ": " + resource.Value + "\n";
+                if (resource.Value != 0)
+                {
+                    text += "  " + resource.Key + ": " + resource.Value + "\n";
+                }
             }
             planetInfo.Text = text;
         }
