@@ -9,6 +9,7 @@ namespace Contorio
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]
     [JsonDerivedType(typeof(SolarPanelState), "SolarPanelState")]
+    [JsonDerivedType(typeof(TransferBeaconState), "TransferBeaconState")]
     public class BlockState
     {
         private string _name;
@@ -123,6 +124,24 @@ namespace Contorio
         {
             get { return _energyPoint; }
             set { _energyPoint = value; }
+        }
+
+        public int Planet
+        {
+            get { return _planet; }
+            set { _planet = value; }
+        }
+
+        public string? Resource
+        {
+            get { return _resource;  }
+            set { _resource = value; }
+        }
+
+        public int Count 
+        { 
+            get { return _count;}
+            set { _count = value; }
         }
 
         public TransferBeaconState(string name, Point? droneStation = null, Point? energyPoint = null, int planet = -1, string? resource = null, int count = 0) : base(name)

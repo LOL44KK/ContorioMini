@@ -228,7 +228,7 @@ namespace Contorio
                     "smelter-copper",
                     "factory",
                     null,
-                    new Dictionary<string, int>() { { "RS", 1 } }
+                    new Dictionary<string, int>()
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
@@ -273,6 +273,26 @@ namespace Contorio
                 cost: new Dictionary<string, int>() { { "iron", 1 } }
             );
             _blocks.Add(cryptorPL.Name, cryptorPL);
+
+            TransferBeacon transferBeacon = new TransferBeacon(
+                name: "transfer_beacon",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                    { new Pixel('╔', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('╗', ConsoleColor.DarkMagenta) },
+                    { new Pixel('║', ConsoleColor.DarkMagenta), new Pixel(' ', ConsoleColor.DarkMagenta), new Pixel(' ', ConsoleColor.DarkMagenta), new Pixel('║', ConsoleColor.DarkMagenta) },
+                    { new Pixel('╚', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('╝', ConsoleColor.DarkMagenta) }
+                }),
+                research: new Research(
+                    "transfer_beacon",
+                    "logic",
+                    null,
+                    new Dictionary<string, int>()
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                energyInput: 1,
+                maxTransferableCount: 10
+            );
+            _blocks.Add(transferBeacon.Name, transferBeacon);
 
             CreateTileSet();
         }
