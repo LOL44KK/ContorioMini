@@ -118,7 +118,7 @@ namespace Contorio
             else if (block.Type == BlockType.TRANSFER_BEACON && ((TransferBeaconState)blockState).DroneStation != null && ((TransferBeaconState)blockState).EnergyPoint != null)
             {
                 TransferBeaconState transferBeaconState = (TransferBeaconState)blockState;
-                if (transferBeaconState.Count <= 0 || transferBeaconState.Planet == -1 || _world.Planets.Count <= transferBeaconState.Planet || transferBeaconState.Resource == null)
+                if (transferBeaconState.Count <= 0 || transferBeaconState.Planet == -1 || transferBeaconState.Planet >= _world.Planets.Count || transferBeaconState.Resource == null)
                 {
                     return;
                 }
@@ -130,9 +130,9 @@ namespace Contorio
                 if (planet.Resources.GetValueOrDefault(transferBeaconState.Resource, 0) >= transferBeaconState.Count)
                 {
                     planet.Resources[transferBeaconState.Resource] -= transferBeaconState.Count;
-                    _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] = _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] + transferBeaconState.Count;
+                    _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] = _world.Planets[transferBeaconState.Planet].Resources.GetValueOrDefault(transferBeaconState.Resource, 0) + transferBeaconState.Count;
+                    planet.Energy -= ((TransferBeacon)block).EnergyInput;
                 }
-                planet.Energy -= ((TransferBeacon)block).EnergyInput;
             }
         }
     }

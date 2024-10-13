@@ -69,10 +69,14 @@ namespace Contorio.Scenes
         private Label labelPreesFToTransferPlanet;
 
         //Block transferBeacon UI
-        private Label labelTransferBeacon;
+        private Label labelTransferBeaconMenu;
+        private Label labelTransferBeaconMenuPlanet;
+        private ItemList itemListTransferBeaconMenuPlanetList;
+        private Label labelTransferBeaconMenuResource;
         private ItemList itemListTransferBeaconMenuResourcesList;
+        private Label labelTransferBeaconMenuCount;
         private ItemList itemListTransferBeaconMenuCount;
-        private Label LabelListTransferBeaconMenuPreesEnterToBack;
+        private Label labelTransferBeaconMenuPreesEnterToBack;
 
         // F3 UI
         private Label labelFPS;
@@ -91,7 +95,7 @@ namespace Contorio.Scenes
         private int researchMenuSelectedItemList = 0;
         private int TABMenuSelectedItemList = 0;
         private Dictionary<string, int> oreChance = new Dictionary<string, int>();
-
+        private int TransferBeaconMenuSelectedItemList = 0;
 
         public ContorioWorld(Renderer renderer)
         {
@@ -298,21 +302,34 @@ namespace Contorio.Scenes
             labelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees E to transfer to player".Length / 2), 3), visible: false);
             labelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Prees F to transfer to planet".Length / 2), 4), visible: false);
 
-            labelTransferBeacon = new Label("Transfer Beacon MENU", ConsoleColor.White, new Point(60, 10), visible: false);
-            labelTransferBeacon.Position = new Point((renderer.ScreenWidth / 2) - (labelTransferBeacon.Width / 2), labelTransferBeacon.Position.Y);
-            itemListTransferBeaconMenuResourcesList = new ItemList(
+            labelTransferBeaconMenu = new Label("Transfer Beacon MENU", ConsoleColor.White, new Point(60, 7), visible: false);
+            labelTransferBeaconMenu.Position = new Point((renderer.ScreenWidth / 2) - (labelTransferBeaconMenu.Width / 2), labelTransferBeaconMenu.Position.Y);
+            labelTransferBeaconMenuPlanet = new Label("planet: ", ConsoleColor.White, new Point(50, 8), visible:false);
+            itemListTransferBeaconMenuPlanetList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
-                new Point(60, 11),
+                new Point(60, 8),
                 1,
                 visible: false
             );
-            itemListTransferBeaconMenuCount = new ItemList(ConsoleColor.White,
-                ConsoleColor.DarkBlue,
-                new Point(60, 12),
+            labelTransferBeaconMenuResource = new Label("resource: ", ConsoleColor.White, new Point(50, 9), visible: false);
+            itemListTransferBeaconMenuResourcesList = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.Blue,
+                new Point(60, 9),
                 1,
                 visible: false
             );
+            labelTransferBeaconMenuCount = new Label("count: ", ConsoleColor.White, new Point(50, 10), visible: false);
+            itemListTransferBeaconMenuCount = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.Blue,
+                new Point(60, 10),
+                1,
+                visible: false
+            );
+            labelTransferBeaconMenuPreesEnterToBack = new Label("press Enter to back", ConsoleColor.White, new Point(60, 11), visible:false);
+            labelTransferBeaconMenuPreesEnterToBack.Position = new Point((renderer.ScreenWidth / 2) - (labelTransferBeaconMenuPreesEnterToBack.Width / 2), labelTransferBeaconMenuPreesEnterToBack.Position.Y);
 
             labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
 
@@ -359,9 +376,14 @@ namespace Contorio.Scenes
             scene.AddSprite(labelPreesEToTransferPlayer);
             scene.AddSprite(labelPreesFToTransferPlanet);
 
-            scene.AddSprite(labelTransferBeacon);
+            scene.AddSprite(labelTransferBeaconMenu);
+            scene.AddSprite(labelTransferBeaconMenuPlanet);
+            scene.AddSprite(itemListTransferBeaconMenuPlanetList);
+            scene.AddSprite(labelTransferBeaconMenuResource);
             scene.AddSprite(itemListTransferBeaconMenuResourcesList);
+            scene.AddSprite(labelTransferBeaconMenuCount);
             scene.AddSprite(itemListTransferBeaconMenuCount);
+            scene.AddSprite(labelTransferBeaconMenuPreesEnterToBack);
 
             scene.AddSprite(labelFPS);
 
@@ -396,7 +418,7 @@ namespace Contorio.Scenes
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.B:
-                        if (!TABmenu && !researchMenu)
+                        if (tileMap.Visible && !TABmenu && !researchMenu)
                         {
                             SetBuildingMode(!buildingMode);
                         }
@@ -418,13 +440,20 @@ namespace Contorio.Scenes
                     case ConsoleKey.Enter:
                         if (tileMap.Visible && !buildingMode)
                         {
-                            SetVisibleTABMenu(false);
-                            SetBuildingMode(false);
-                            setVisibleResearchMenu(false);
-                            SetVisibleMap(labelTransferBeacon.Visible);
-                            SetVisibleTransferBeaconMenu(!labelTransferBeacon.Visible);
+                            Block? block = resourceManager?.Blocks.GetValueOrDefault(world.Planets[player.Planet]?.Blocks.GetValueOrDefault(player.Coord, null)?.Name ?? "", null);
+                            if (block != null && block.Type == BlockType.TRANSFER_BEACON)
+                            {
+                                SetVisibleTABMenu(false);
+                                SetBuildingMode(false);
+                                setVisibleResearchMenu(false);
+                                SetVisibleMap(labelTransferBeaconMenu.Visible);
+                                SetVisibleTransferBeaconMenu(!labelTransferBeaconMenu.Visible);
 
-                            UpdateItemListTransferBeaconMenuResourcesList();
+                                UpdateItemListTransferBeaconMenuResourcesList();
+                                UpdateItemListTransferBeaconMenuCount();
+                                UpdateItemListTransferBeaconMenuPlanetList();
+                            }
+                            return;
                         }
                         break;
                     case ConsoleKey.F3:
@@ -448,7 +477,7 @@ namespace Contorio.Scenes
                     HandleKeyPressMap(keyInfo);
                 }
 
-                if (!buildingMode && !researchMenu && !TABmenu)
+                if (!labelTransferBeaconMenu.Visible &&!buildingMode && !researchMenu && !TABmenu)
                 {
                     HandleKeyPressSwitchPlanet(keyInfo);
                 }
@@ -468,9 +497,9 @@ namespace Contorio.Scenes
                     HandleKeyPressTABMenu(keyInfo);
                 }
 
-                if (labelTransferBeacon.Visible)
+                if (labelTransferBeaconMenu.Visible)
                 {
-
+                    HandleKeyPressTransferBeaconMenu(keyInfo);
                 }
             }
         }
@@ -478,9 +507,40 @@ namespace Contorio.Scenes
 
         void HandleKeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
         {
+            void UpdateSelectedItemList()
+            {
+                itemListTransferBeaconMenuPlanetList.SelectedItemColor = (TransferBeaconMenuSelectedItemList == 0) ? ConsoleColor.DarkBlue : ConsoleColor.Blue;
+                itemListTransferBeaconMenuResourcesList.SelectedItemColor = (TransferBeaconMenuSelectedItemList == 1) ? ConsoleColor.DarkBlue : ConsoleColor.Blue;
+                itemListTransferBeaconMenuCount.SelectedItemColor = (TransferBeaconMenuSelectedItemList == 2) ? ConsoleColor.DarkBlue : ConsoleColor.Blue;
+            }
+
+            void HandleNavigation(bool next)
+            {
+                if (TransferBeaconMenuSelectedItemList == 0) { if (next) itemListTransferBeaconMenuPlanetList.NextItem(); else itemListTransferBeaconMenuPlanetList.PreviousItem(); ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Planet = itemListTransferBeaconMenuPlanetList.SelectedIndex; }
+                if (TransferBeaconMenuSelectedItemList == 1) { if (next) itemListTransferBeaconMenuResourcesList.NextItem(); else itemListTransferBeaconMenuResourcesList.PreviousItem(); ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Resource = itemListTransferBeaconMenuResourcesList.SelectedItem; }
+                if (TransferBeaconMenuSelectedItemList == 2) { if (next) itemListTransferBeaconMenuCount.NextItem(); else itemListTransferBeaconMenuCount.PreviousItem(); ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Count = int.Parse(itemListTransferBeaconMenuCount.SelectedItem); }
+            }
+
             switch (keyInfo.Key)
             {
-
+                case ConsoleKey.Enter:
+                    SetVisibleTransferBeaconMenu(false);
+                    SetVisibleMap(true);
+                    break;
+                case ConsoleKey.DownArrow:
+                    TransferBeaconMenuSelectedItemList = (TransferBeaconMenuSelectedItemList + 1) % 3;
+                    UpdateSelectedItemList();
+                    break;
+                case ConsoleKey.UpArrow:
+                    TransferBeaconMenuSelectedItemList = (TransferBeaconMenuSelectedItemList - 1 + 3) % 3;
+                    UpdateSelectedItemList();
+                    break;
+                case ConsoleKey.RightArrow:
+                    HandleNavigation(true);
+                    break;
+                case ConsoleKey.LeftArrow:
+                    HandleNavigation(false);
+                    break;
             }
         }
 
@@ -800,9 +860,14 @@ namespace Contorio.Scenes
 
         void SetVisibleTransferBeaconMenu(bool visible)
         {
-            labelTransferBeacon.Visible = visible;
+            labelTransferBeaconMenu.Visible = visible;
+            labelTransferBeaconMenuPlanet.Visible = visible;
+            itemListTransferBeaconMenuPlanetList.Visible = visible;
+            labelTransferBeaconMenuResource.Visible = visible;
             itemListTransferBeaconMenuResourcesList.Visible = visible;
+            labelTransferBeaconMenuCount.Visible = visible;
             itemListTransferBeaconMenuCount.Visible = visible;
+            labelTransferBeaconMenuPreesEnterToBack.Visible = visible;
         }
 
         private void UpdatePlanetResourcesToPlayer()
@@ -895,6 +960,27 @@ namespace Contorio.Scenes
                 itemListTransferBeaconMenuResourcesList.AddItem(resource.Key);
             }
             itemListTransferBeaconMenuResourcesList.SelectedItem = ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Resource;
+        }
+
+        private void UpdateItemListTransferBeaconMenuCount()
+        {
+            itemListTransferBeaconMenuCount.ClearItems();
+            itemListTransferBeaconMenuCount.AddItem("" + 0);
+            for (int i = 2; i < ((TransferBeacon)resourceManager.Blocks[world.Planets[player.Planet].Blocks[player.Coord].Name]).MaxTransferableCount; i *= 2)
+            {
+                itemListTransferBeaconMenuCount.AddItem("" + i);
+            }
+            itemListTransferBeaconMenuCount.SelectedItem = "" + ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Count;
+        }
+
+        private void UpdateItemListTransferBeaconMenuPlanetList()
+        {
+            itemListTransferBeaconMenuPlanetList.ClearItems();
+            foreach (var planet in world.Planets)
+            {
+                itemListTransferBeaconMenuPlanetList.AddItem(planet.Name);
+            }
+            itemListTransferBeaconMenuPlanetList.SelectedIndex = ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Planet;
         }
 
         //old method
