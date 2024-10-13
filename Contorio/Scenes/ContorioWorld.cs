@@ -405,32 +405,14 @@ namespace Contorio.Scenes
                         break;
                 }
 
-                //Map
                 if (tileMap.Visible)
                 {
                     HandleKeyPressMap(keyInfo);
                 }
 
-                //Planet
                 if (!buildingMode && !researchMenu && !TABmenu)
                 {
-                    switch (keyInfo.Key)
-                    {
-                        case ConsoleKey.DownArrow:
-                            itemListPlanetList.NextItem();
-                            player.Planet = itemListPlanetList.SelectedIndex;
-                            player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                            loadMap(tileMap, world.Planets[player.Planet]);
-                            UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
-                            break;
-                        case ConsoleKey.UpArrow:
-                            itemListPlanetList.PreviousItem();
-                            player.Planet = itemListPlanetList.SelectedIndex;
-                            player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                            loadMap(tileMap, world.Planets[player.Planet]);
-                            UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
-                            break;
-                    }
+                    HandleKeyPressSwitchPlanet(keyInfo);
                 }
 
                 if (tileMap.Visible && buildingMode)
@@ -465,6 +447,27 @@ namespace Contorio.Scenes
                     break;
                 case ConsoleKey.D:
                     player.Move(1, 0);
+                    break;
+            }
+        }
+
+        void HandleKeyPressSwitchPlanet(ConsoleKeyInfo keyInfo)
+        {
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.DownArrow:
+                    itemListPlanetList.NextItem();
+                    player.Planet = itemListPlanetList.SelectedIndex;
+                    player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
+                    loadMap(tileMap, world.Planets[player.Planet]);
+                    UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
+                    break;
+                case ConsoleKey.UpArrow:
+                    itemListPlanetList.PreviousItem();
+                    player.Planet = itemListPlanetList.SelectedIndex;
+                    player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
+                    loadMap(tileMap, world.Planets[player.Planet]);
+                    UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
                     break;
             }
         }
