@@ -68,6 +68,9 @@ namespace Contorio.Scenes
         private Label labelPreesEToTransferPlayer;
         private Label labelPreesFToTransferPlanet;
 
+        private ItemList itemListPlanetsTransfer;
+
+
         // F3 UI
         private Label labelFPS;
 
@@ -265,7 +268,7 @@ namespace Contorio.Scenes
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
                 new Point(27, 2),
-                15,
+                12,
                 visible: false
             );
             labelPlayerResourcesToPlanet = new Label("RESOURCES", ConsoleColor.White, new Point(93 - "RESOURCES".Length, 1), visible: false);
@@ -273,7 +276,7 @@ namespace Contorio.Scenes
                 ConsoleColor.White,
                 ConsoleColor.Blue,
                 new Point(84, 2),
-                15,
+                12,
                 visible: false
             );
             labelCountResource = new Label("Count: 0", ConsoleColor.White, new Point((renderer.ScreenWidth / 2) - ("Count: 0".Length / 2), 1), visible: false);

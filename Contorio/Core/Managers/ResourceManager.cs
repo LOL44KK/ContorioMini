@@ -26,6 +26,7 @@ namespace Contorio
 
         public Dictionary<string, Block> Blocks { get { return _blocks; } }
         public Dictionary<string, Ground> Grounds { get { return _grounds; } }
+        
         public TileSet TileSet { get { return _tileSet; } }
         public Dictionary<string, int> TileIds { get { return _tileIds; } }
 

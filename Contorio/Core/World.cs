@@ -55,7 +55,7 @@ namespace Contorio
             int cost = 0;
             foreach (var ore in oreChance)
             {
-                cost += ore.Value * planetSize;
+                cost += ore.Value * (int)Math.Pow(planetSize, 1.5);
             }
             return cost;
         }
