@@ -8,7 +8,7 @@ namespace Contorio
         private Dictionary<string, int> _tokens;
         private Player _player;
         private ResearchSystem _researchSystem;
-        
+
         public List<Planet> Planets
         {
             get { return _planets; }

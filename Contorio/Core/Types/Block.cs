@@ -10,7 +10,8 @@ namespace Contorio
         FACTORY,
         ENERGY_POINT,
         SOLAR_PANEL,
-        CRYPTOR
+        CRYPTOR,
+        TRANSFER_BEACON
     }
 
     public class Block
@@ -118,6 +119,22 @@ namespace Contorio
         {
             _energyInput = energyInput;
             _outputToken = outputToken;
+        }
+    }
+
+    public class TransferBeacon : Block
+    {
+        private int _energyInput;
+        private int _maxTransferableCount;
+
+        public int EnergyInput => _energyInput;
+
+        public int MaxTransferableCount => _maxTransferableCount;
+
+        public TransferBeacon(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, int maxTransferableCount) : base(BlockType.TRANSFER_BEACON, name, sprite, research, cost) 
+        {
+            _energyInput = energyInput;
+            _maxTransferableCount = maxTransferableCount;
         }
     }
 }

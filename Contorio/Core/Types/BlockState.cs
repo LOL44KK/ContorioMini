@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace Contorio
 {
@@ -101,6 +102,36 @@ namespace Contorio
         public CryptorState(string name, Point? energyPoint = null) : base(name)
         {
             _energyPoint = energyPoint;
+        }
+    }
+
+    public class TransferBeaconState : BlockState
+    {
+        private Point? _droneStation;
+        private Point? _energyPoint;
+        private int _planet;
+        private string? _resource;
+        private int _count;
+
+        public Point? DroneStation
+        {
+            get { return _droneStation; }
+            set { _droneStation = value; }
+        }
+
+        public Point? EnergyPoint
+        {
+            get { return _energyPoint; }
+            set { _energyPoint = value; }
+        }
+
+        public TransferBeaconState(string name, Point? droneStation = null, Point? energyPoint = null, int planet = -1, string? resource = null, int count = 0) : base(name)
+        {
+            _droneStation = droneStation;
+            _energyPoint = energyPoint;
+            _planet = planet;
+            _resource = resource;
+            _count = count;
         }
     }
 }
