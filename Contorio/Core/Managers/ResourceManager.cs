@@ -28,12 +28,16 @@ namespace Contorio
         public Dictionary<string, Ground> Grounds { get { return _grounds; } }
         
         public TileSet TileSet { get { return _tileSet; } }
-        public Dictionary<string, int> TileIds { get { return _tileIds; } }
+        public IReadOnlyDictionary<string, int> TileIds 
+        { 
+            get { return _tileIds; } 
+        }
 
         private ResourceManager()
         {
             _blocks = new Dictionary<string, Block>();
             _grounds = new Dictionary<string, Ground>();
+            _tileSet = new TileSet(4, 3);
             _tileIds = new Dictionary<string, int>();
 
             Ground dirt = new Ground(
@@ -294,12 +298,14 @@ namespace Contorio
             );
             _blocks.Add(transferBeacon.Name, transferBeacon);
 
-            CreateTileSet();
+            InitializeTileSet();
         }
 
-        private void CreateTileSet()
+        private void InitializeTileSet()
         {
             _tileSet = new TileSet(4, 3);
+            _tileIds.Clear();
+
             foreach (Ground ground in _grounds.Values)
             {
                 _tileSet.AddTile(ground.Sprite);

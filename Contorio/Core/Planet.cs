@@ -79,7 +79,7 @@ namespace Contorio
             }
         }
 
-        public Planet(int size, Dictionary<string, int> oreChance)
+        public Planet(int size, Dictionary<string, int> oreChance, string dirt="dirt")
         {
             _blocks = new Dictionary<Point, BlockState>();
             _ground = new Dictionary<Point, GroundState>();
@@ -91,7 +91,7 @@ namespace Contorio
             {
                 for (int x = 0; x < size; x++)
                 {
-                    _ground[new Point(x, y)] = new GroundState("dirt");
+                    _ground[new Point(x, y)] = new GroundState(dirt);
                 }
             }
 

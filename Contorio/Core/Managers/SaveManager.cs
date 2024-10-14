@@ -2,7 +2,7 @@
 
 namespace Contorio
 {
-    public class SaveManager
+    public static class SaveManager
     {
         private static JsonSerializerOptions _options = new JsonSerializerOptions
         {
