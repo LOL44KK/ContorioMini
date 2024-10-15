@@ -1,10 +1,8 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
 namespace Contorio
 {
-
     [JsonDerivedType(typeof(DrillState), "DrillState")]
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]

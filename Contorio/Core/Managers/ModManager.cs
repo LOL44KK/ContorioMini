@@ -33,6 +33,28 @@
             get { return _author; }
             init { _author = value; }
         }
+
+        public List<Block> Blocks
+        {
+            get { return _blocks; }
+            init { _blocks = value; }
+        }
+
+        public List<Ground> Grounds 
+        { 
+            get { return _grounds; }
+            init { _grounds = value; }
+        }
+
+        Mod()
+        {
+            _name = "None";
+            _description = "None";
+            _version = "None";
+            _author = "None";
+            _blocks = new List<Block>();
+            _grounds = new List<Ground>();
+        }
     }
 
     public class ModManager

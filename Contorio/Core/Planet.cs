@@ -138,18 +138,25 @@ namespace Contorio
                 _blocks[coord] = new BlockState(block.Name);
                 ConnectNearbyBlocks(coord, BlockType.ENERGY_POINT);
             }
+            else if (block.Type == BlockType.SOLAR_PANEL)
+            {
+                _blocks[coord] = new SolarPanelState(
+                    block.Name,
+                    SearchEnergyPoint(coord)
+                );
+            }
+            else if (block.Type == BlockType.CRYPTOR)
+            {
+                _blocks[coord] = new CryptorState(
+                    block.Name,
+                    SearchEnergyPoint(coord)
+                );
+            }
             else if (block.Type == BlockType.DRILL)
             {
                 _blocks[coord] = new DrillState(
                     block.Name,
                     SearchDroneStation(coord),
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else if (block.Type == BlockType.SOLAR_PANEL)
-            {
-                _blocks[coord] = new SolarPanelState(
-                    block.Name,
                     SearchEnergyPoint(coord)
                 );
             }
@@ -161,13 +168,6 @@ namespace Contorio
                     SearchEnergyPoint(coord)
                 );
             }
-            else if (block.Type == BlockType.CRYPTOR)
-            {
-                _blocks[coord] = new CryptorState(
-                    block.Name,
-                    SearchEnergyPoint(coord)
-                );
-            }
             else if (block.Type == BlockType.TRANSFER_BEACON)
             {
                 _blocks[coord] = new TransferBeaconState(
@@ -176,7 +176,11 @@ namespace Contorio
                     SearchEnergyPoint(coord)
                 );
             }
-            return false;
+            else
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool RemoveBlock(Point coord)
@@ -259,7 +263,7 @@ namespace Contorio
             {
                 if (resourceManager.Blocks[block.Value.Name].Type == BlockType.DRONE_STATION)
                 {
-                    double distance = CalculateDistance(startCoord, block.Key);
+                    double distance = startCoord.DistanceTo(block.Key);
                     int range = ((DroneStation)resourceManager.Blocks[block.Value.Name]).Range;
 
                     if (distance < range && distance < closestDistance)
@@ -281,7 +285,7 @@ namespace Contorio
             {
                 if (resourceManager.Blocks[block.Value.Name].Type == BlockType.ENERGY_POINT)
                 {
-                    double distance = CalculateDistance(startCoord, block.Key);
+                    double distance = startCoord.DistanceTo(block.Key);
                     int range = ((EnergyPoint)resourceManager.Blocks[block.Value.Name]).Range;
 
                     if (distance < range && distance < closestDistance)
@@ -316,12 +320,28 @@ namespace Contorio
 
             foreach (var block in _blocks)
             {
-                double distance = CalculateDistance(coord, block.Key);
+                double distance = coord.DistanceTo(block.Key);
                 if (distance <= range)
                 {
                     BlockType blockType = resourceManager.Blocks[block.Value.Name].Type;
 
-                    if (blockType == BlockType.DRILL)
+                    if (blockType == BlockType.SOLAR_PANEL)
+                    {
+                        SolarPanelState solarPanelState = (SolarPanelState)block.Value;
+                        if (type == BlockType.ENERGY_POINT)
+                        {
+                            solarPanelState.EnergyPoint = coord;
+                        }
+                    }
+                    else if (blockType == BlockType.CRYPTOR)
+                    {
+                        CryptorState cryptorState = (CryptorState)block.Value;
+                        if (type == BlockType.ENERGY_POINT)
+                        {
+                            cryptorState.EnergyPoint = coord;
+                        }
+                    }
+                    else if (blockType == BlockType.DRILL)
                     {
                         DrillState drillState = (DrillState)block.Value;
                         if (type == BlockType.DRONE_STATION)
@@ -345,22 +365,6 @@ namespace Contorio
                             factoryState.EnergyPoint = coord;
                         }
                     }
-                    else if (blockType == BlockType.SOLAR_PANEL)
-                    {
-                        SolarPanelState solarPanelState = (SolarPanelState)block.Value;
-                        if (type == BlockType.ENERGY_POINT)
-                        {
-                            solarPanelState.EnergyPoint = coord;
-                        }
-                    }
-                    else if (blockType == BlockType.CRYPTOR)
-                    {
-                        CryptorState cryptorState = (CryptorState)block.Value;
-                        if (type == BlockType.ENERGY_POINT)
-                        {
-                            cryptorState.EnergyPoint = coord;
-                        }
-                    }
                     else if (blockType == BlockType.TRANSFER_BEACON)
                     {
                         TransferBeaconState factoryState = (TransferBeaconState)block.Value;
@@ -375,11 +379,6 @@ namespace Contorio
                     }
                 }
             }
-        }
-
-        private static double CalculateDistance(Point p1, Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
         }
     }
 }
