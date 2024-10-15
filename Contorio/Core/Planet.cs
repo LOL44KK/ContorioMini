@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Contorio
 {
@@ -126,59 +127,58 @@ namespace Contorio
             return prefixes[random.Next(prefixes.Count)] + roots[random.Next(roots.Count)] + "-" + suffixes[random.Next(suffixes.Count)];
         }
 
+        /// В функции ниже можно использовать ключевое слово is
+        /// для проверки на реализацию интерфейса. Это поможет избежать
+        /// дублирования кода.
+        /// Также для классов BlockState можно применить паттерн Абстрактная фабрика
+
         public bool SetBlock(Point coord, Block block)
         {
-            if (block.Type == BlockType.DRONE_STATION)
+            switch (block.Type)
             {
-                _blocks[coord] = new BlockState(block.Name);
-                ConnectNearbyBlocks(coord, BlockType.DRONE_STATION);
-            }
-            else if (block.Type == BlockType.ENERGY_POINT)
-            {
-                _blocks[coord] = new BlockState(block.Name);
-                ConnectNearbyBlocks(coord, BlockType.ENERGY_POINT);
-            }
-            else if (block.Type == BlockType.SOLAR_PANEL)
-            {
-                _blocks[coord] = new SolarPanelState(
-                    block.Name,
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else if (block.Type == BlockType.CRYPTOR)
-            {
-                _blocks[coord] = new CryptorState(
-                    block.Name,
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else if (block.Type == BlockType.DRILL)
-            {
-                _blocks[coord] = new DrillState(
-                    block.Name,
-                    SearchDroneStation(coord),
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else if (block.Type == BlockType.FACTORY)
-            {
-                _blocks[coord] = new FactoryState(
-                    block.Name,
-                    SearchDroneStation(coord),
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else if (block.Type == BlockType.TRANSFER_BEACON)
-            {
-                _blocks[coord] = new TransferBeaconState(
-                    block.Name,
-                    SearchDroneStation(coord),
-                    SearchEnergyPoint(coord)
-                );
-            }
-            else
-            {
-                return false;
+                case BlockType.DRONE_STATION:
+                    _blocks[coord] = new BlockState(block.Name);
+                    ConnectNearbyBlocks(coord, block);
+                    break;
+                case BlockType.ENERGY_POINT:
+                    _blocks[coord] = new BlockState(block.Name);
+                    ConnectNearbyBlocks(coord, block);
+                    break;
+                case BlockType.SOLAR_PANEL:
+                    _blocks[coord] = new SolarPanelState(
+                        block.Name,
+                        SearchEnergyPoint(coord)
+                    );
+                    break;
+                case BlockType.CRYPTOR:
+                    _blocks[coord] = new CryptorState(
+                        block.Name,
+                        SearchEnergyPoint(coord)
+                    );
+                    break;
+                case BlockType.DRILL:
+                    _blocks[coord] = new DrillState(
+                        block.Name,
+                        SearchDroneStation(coord),
+                        SearchEnergyPoint(coord)
+                    );
+                    break;
+                case BlockType.FACTORY:
+                    _blocks[coord] = new FactoryState(
+                       block.Name,
+                       SearchDroneStation(coord),
+                       SearchEnergyPoint(coord)
+                   );
+                    break;
+                case BlockType.TRANSFER_BEACON:
+                    _blocks[coord] = new TransferBeaconState(
+                        block.Name,
+                        SearchDroneStation(coord),
+                        SearchEnergyPoint(coord)
+                    );
+                    break;
+                default:
+                    return false;
             }
             return true;
         }
@@ -192,63 +192,78 @@ namespace Contorio
 
             ResourceManager resourceManager = ResourceManager.Instance;
 
-            BlockType type = resourceManager.Blocks[_blocks[coord].Name].Type;
+            Block blockToRemove = resourceManager.Blocks[_blocks[coord].Name];
 
             _blocks.Remove(coord);
 
-            foreach (var block in _blocks)
+            int range;
+            switch (blockToRemove.Type)
             {
-                if (resourceManager.Blocks[block.Value.Name].Type == BlockType.DRILL)
+                case BlockType.ENERGY_POINT:
+                    range = ((EnergyPoint)blockToRemove).Range;
+                    break;
+                case BlockType.DRONE_STATION:
+                    range = ((DroneStation)blockToRemove).Range;
+                    break;
+                default:
+                    return true;
+            }
+
+            foreach (var blockState in _blocks
+                .Where(pair => coord.DistanceTo(pair.Key) <= range))
+            {
+                Block block = resourceManager.Blocks[blockState.Value.Name];
+                
+                switch (block.Type)
                 {
-                    DrillState drillState = (DrillState)block.Value;
-                    if (type == BlockType.DRONE_STATION && drillState.DroneStation == coord)
-                    {
-                        drillState.DroneStation = SearchDroneStation(block.Key);
-                    }
-                    else if (type == BlockType.ENERGY_POINT && drillState.EnergyPoint == coord)
-                    {
-                        drillState.EnergyPoint = SearchEnergyPoint(block.Key);
-                    }
-                }
-                else if (resourceManager.Blocks[block.Value.Name].Type == BlockType.FACTORY)
-                {
-                    FactoryState factoryState = (FactoryState)block.Value;
-                    if (type == BlockType.DRONE_STATION && factoryState.DroneStation == coord)
-                    {
-                        factoryState.DroneStation = SearchDroneStation(block.Key);
-                    }
-                    else if (type == BlockType.ENERGY_POINT && factoryState.EnergyPoint == coord)
-                    {
-                        factoryState.EnergyPoint = SearchEnergyPoint(block.Key);
-                    }
-                }
-                else if (resourceManager.Blocks[block.Value.Name].Type == BlockType.SOLAR_PANEL)
-                {
-                    SolarPanelState solarPanelState = (SolarPanelState)block.Value;
-                    if (type == BlockType.ENERGY_POINT && solarPanelState.EnergyPoint == coord)
-                    {
-                        solarPanelState.EnergyPoint = SearchEnergyPoint(block.Key);
-                    }
-                }
-                else if (resourceManager.Blocks[block.Value.Name].Type == BlockType.CRYPTOR)
-                {
-                    CryptorState cryptorState = (CryptorState)block.Value;
-                    if (type == BlockType.CRYPTOR && cryptorState.EnergyPoint == coord)
-                    {
-                        cryptorState.EnergyPoint = SearchEnergyPoint(block.Key);
-                    }
-                }
-                else if (resourceManager.Blocks[block.Value.Name].Type == BlockType.TRANSFER_BEACON)
-                {
-                    TransferBeaconState factoryState = (TransferBeaconState)block.Value;
-                    if (type == BlockType.DRONE_STATION && factoryState.DroneStation == coord)
-                    {
-                        factoryState.DroneStation = SearchDroneStation(block.Key);
-                    }
-                    else if (type == BlockType.ENERGY_POINT && factoryState.EnergyPoint == coord)
-                    {
-                        factoryState.EnergyPoint = SearchEnergyPoint(block.Key);
-                    }
+                    case BlockType.SOLAR_PANEL:
+                        SolarPanelState solarPanelState = (SolarPanelState)blockState.Value;
+                        if (blockToRemove.Type == BlockType.ENERGY_POINT && solarPanelState.EnergyPoint == coord)
+                        {
+                            solarPanelState.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        }
+                        break;
+                    case BlockType.CRYPTOR:
+                        CryptorState cryptorState = (CryptorState)blockState.Value;
+                        if (blockToRemove.Type == BlockType.CRYPTOR && cryptorState.EnergyPoint == coord)
+                        {
+                            cryptorState.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        }
+                        break;
+                    case BlockType.DRILL:
+                        DrillState drillState = (DrillState)blockState.Value;
+                        if (blockToRemove.Type == BlockType.DRONE_STATION && drillState.DroneStation == coord)
+                        {
+                            drillState.DroneStation = SearchDroneStation(blockState.Key);
+                        }
+                        else if (blockToRemove.Type == BlockType.ENERGY_POINT && drillState.EnergyPoint == coord)
+                        {
+                            drillState.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        }
+                        break;
+                    case BlockType.FACTORY:
+                        FactoryState factoryState = (FactoryState)blockState.Value;
+                        if (blockToRemove.Type == BlockType.DRONE_STATION && factoryState.DroneStation == coord)
+                        {
+                            factoryState.DroneStation = SearchDroneStation(blockState.Key);
+                        }
+                        else if (blockToRemove.Type == BlockType.ENERGY_POINT && factoryState.EnergyPoint == coord)
+                        {
+                            factoryState.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        }
+                        break;
+                    case BlockType.TRANSFER_BEACON:
+                        TransferBeaconState transferBeaconState = (TransferBeaconState)blockState.Value;
+                        if (blockToRemove.Type == BlockType.DRONE_STATION && transferBeaconState.DroneStation == coord)
+                        {
+                            transferBeaconState.DroneStation = SearchDroneStation(blockState.Key);
+                        }
+                        else if (blockToRemove.Type == BlockType.ENERGY_POINT && transferBeaconState.EnergyPoint == coord)
+                        {
+                            transferBeaconState.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        }
+                        break;
+
                 }
             }
             return true;
@@ -298,85 +313,76 @@ namespace Contorio
             return closestStation;
         }
 
-        private void ConnectNearbyBlocks(Point coord, BlockType type)
+        private void ConnectNearbyBlocks(Point coord, Block toBlock)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
+            
             int range;
-
-            if (type == BlockType.DRONE_STATION)
+            switch (toBlock.Type)
             {
-                var station = (DroneStation)resourceManager.Blocks[_blocks[coord].Name];
-                range = station.Range;
-            }
-            else if (type == BlockType.ENERGY_POINT)
-            {
-                var energyPoint = (EnergyPoint)resourceManager.Blocks[_blocks[coord].Name];
-                range = energyPoint.Range;
-            }
-            else
-            {
-                return;
+                case BlockType.ENERGY_POINT:
+                    range = ((EnergyPoint)toBlock).Range;
+                    break;
+                case BlockType.DRONE_STATION:
+                    range = ((DroneStation)toBlock).Range;
+                    break;
+                default:
+                    return;
             }
 
-            foreach (var block in _blocks)
+            foreach (var blockState in _blocks
+                .Where((pair) => coord.DistanceTo(pair.Key) <= range)
+                .Select(pair => pair.Value))
             {
-                double distance = coord.DistanceTo(block.Key);
-                if (distance <= range)
+                switch (resourceManager.Blocks[blockState.Name].Type)
                 {
-                    BlockType blockType = resourceManager.Blocks[block.Value.Name].Type;
-
-                    if (blockType == BlockType.SOLAR_PANEL)
-                    {
-                        SolarPanelState solarPanelState = (SolarPanelState)block.Value;
-                        if (type == BlockType.ENERGY_POINT)
+                    case BlockType.SOLAR_PANEL:
+                        SolarPanelState solarPanelState = ((SolarPanelState)blockState);
+                        if (toBlock.Type == BlockType.ENERGY_POINT)
                         {
                             solarPanelState.EnergyPoint = coord;
                         }
-                    }
-                    else if (blockType == BlockType.CRYPTOR)
-                    {
-                        CryptorState cryptorState = (CryptorState)block.Value;
-                        if (type == BlockType.ENERGY_POINT)
+                        break;
+                    case BlockType.CRYPTOR:
+                        CryptorState cryptorState = (CryptorState)blockState;
+                        if (toBlock.Type == BlockType.ENERGY_POINT)
                         {
                             cryptorState.EnergyPoint = coord;
                         }
-                    }
-                    else if (blockType == BlockType.DRILL)
-                    {
-                        DrillState drillState = (DrillState)block.Value;
-                        if (type == BlockType.DRONE_STATION)
+                        break;
+                    case BlockType.DRILL:
+                        DrillState drillState = (DrillState)blockState;
+                        if (toBlock.Type == BlockType.DRONE_STATION)
                         {
                             drillState.DroneStation = coord;
                         }
-                        else if (type == BlockType.ENERGY_POINT)
+                        else if (toBlock.Type == BlockType.ENERGY_POINT)
                         {
                             drillState.EnergyPoint = coord;
                         }
-                    }
-                    else if (blockType == BlockType.FACTORY)
-                    {
-                        FactoryState factoryState = (FactoryState)block.Value;
-                        if (type == BlockType.DRONE_STATION)
+                        break;
+                    case BlockType.FACTORY:
+                        FactoryState factoryState = (FactoryState)blockState;
+                        if (toBlock.Type == BlockType.DRONE_STATION)
                         {
                             factoryState.DroneStation = coord;
                         }
-                        else if (type == BlockType.ENERGY_POINT)
+                        else if (toBlock.Type == BlockType.ENERGY_POINT)
                         {
                             factoryState.EnergyPoint = coord;
                         }
-                    }
-                    else if (blockType == BlockType.TRANSFER_BEACON)
-                    {
-                        TransferBeaconState factoryState = (TransferBeaconState)block.Value;
-                        if (type == BlockType.DRONE_STATION)
+                        break;
+                    case BlockType.TRANSFER_BEACON:
+                        TransferBeaconState transferBeaconState = (TransferBeaconState)blockState;
+                        if (toBlock.Type == BlockType.DRONE_STATION)
                         {
-                            factoryState.DroneStation = coord;
+                            transferBeaconState.DroneStation = coord;
                         }
-                        else if (type == BlockType.ENERGY_POINT)
+                        else if (toBlock.Type == BlockType.ENERGY_POINT)
                         {
-                            factoryState.EnergyPoint = coord;
+                            transferBeaconState.EnergyPoint = coord;
                         }
-                    }
+                        break;
                 }
             }
         }

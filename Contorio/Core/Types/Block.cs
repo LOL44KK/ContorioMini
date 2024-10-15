@@ -2,6 +2,9 @@
 
 namespace Contorio
 {
+    /// Для блоков, перечисленных ниже, можно создать интерфейсы,
+    /// такие как IEnergyInput.
+    
     public enum BlockType
     {
         BLOCK,

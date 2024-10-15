@@ -3,6 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace Contorio
 {
+    /// Для блоков, перечисленных ниже, можно создать интерфейсы,
+    /// такие как IConnectToDroneStation и IConnectToEnergyPoint.
+    /// Также можно применить паттерн Абстрактная фабрика
+    
     [JsonDerivedType(typeof(DrillState), "DrillState")]
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]
