@@ -13,8 +13,8 @@ namespace Contorio
 
         public void Run()
         {
-            ContorioWorld contorioWorld = new ContorioWorld(renderer);
             ContorioMenu contorioMenu = new ContorioMenu(renderer);
+            ContorioWorld contorioWorld = new ContorioWorld(renderer);
 
             while (true)
             {
