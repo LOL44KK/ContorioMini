@@ -331,7 +331,7 @@ namespace Contorio
                     new Dictionary<string, int>()
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
-                energyInput: 1,
+                energyInput: 10,
                 maxTransferableCount: 10
             );
             _blocks.Add(transferBeacon.Name, transferBeacon);
