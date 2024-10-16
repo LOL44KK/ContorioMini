@@ -7,8 +7,10 @@ namespace Contorio
         static void Main(string[] args)
         {
             new Contorio().Run();
+            
+            /*
             Note[] Mary =
-{
+            {
                 new Note(Tone.B, Duration.QUARTER),
                 new Note(Tone.A, Duration.QUARTER),
                 new Note(Tone.GbelowC, Duration.QUARTER),
@@ -24,6 +26,7 @@ namespace Contorio
                 new Note(Tone.D, Duration.HALF)
             };
             SoundPlayer.Play(Mary);
+            */
         }
     }
 }
