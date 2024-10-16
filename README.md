@@ -14,6 +14,7 @@ Terminal-based game about automation, factory construction, and planet.
 # Table of Contents
 - [Controls](#controls)
 - [What's Not Done Yet](#whats-not-done-yet)
+- [Wiki](https://github.com/LOL44KK/ContorioMini/wiki)
 
 # Controls
 - **W, A, S, D** — character movement.
