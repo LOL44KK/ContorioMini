@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Contorio
 {
@@ -122,8 +121,8 @@ namespace Contorio
 
             List<string> suffixes = new List<string>
             { "X", "Prime", "Major", "Minor", "Alpha", "Beta", "Gamma", "Delta" };
+            
             Random random = new Random();
-
             return prefixes[random.Next(prefixes.Count)] + roots[random.Next(roots.Count)] + "-" + suffixes[random.Next(suffixes.Count)];
         }
 

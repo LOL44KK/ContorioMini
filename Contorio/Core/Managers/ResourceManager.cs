@@ -177,9 +177,9 @@ namespace Contorio
                 name: "solar_panel",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
-                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
-                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) }
+                    { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) },
+                    { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) },
+                    { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) }
                 }),
                 energyOutput: 1,
                 research: new Research(
@@ -191,6 +191,44 @@ namespace Contorio
                 cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } }
                 );
             _blocks.Add(solarPanel.Name, solarPanel);
+
+            SolarPanel solarPanel_MK2 = new SolarPanel(
+                name: "solar_panel-MK2",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                                { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) },
+                                { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue) },
+                                { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) }
+                }),
+                energyOutput: 2,
+                research: new Research(
+                    "solar_panel-MK2",
+                    "energy",
+                    "solar_panel",
+                    new Dictionary<string, int>() { { "RS", 1000 } }
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 2 }, { "copper", 5 } }
+                );
+            _blocks.Add(solarPanel_MK2.Name, solarPanel_MK2);
+            
+            SolarPanel solarPanel_MK3 = new SolarPanel(
+                name: "solar_panel-MK3",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
+                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
+                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) }
+                }),
+                energyOutput: 4,
+                research: new Research(
+                    "solar_panel-MK3",
+                    "energy",
+                    "solar_panel-MK2",
+                    new Dictionary<string, int>() { { "RS", 100000 } }
+                ),
+                cost: new Dictionary<string, int>() { { "iron", 5 }, { "copper", 10 } }
+                );
+            _blocks.Add(solarPanel_MK3.Name, solarPanel_MK3);
 
             Factory smelterIron = new Factory(
                 name: "smelter-iron",
