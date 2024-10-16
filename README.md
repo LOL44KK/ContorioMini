@@ -13,6 +13,7 @@ Terminal-based game about automation, factory construction, and planet.
 
 # Table of Contents
 - [Controls](#controls)
+- [What's Not Done Yet](#whats-not-done-yet)
 
 # Controls
 - **W, A, S, D** — character movement.
