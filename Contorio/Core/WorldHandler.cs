@@ -3,6 +3,7 @@ using System.Drawing;
 
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
+using Contorio.Core.Interfaces;
 
 namespace Contorio.Core
 {
@@ -46,52 +47,71 @@ namespace Contorio.Core
             ResourceManager resourceManager = ResourceManager.Instance;
             Block block = resourceManager.Blocks[blockState.Name];
 
-            if (block.Type == BlockType.ENERGY_POINT || block.Type == BlockType.DRONE_STATION)
+            // Проверка на не обрабатываемые типы
+            if (
+                block.Type == BlockType.ENERGY_POINT ||
+                block.Type == BlockType.DRONE_STATION
+                )
             {
                 return;
             }
 
-            //SolarPanel
-            else if (block.Type == BlockType.SOLAR_PANEL && ((SolarPanelState)blockState).EnergyPoint != null)
+            // Проверка на потребление электричества
+            IEnergyInput? energyInput = null;
+            if (block is IEnergyInput iEnergyInput)
             {
-                planet.Energy += ((SolarPanel)block).EnergyOutput;
-            }
-
-            //Drill
-            else if (block.Type == BlockType.DRILL && ((DrillState)blockState).DroneStation != null && ((DrillState)blockState).EnergyPoint != null)
-            {
-                GroundState? groundState;
-                if (planet.Ground.TryGetValue(blockCoord, out groundState))
-                {
-                    Ground ground = resourceManager.Grounds[groundState.Name];
-                    if (ground.Type == GroundType.ORE && planet.Energy >= ((Drill)block).EnergyInput)
-                    {
-                        planet.Resources[((Ore)ground).Product] = planet.Resources.GetValueOrDefault(((Ore)ground).Product, 0) + ((Drill)block).Speed;
-                        planet.Energy -= ((Drill)block).EnergyInput;
-                    }
-                }
-            }
-
-            //Factory
-            else if (block.Type == BlockType.FACTORY && ((FactoryState)blockState).DroneStation != null && ((FactoryState)blockState).EnergyPoint != null)
-            {
-                if (planet.Energy < ((Factory)block).EnergyInput)
+                if (planet.Energy < iEnergyInput.EnergyInput)
                 {
                     return;
                 }
-                Recipe recipe = ((Factory)block).Recipe;
-                bool work = true;
-                foreach (var input in recipe.Input)
+                energyInput = iEnergyInput;
+            }
+
+            // Проверка на базовые подключения
+            if (blockState is IConnectToDroneStation iConnectToDroneStation)
+            {
+                if (iConnectToDroneStation.DroneStation == null)
                 {
-                    if (planet.Resources.GetValueOrDefault(input.Key, 0) < input.Value)
-                    {
-                        work = false;
-                        break;
-                    }
+                    return;
                 }
-                if (work)
+            }
+            if (blockState is IConnectToEnergyPoint iConnectToEnergyPoint)
+            {
+                if (iConnectToEnergyPoint.EnergyPoint == null)
                 {
-                    planet.Energy -= ((Factory)block).EnergyInput;
+                    return;
+                }
+            }
+
+            // Оброботка Блока
+            switch (block.Type)
+            {
+                case BlockType.SOLAR_PANEL:
+                    planet.Energy += ((SolarPanel)block).EnergyOutput;
+                    break;
+                
+                case BlockType.DRILL:
+                    GroundState? groundState;
+                    if (planet.Ground.TryGetValue(blockCoord, out groundState))
+                    {
+                        Ground ground = resourceManager.Grounds[groundState.Name];
+                        if (ground.Type == GroundType.ORE)
+                        {
+                            planet.Resources[((Ore)ground).Product] = planet.Resources.GetValueOrDefault(((Ore)ground).Product, 0) + ((Drill)block).Speed;
+                        }
+                    }
+                    break;
+                
+                case BlockType.FACTORY:
+                    Recipe recipe = ((Factory)block).Recipe;
+                    foreach (var input in recipe.Input)
+                    {
+                        if (planet.Resources.GetValueOrDefault(input.Key, 0) < input.Value)
+                        {
+                            return;
+                        }
+                    }
+
                     foreach (var input in recipe.Input)
                     {
                         planet.Resources[input.Key] = planet.Resources.GetValueOrDefault(input.Key, 0) - input.Value;
@@ -100,42 +120,36 @@ namespace Contorio.Core
                     {
                         planet.Resources[output.Key] = planet.Resources.GetValueOrDefault(output.Key, 0) + output.Value;
                     }
-                }
+                    break;
+                
+                case BlockType.CRYPTOR:
+                    foreach (var token in ((Cryptor)block).OutputToken)
+                    {
+                        _world.Tokens[token.Key] = _world.Tokens.GetValueOrDefault(token.Key, 0) + token.Value;
+                    }
+                    break;
+                
+                case BlockType.TRANSFER_BEACON:
+                    TransferBeaconState transferBeaconState = (TransferBeaconState)blockState;
+                    if (transferBeaconState.Count <= 0 || 
+                        transferBeaconState.Planet == -1 || 
+                        transferBeaconState.Planet >= _world.Planets.Count || 
+                        transferBeaconState.Resource == null)
+                    {
+                        return;
+                    }
+                    if (planet.Resources.GetValueOrDefault(transferBeaconState.Resource, 0) >= transferBeaconState.Count)
+                    {
+                        planet.Resources[transferBeaconState.Resource] -= transferBeaconState.Count;
+                        _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] = _world.Planets[transferBeaconState.Planet].Resources.GetValueOrDefault(transferBeaconState.Resource, 0) + transferBeaconState.Count;
+                    }
+                    break;
             }
 
-            //Cryptor
-            else if (block.Type == BlockType.CRYPTOR && ((CryptorState)blockState).EnergyPoint != null)
+            //
+            if (energyInput != null)
             {
-                if (planet.Energy < ((Cryptor)block).EnergyInput)
-                {
-                    return;
-                }
-                planet.Energy -= ((Cryptor)block).EnergyInput;
-                foreach (var token in ((Cryptor)block).OutputToken)
-                {
-                    _world.Tokens[token.Key] = _world.Tokens.GetValueOrDefault(token.Key, 0) + token.Value;
-                }
-            }
-
-            //TransferBeacon
-            else if (block.Type == BlockType.TRANSFER_BEACON && ((TransferBeaconState)blockState).DroneStation != null && ((TransferBeaconState)blockState).EnergyPoint != null)
-            {
-                TransferBeaconState transferBeaconState = (TransferBeaconState)blockState;
-                if (transferBeaconState.Count <= 0 || transferBeaconState.Planet == -1 || transferBeaconState.Planet >= _world.Planets.Count || transferBeaconState.Resource == null)
-                {
-                    return;
-                }
-
-                if (planet.Energy < ((TransferBeacon)block).EnergyInput)
-                {
-                    return;
-                }
-                if (planet.Resources.GetValueOrDefault(transferBeaconState.Resource, 0) >= transferBeaconState.Count)
-                {
-                    planet.Resources[transferBeaconState.Resource] -= transferBeaconState.Count;
-                    _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] = _world.Planets[transferBeaconState.Planet].Resources.GetValueOrDefault(transferBeaconState.Resource, 0) + transferBeaconState.Count;
-                    planet.Energy -= ((TransferBeacon)block).EnergyInput;
-                }
+                planet.Energy -= energyInput.EnergyInput;
             }
         }
     }

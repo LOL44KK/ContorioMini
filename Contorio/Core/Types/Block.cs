@@ -1,4 +1,5 @@
 ﻿using Contorio.CharGraphics;
+using Contorio.Core.Interfaces;
 
 namespace Contorio.Core.Types
 {    
@@ -63,7 +64,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class Drill : Block
+    public class Drill : Block, IEnergyInput
     {
         private int _speed;
         int _energyInput;
@@ -91,7 +92,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class Factory : Block
+    public class Factory : Block, IEnergyInput
     {
         private int _energyInput;
         private Recipe _recipe;
@@ -107,7 +108,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class Cryptor : Block
+    public class Cryptor : Block, IEnergyInput
     {
         private int _energyInput;
         private Dictionary<string, int> _outputToken;
@@ -122,7 +123,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class TransferBeacon : Block
+    public class TransferBeacon : Block, IEnergyInput
     {
         private int _energyInput;
         private int _maxTransferableCount;
