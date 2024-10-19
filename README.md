@@ -6,7 +6,8 @@
 ╚██████╗╚██████╔╝██║ ╚████║   ██║   ╚██████╔╝██║  ██║██║╚██████╔╝██║ ╚═╝ ██║██║██║ ╚████║██║
  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝
 ```
-
+# Latest release
+- [Download](https://github.com/LOL44KK/ContorioMini/releases/latest)
 
 # Description
 Terminal-based game about automation, factory construction, and planet.
@@ -14,6 +15,7 @@ Terminal-based game about automation, factory construction, and planet.
 # Table of Contents
 - [Wiki](https://github.com/LOL44KK/ContorioMini/wiki)
 - [Controls](#controls)
+- [Install](https://github.com/LOL44KK/ContorioMini/releases/latest)
 - [What's Not Done Yet](#whats-not-done-yet)
 
 # Controls
