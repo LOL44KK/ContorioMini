@@ -1,10 +1,7 @@
 ﻿using Contorio.CharGraphics;
 
 namespace Contorio.Core.Types
-{
-    /// Для блоков, перечисленных ниже, можно создать интерфейсы,
-    /// такие как IEnergyInput.
-    
+{    
     public enum BlockType
     {
         BLOCK,

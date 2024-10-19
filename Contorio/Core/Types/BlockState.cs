@@ -1,12 +1,10 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
 
+using Contorio.Core.Interfaces;
+
 namespace Contorio.Core.Types
 {
-    /// Для блоков, перечисленных ниже, можно создать интерфейсы,
-    /// такие как IConnectToDroneStation и IConnectToEnergyPoint.
-    /// Также можно применить паттерн Абстрактная фабрика
-    
     [JsonDerivedType(typeof(DrillState), "DrillState")]
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]
@@ -28,7 +26,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class DrillState : BlockState
+    public class DrillState : BlockState, IConnectToDroneStation, IConnectToEnergyPoint
     {
         private Point? _droneStation;
         private Point? _energyPoint;
@@ -52,7 +50,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class SolarPanelState : BlockState
+    public class SolarPanelState : BlockState, IConnectToEnergyPoint
     {
         private Point? _energyPoint;
 
@@ -68,7 +66,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class FactoryState : BlockState
+    public class FactoryState : BlockState, IConnectToDroneStation, IConnectToEnergyPoint
     {
         private Point? _droneStation;
         private Point? _energyPoint;
@@ -92,7 +90,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class CryptorState : BlockState
+    public class CryptorState : BlockState, IConnectToEnergyPoint
     {
         private Point? _energyPoint;
 
@@ -108,7 +106,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    public class TransferBeaconState : BlockState
+    public class TransferBeaconState : BlockState, IConnectToDroneStation, IConnectToEnergyPoint
     {
         private Point? _droneStation;
         private Point? _energyPoint;
