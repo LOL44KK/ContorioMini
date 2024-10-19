@@ -1,6 +1,6 @@
 ﻿using Contorio.CharGraphics;
 
-namespace Contorio
+namespace Contorio.Core.Types
 {
     /// Для блоков, перечисленных ниже, можно создать интерфейсы,
     /// такие как IEnergyInput.

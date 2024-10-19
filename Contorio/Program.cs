@@ -1,6 +1,4 @@
-﻿using Contorio.CharGraphics.Sound;
-
-namespace Contorio
+﻿namespace Contorio
 {
     internal class Program
     {

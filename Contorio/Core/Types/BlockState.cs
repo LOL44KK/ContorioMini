@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
 
-namespace Contorio
+namespace Contorio.Core.Types
 {
     /// Для блоков, перечисленных ниже, можно создать интерфейсы,
     /// такие как IConnectToDroneStation и IConnectToEnergyPoint.

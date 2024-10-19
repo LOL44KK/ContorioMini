@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 
-namespace Contorio
+using Contorio.Core.Types;
+using Contorio.Core.Managers;
+
+namespace Contorio.Core
 {
     public class Planet
     {

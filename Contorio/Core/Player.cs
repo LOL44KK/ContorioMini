@@ -1,9 +1,9 @@
-﻿using Contorio.CharGraphics.Widgets;
-using System.Drawing;
-using System.Numerics;
-using System.Resources;
+﻿using System.Drawing;
 
-namespace Contorio
+using Contorio.Core.Types;
+using Contorio.Core.Managers;
+
+namespace Contorio.Core
 {
     public class Player
     {

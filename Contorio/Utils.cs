@@ -2,6 +2,9 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
+using Contorio.Core;
+using Contorio.Core.Types;
+
 namespace Contorio
 {
     public static class PointExtensions

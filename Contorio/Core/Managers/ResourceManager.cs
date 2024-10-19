@@ -1,6 +1,8 @@
 ﻿using Contorio.CharGraphics;
 
-namespace Contorio
+using Contorio.Core.Types;
+
+namespace Contorio.Core.Managers
 {
     //Singleton
     public class ResourceManager

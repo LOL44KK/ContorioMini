@@ -1,4 +1,6 @@
-﻿namespace Contorio
+﻿using Contorio.Core.Types;
+
+namespace Contorio.Core.Managers
 {
     public class Mod
     {

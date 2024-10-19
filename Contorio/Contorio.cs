@@ -1,5 +1,7 @@
 ﻿using Contorio.CharGraphics;
 using Contorio.Scenes;
+using Contorio.Core;
+using Contorio.Core.Managers;
 
 namespace Contorio
 {

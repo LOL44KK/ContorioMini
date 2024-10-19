@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 
-namespace Contorio
+using Contorio.Core.Types;
+
+namespace Contorio.Core.Managers
 {
     public static class SaveManager
     {

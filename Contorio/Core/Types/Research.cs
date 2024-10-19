@@ -1,4 +1,4 @@
-﻿namespace Contorio
+﻿namespace Contorio.Core.Types
 {
     public class Research
     {

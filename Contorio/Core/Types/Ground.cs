@@ -1,6 +1,6 @@
 ﻿using Contorio.CharGraphics;
 
-namespace Contorio
+namespace Contorio.Core.Types
 {
     public enum GroundType
     {
