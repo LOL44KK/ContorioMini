@@ -212,16 +212,16 @@ namespace Contorio.Core
             {
                 if (blockToRemove.Type == BlockType.ENERGY_POINT)
                 {
-                    if (blockState.Value is IConnectToEnergyPoint)
+                    if (blockState.Value is IConnectToEnergyPoint iConnectToEnergyPoint)
                     {
-                        ((IConnectToEnergyPoint)blockState.Value).EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        iConnectToEnergyPoint.EnergyPoint = SearchEnergyPoint(blockState.Key);
                     }
                 }
                 else if(blockToRemove.Type == BlockType.DRONE_STATION)
                 {
-                    if (blockState.Value is IConnectToDroneStation)
+                    if (blockState.Value is IConnectToDroneStation iConnectToDroneStation)
                     {
-                        ((IConnectToDroneStation)blockState.Value).DroneStation = SearchDroneStation(blockState.Key);
+                        iConnectToDroneStation.DroneStation = SearchDroneStation(blockState.Key);
                     }
                 }
             }
@@ -295,16 +295,16 @@ namespace Contorio.Core
             {
                 if (toBlock.Type == BlockType.ENERGY_POINT)
                 {
-                    if (blockState is IConnectToEnergyPoint)
+                    if (blockState is IConnectToEnergyPoint iConnectToEnergyPoint)
                     {
-                        ((IConnectToEnergyPoint)blockState).EnergyPoint = coord;
+                        iConnectToEnergyPoint.EnergyPoint = coord;
                     }
                 }
                 else if (toBlock.Type == BlockType.DRONE_STATION)
                 {
-                    if (blockState is IConnectToDroneStation)
+                    if (blockState is IConnectToDroneStation iConnectToDroneStation)
                     {
-                        ((IConnectToDroneStation)blockState).DroneStation = coord;
+                        iConnectToDroneStation.DroneStation = coord;
                     }
                 }
             }
