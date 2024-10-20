@@ -1,9 +1,24 @@
-﻿using System.Text.Json;
+﻿using System.Drawing;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using Contorio.Core.Types;
+using Contorio.Utils;
 
 namespace Contorio.Core.Managers
 {
+    [JsonSerializable(typeof(Point))]
+    [JsonSerializable(typeof(World))]
+    [JsonSerializable(typeof(Planet))]
+    [JsonSerializable(typeof(Player))]
+    [JsonSerializable(typeof(Research))]
+    [JsonSerializable(typeof(ResearchSystem))]
+    [JsonSerializable(typeof(Dictionary<Point, BlockState>))]
+    [JsonSerializable(typeof(Dictionary<Point, GroundState>))]
+    public partial class MyJsonContext : JsonSerializerContext
+    {
+    }
+
     public static class SaveManager
     {
         private static JsonSerializerOptions _options = new JsonSerializerOptions

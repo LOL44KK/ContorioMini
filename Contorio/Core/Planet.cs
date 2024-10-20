@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 
+using Contorio.Utils;
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
 using Contorio.Core.Interfaces;
@@ -56,7 +57,7 @@ namespace Contorio.Core
             _blocks = new Dictionary<Point, BlockState>();
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
-            _name = GenerateName();
+            _name = GeneratePlanetName.GenerateName();
             _size = 33;
 
             for (int y = 0; y < 33; y++)
@@ -88,7 +89,7 @@ namespace Contorio.Core
             _blocks = new Dictionary<Point, BlockState>();
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
-            _name = GenerateName();
+            _name = GeneratePlanetName.GenerateName();
             _size = size;
 
             for (int y = 0; y < size; y++)
@@ -113,21 +114,6 @@ namespace Contorio.Core
                     }
                 }
             }
-        }
-
-        private string GenerateName()
-        {
-            List<string> prefixes = new List<string>
-            { "Neo", "Exo", "Zeta", "Omega", "Alpha", "Nova", "Astro", "Cosmo" };
-
-            List<string> roots = new List<string>
-            { "terra", "tron", "prime", "mund", "stella", "orbis", "sphere", "globe" };
-
-            List<string> suffixes = new List<string>
-            { "X", "Prime", "Major", "Minor", "Alpha", "Beta", "Gamma", "Delta" };
-            
-            Random random = new Random();
-            return prefixes[random.Next(prefixes.Count)] + roots[random.Next(roots.Count)] + "-" + suffixes[random.Next(suffixes.Count)];
         }
 
         public bool SetBlock(Point coord, Block block)

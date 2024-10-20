@@ -2,19 +2,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using Contorio.Core;
-using Contorio.Core.Types;
-
-namespace Contorio
+namespace Contorio.Utils
 {
-    public static class PointExtensions
-    {
-        public static double DistanceTo(this Point p1, Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
-        }
-    }
-
     public class PointDictionaryConverter<TValue> : JsonConverter<Dictionary<Point, TValue>>
     {
         public override Dictionary<Point, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -35,12 +24,12 @@ namespace Contorio
 
                 string? key = reader.GetString();
                 string[] parts = key.Split(',');
-                
+
                 Point point = new Point(int.Parse(parts[0]), int.Parse(parts[1]));
 
                 reader.Read();
                 TValue? value = JsonSerializer.Deserialize<TValue>(ref reader, options);
-                
+
                 dictionary[point] = value;
             }
 
@@ -58,18 +47,5 @@ namespace Contorio
             }
             writer.WriteEndObject();
         }
-    }
-
-    [JsonSerializable(typeof(Point))]
-    [JsonSerializable(typeof(World))]
-    [JsonSerializable(typeof(Planet))]
-    [JsonSerializable(typeof(Player))]
-    [JsonSerializable(typeof(Research))]
-    [JsonSerializable(typeof(ResearchSystem))]
-    [JsonSerializable(typeof(Dictionary<Point, BlockState>))]
-    [JsonSerializable(typeof(Dictionary<Point, GroundState>))]
-    public partial class MyJsonContext : JsonSerializerContext
-    {
-
     }
 }
