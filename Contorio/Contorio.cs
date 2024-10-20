@@ -15,6 +15,9 @@ namespace Contorio
 
         public void Run()
         {
+            ModManager.Instance.AddMode(new BaseMod());
+            ModManager.Instance.InitializeResources();
+
             ContorioMenu contorioMenu = new ContorioMenu(renderer);
             ContorioWorld contorioWorld = new ContorioWorld(renderer);
 
