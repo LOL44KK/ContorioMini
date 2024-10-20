@@ -5,6 +5,7 @@ using Contorio.Core.Interfaces;
 
 namespace Contorio.Core.Types
 {
+    // Используется для хранение состояния блока
     [JsonDerivedType(typeof(DrillState), "DrillState")]
     [JsonDerivedType(typeof(FactoryState), "FactoryState")]
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]

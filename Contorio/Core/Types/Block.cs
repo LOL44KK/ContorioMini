@@ -15,6 +15,7 @@ namespace Contorio.Core.Types
         TRANSFER_BEACON
     }
 
+    // Используется для хранение характеристик блока
     public class Block
     {
         private BlockType _type;
