@@ -61,7 +61,7 @@ namespace Contorio.Scenes
         private Label labelPressGtoSearchPlanet;
 
         // Resource transfer UI (TAB menu)
-        private Label labelResourcesToPlayer;
+        private Label labelPlanetResourcesToPlayer;
         private ItemList itemListPlanetResourcesToPlayer;
         private Label labelPlayerResourcesToPlanet;
         private ItemList itemListPlayerResourcesToPlanet;
@@ -273,7 +273,7 @@ namespace Contorio.Scenes
             labelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible: false);
             labelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
 
-            labelResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1), visible: false);
+            labelPlanetResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1), visible: false);
             itemListPlanetResourcesToPlayer = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
@@ -369,7 +369,7 @@ namespace Contorio.Scenes
             scene.AddSprite(labelPalkaPeredCostSearchPlanet);
             scene.AddSprite(labelPressGtoSearchPlanet);
 
-            scene.AddSprite(labelResourcesToPlayer);
+            scene.AddSprite(labelPlanetResourcesToPlayer);
             scene.AddSprite(itemListPlanetResourcesToPlayer);
             scene.AddSprite(labelPlayerResourcesToPlanet);
             scene.AddSprite(itemListPlayerResourcesToPlanet);
@@ -848,7 +848,7 @@ namespace Contorio.Scenes
         {
             TABmenu = visible;
 
-            labelResourcesToPlayer.Visible = visible;
+            labelPlanetResourcesToPlayer.Visible = visible;
             itemListPlanetResourcesToPlayer.Visible = visible;
             labelPlayerResourcesToPlanet.Visible = visible;
             itemListPlayerResourcesToPlanet.Visible = visible;
