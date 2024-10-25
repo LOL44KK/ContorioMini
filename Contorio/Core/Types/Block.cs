@@ -12,7 +12,8 @@ namespace Contorio.Core.Types
         ENERGY_POINT,
         SOLAR_PANEL,
         CRYPTOR,
-        TRANSFER_BEACON
+        TRANSFER_BEACON,
+        ENERGY_GENERATOR
     }
 
     // Используется для хранение характеристик блока
@@ -47,7 +48,7 @@ namespace Contorio.Core.Types
 
         public int Range => _range;
 
-        public DroneStation(string name, Sprite sprite, Research research, int range, Dictionary<string, int> cost) : base(BlockType.DRONE_STATION, name, sprite, research, cost)
+        public DroneStation(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int range) : base(BlockType.DRONE_STATION, name, sprite, research, cost)
         {
             _range = range;
         }
@@ -59,7 +60,7 @@ namespace Contorio.Core.Types
 
         public int Range => _range;
 
-        public EnergyPoint(string name, Sprite sprite, Research research, int range, Dictionary<string, int> cost) : base(BlockType.ENERGY_POINT, name, sprite, research, cost)
+        public EnergyPoint(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int range) : base(BlockType.ENERGY_POINT, name, sprite, research, cost)
         {
             _range = range;
         }
@@ -74,7 +75,7 @@ namespace Contorio.Core.Types
 
         public int EnergyInput => _energyInput;
 
-        public Drill(string name, Sprite sprite, Research research, int speed, int energyInput, Dictionary<string, int> cost) : base(BlockType.DRILL, name, sprite, research, cost)
+        public Drill(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int speed, int energyInput) : base(BlockType.DRILL, name, sprite, research, cost)
         {
             _speed = speed;
             _energyInput = energyInput;
@@ -87,7 +88,7 @@ namespace Contorio.Core.Types
 
         public int EnergyOutput => _energyOutput;
 
-        public SolarPanel(string name, Sprite sprite, Research research, int energyOutput, Dictionary<string, int> cost) : base(BlockType.SOLAR_PANEL, name, sprite, research, cost)
+        public SolarPanel(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyOutput) : base(BlockType.SOLAR_PANEL, name, sprite, research, cost)
         {
             _energyOutput = energyOutput;
         }
@@ -102,7 +103,7 @@ namespace Contorio.Core.Types
 
         public Recipe Recipe => _recipe;
 
-        public Factory(string name, Sprite sprite, Research research, int energyInput, Recipe recipe, Dictionary<string, int> cost) : base(BlockType.FACTORY, name, sprite, research, cost)
+        public Factory(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, Recipe recipe) : base(BlockType.FACTORY, name, sprite, research, cost)
         {
             _energyInput = energyInput;
             _recipe = recipe;
@@ -117,7 +118,7 @@ namespace Contorio.Core.Types
         public int EnergyInput => _energyInput;
         public IReadOnlyDictionary<string, int> OutputToken => _outputToken;
 
-        public Cryptor(string name, Sprite sprite, Research research, int energyInput, Dictionary<string, int> outputToken, Dictionary<string, int> cost) : base(BlockType.CRYPTOR, name, sprite, research, cost)
+        public Cryptor(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, Dictionary<string, int> outputToken) : base(BlockType.CRYPTOR, name, sprite, research, cost)
         {
             _energyInput = energyInput;
             _outputToken = outputToken;
@@ -137,6 +138,21 @@ namespace Contorio.Core.Types
         {
             _energyInput = energyInput;
             _maxTransferableCount = maxTransferableCount;
+        }
+    }
+
+    public class EnergyGenerator : Block
+    {
+        private int _energyOutput;
+        private Recipe _recipe;
+
+        public int EnergyOutput => _energyOutput;
+        public Recipe Recipe => _recipe;
+
+        public EnergyGenerator(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyOutput, Recipe recipe) : base(BlockType.ENERGY_GENERATOR, name, sprite, research, cost)
+        {
+            _energyOutput = energyOutput;
+            _recipe = recipe;
         }
     }
 }

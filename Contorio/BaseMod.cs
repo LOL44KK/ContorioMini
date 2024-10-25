@@ -16,6 +16,7 @@ namespace Contorio
             Blocks = new List<Block>();
             Grounds = new List<Ground>();
 
+            // Ground
             Ground dirt = new Ground(
                 type: GroundType.DIR,
                 name: "dirt",
@@ -51,6 +52,9 @@ namespace Contorio
             );
             Grounds.Add(copperOre);
 
+
+
+            // Block
             DroneStation droneStation = new DroneStation(
                 name: "drone_station",
                 sprite: new Sprite(new Pixel[3, 4]
@@ -59,14 +63,14 @@ namespace Contorio
                     { new Pixel(' ', ConsoleColor.White), new Pixel('#', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel('%', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel('%', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
                 }),
-                range: 4,
                 research: new Research(
                     "drone_station",
                     "logic",
                     null,
                     new Dictionary<string, int>()
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                    ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                range: 4
                 );
             Blocks.Add(droneStation);
 
@@ -78,14 +82,14 @@ namespace Contorio
                     { new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow) },
                     { new Pixel(' ', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel(' ', ConsoleColor.DarkYellow) }
                 }),
-                range: 4,
                 research: new Research(
                     "energy_point",
                     "energy",
                     null,
                     new Dictionary<string, int>()
-                ),
-                cost: new Dictionary<string, int>() { { "copper", 5 } }
+                    ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                range: 4
                 );
             Blocks.Add(energyPoint);
 
@@ -97,15 +101,15 @@ namespace Contorio
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
                 }),
-                speed: 1,
-                energyInput: 1,
                 research: new Research(
                     "drill",
                     "mining",
                     null,
                     new Dictionary<string, int>()
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                    )
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                speed: 1,
+                energyInput: 1
                 );
             Blocks.Add(drill);
 
@@ -117,15 +121,15 @@ namespace Contorio
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
                 }),
-                speed: 3,
-                energyInput: 2,
                 research: new Research(
                     "drill-MK2",
                     "mining",
                     "drill",
                     new Dictionary<string, int>() { { "RS", 10000 } }
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                    ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                speed: 3,
+                energyInput: 2
                 );
             Blocks.Add(drill_MK2);
 
@@ -137,8 +141,6 @@ namespace Contorio
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel(' ', ConsoleColor.White), new Pixel('*', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) }
                 }),
-                speed: 8,
-                energyInput: 5,
                 research: new Research(
                     "drill-MK3",
                     "mining",
@@ -146,6 +148,8 @@ namespace Contorio
                     new Dictionary<string, int>() { { "RS", 10000000 } }
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } }
+                speed: 8,
+                energyInput: 5
             );
             Blocks.Add(drill_MK3);
 
@@ -157,14 +161,14 @@ namespace Contorio
                     { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) },
                     { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) }
                 }),
-                energyOutput: 1,
+                cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } }
                 research: new Research(
                     "solar_panel",
                     "energy",
                     null,
                     new Dictionary<string, int>()
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } }
+                    ),
+                energyOutput: 1
                 );
             Blocks.Add(solarPanel);
 
@@ -172,18 +176,18 @@ namespace Contorio
                 name: "solar_panel-MK2",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                                { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) },
-                                { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue) },
-                                { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) }
+                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) },
+                    { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue) },
+                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) }
                 }),
-                energyOutput: 2,
+                cost: new Dictionary<string, int>() { { "iron", 2 }, { "copper", 5 } },
                 research: new Research(
                     "solar_panel-MK2",
                     "energy",
                     "solar_panel",
                     new Dictionary<string, int>() { { "RS", 1000 } }
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 2 }, { "copper", 5 } }
+                    ),
+                energyOutput: 2
                 );
             Blocks.Add(solarPanel_MK2);
 
@@ -191,18 +195,18 @@ namespace Contorio
                 name: "solar_panel-MK3",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
-                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
-                                            { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) }
+                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
+                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
+                    { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) }
                 }),
-                energyOutput: 4,
                 research: new Research(
                     "solar_panel-MK3",
                     "energy",
                     "solar_panel-MK2",
                     new Dictionary<string, int>() { { "RS", 100000 } }
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 5 }, { "copper", 10 } }
+                    ),
+                cost: new Dictionary<string, int>() { { "iron", 5 }, { "copper", 10 } },
+                energyOutput: 4
                 );
             Blocks.Add(solarPanel_MK3);
 
@@ -214,18 +218,18 @@ namespace Contorio
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) },
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
                 }),
-                energyInput: 1,
-                recipe: new Recipe(
-                    input: new Dictionary<string, int> { { "iron-ore", 1 } },
-                    output: new Dictionary<string, int> { { "iron", 1 } }
-                    ),
                 research: new Research(
                     "smelter-iron",
                     "factory",
                     null,
                     new Dictionary<string, int>()
-                ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                    ),
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                energyInput: 1,
+                recipe: new Recipe(
+                    input: new Dictionary<string, int> { { "iron-ore", 1 } },
+                    output: new Dictionary<string, int> { { "iron", 1 } }
+                    )
                 );
             Blocks.Add(smelterIron);
 
@@ -233,22 +237,22 @@ namespace Contorio
                 name: "smelter-copper",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
-                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
-                                { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
+                    { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
+                    { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
+                    { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
                 }),
-                energyInput: 1,
-                recipe: new Recipe(
-                    input: new Dictionary<string, int> { { "copper-ore", 1 } },
-                    output: new Dictionary<string, int> { { "copper", 1 } }
-                ),
                 research: new Research(
                     "smelter-copper",
                     "factory",
                     null,
                     new Dictionary<string, int>()
                 ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                energyInput: 1,
+                recipe: new Recipe(
+                    input: new Dictionary<string, int> { { "copper-ore", 1 } },
+                    output: new Dictionary<string, int> { { "copper", 1 } }
+                )
             );
             Blocks.Add(smelterCopper);
 
@@ -260,15 +264,15 @@ namespace Contorio
                     { new Pixel('║', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('║', ConsoleColor.DarkCyan) },
                     { new Pixel('╚', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╝', ConsoleColor.DarkCyan) }
                 }),
-                energyInput: 1,
-                outputToken: new Dictionary<string, int>() { { "RS", 1 } },
                 research: new Research(
                     "cryptor-RS",
                     "cryptors",
                     null,
                     new Dictionary<string, int>()
                 ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                energyInput: 1,
+                outputToken: new Dictionary<string, int>() { { "RS", 1 } }
             );
             Blocks.Add(cryptorRS);
 
@@ -276,19 +280,19 @@ namespace Contorio
                 name: "cryptor-PL",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
-                                { new Pixel('╔', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╗', ConsoleColor.DarkYellow) },
-                                { new Pixel('║', ConsoleColor.DarkYellow), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('║', ConsoleColor.DarkYellow) },
-                                { new Pixel('╚', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╝', ConsoleColor.DarkYellow) }
+                    { new Pixel('╔', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╗', ConsoleColor.DarkYellow) },
+                    { new Pixel('║', ConsoleColor.DarkYellow), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('║', ConsoleColor.DarkYellow) },
+                    { new Pixel('╚', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╝', ConsoleColor.DarkYellow) }
                 }),
-                energyInput: 1,
-                outputToken: new Dictionary<string, int>() { { "PL", 1 } },
                 research: new Research(
                     "cryptor-PL",
                     "cryptors",
                     null,
                     new Dictionary<string, int>() { { "RS", 1 } }
                 ),
-                cost: new Dictionary<string, int>() { { "iron", 1 } }
+                cost: new Dictionary<string, int>() { { "iron", 1 } },
+                energyInput: 1,
+                outputToken: new Dictionary<string, int>() { { "PL", 1 } }
             );
             Blocks.Add(cryptorPL);
 
@@ -310,7 +314,7 @@ namespace Contorio
                 energyInput: 10,
                 maxTransferableCount: 10
             );
-            Blocks.Add( transferBeacon);
+            Blocks.Add(transferBeacon);
         }
     }
 }
