@@ -11,6 +11,7 @@ namespace Contorio.Core.Types
     [JsonDerivedType(typeof(CryptorState), "CryptorState")]
     [JsonDerivedType(typeof(SolarPanelState), "SolarPanelState")]
     [JsonDerivedType(typeof(TransferBeaconState), "TransferBeaconState")]
+    [JsonDerivedType(typeof(EnergyGeneratorState), "EnergyGeneratorState")]
     public class BlockState
     {
         private string _name;
@@ -152,6 +153,30 @@ namespace Contorio.Core.Types
             _planet = planet;
             _resource = resource;
             _count = count;
+        }
+    }
+
+    public class EnergyGeneratorState : BlockState, IConnectToEnergyPoint, IConnectToDroneStation
+    {
+        private Point? _droneStation;
+        private Point? _energyPoint;
+
+        public Point? DroneStation
+        {
+            get { return _droneStation; }
+            set { _droneStation = value; }
+        }
+
+        public Point? EnergyPoint
+        {
+            get { return _energyPoint; }
+            set { _energyPoint = value; }
+        }
+
+        public EnergyGeneratorState(string name, Point? droneStation = null, Point? energyPoint = null) : base(name)
+        {
+            _droneStation = droneStation;
+            _energyPoint = energyPoint;
         }
     }
 }

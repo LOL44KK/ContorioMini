@@ -161,6 +161,13 @@ namespace Contorio.Core
                         SearchEnergyPoint(coord)
                     );
                     break;
+                case BlockType.ENERGY_GENERATOR:
+                    _blocks[coord] = new EnergyGeneratorState(
+                        block.Name,
+                        SearchDroneStation(coord),
+                        SearchEnergyPoint(coord)
+                    );
+                    break;
                 default:
                     return false;
             }

@@ -83,6 +83,7 @@ namespace Contorio.Core
                 }
             }
 
+            Recipe recipe;
             // Оброботка Блока
             switch (block.Type)
             {
@@ -103,7 +104,7 @@ namespace Contorio.Core
                     break;
                 
                 case BlockType.FACTORY:
-                    Recipe recipe = ((Factory)block).Recipe;
+                    recipe = ((Factory)block).Recipe;
                     foreach (var input in recipe.Input)
                     {
                         if (planet.Resources.GetValueOrDefault(input.Key, 0) < input.Value)
@@ -143,6 +144,22 @@ namespace Contorio.Core
                         planet.Resources[transferBeaconState.Resource] -= transferBeaconState.Count;
                         _world.Planets[transferBeaconState.Planet].Resources[transferBeaconState.Resource] = _world.Planets[transferBeaconState.Planet].Resources.GetValueOrDefault(transferBeaconState.Resource, 0) + transferBeaconState.Count;
                     }
+                    break;
+
+                case BlockType.ENERGY_GENERATOR:
+                    recipe = ((EnergyGenerator)block).Recipe;
+                    foreach (var input in recipe.Input)
+                    {
+                        if (planet.Resources.GetValueOrDefault(input.Key, 0) < input.Value)
+                        {
+                            return;
+                        }
+                    }
+                    foreach (var input in recipe.Input)
+                    {
+                        planet.Resources[input.Key] = planet.Resources.GetValueOrDefault(input.Key, 0) - input.Value;
+                    }
+                    planet.Energy += ((EnergyGenerator)block).EnergyOutput;
                     break;
             }
 
