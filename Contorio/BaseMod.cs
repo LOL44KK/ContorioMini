@@ -228,7 +228,7 @@ namespace Contorio
                 energyInput: 1,
                 recipe: new Recipe(
                     input: new Dictionary<string, int> { { "iron-ore", 1 } },
-                    output: new Dictionary<string, int> { { "iron", 1 } }
+                    output: new Dictionary<string, (int, float)> { { "iron", (1, 1f) } }
                     )
                 );
             Blocks.Add(smelterIron);
@@ -251,7 +251,7 @@ namespace Contorio
                 energyInput: 1,
                 recipe: new Recipe(
                     input: new Dictionary<string, int> { { "copper-ore", 1 } },
-                    output: new Dictionary<string, int> { { "copper", 1 } }
+                    output: new Dictionary<string, (int, float)> { { "copper", (1, 1f) } }
                 )
             );
             Blocks.Add(smelterCopper);
@@ -334,7 +334,7 @@ namespace Contorio
                 energyOutput:3,
                 recipe: new Recipe(
                     input: new Dictionary<string, int> { { "copper-ore", 1 } },
-                    output: new Dictionary<string, int>()
+                    output: new Dictionary<string, (int, float)>()
                     )
                 );
             Blocks.Add(coal_generator);

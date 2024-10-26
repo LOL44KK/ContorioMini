@@ -84,6 +84,7 @@ namespace Contorio.Core
             }
 
             Recipe recipe;
+            Random random;
             // Оброботка Блока
             switch (block.Type)
             {
@@ -117,9 +118,13 @@ namespace Contorio.Core
                     {
                         planet.Resources[input.Key] = planet.Resources.GetValueOrDefault(input.Key, 0) - input.Value;
                     }
+                    random = new Random();
                     foreach (var output in recipe.Output)
                     {
-                        planet.Resources[output.Key] = planet.Resources.GetValueOrDefault(output.Key, 0) + output.Value;
+                        if (random.NextDouble() < output.Value.Chance)
+                        {
+                            planet.Resources[output.Key] = planet.Resources.GetValueOrDefault(output.Key, 0) + output.Value.Quantity;
+                        }
                     }
                     break;
                 
@@ -155,9 +160,18 @@ namespace Contorio.Core
                             return;
                         }
                     }
+
                     foreach (var input in recipe.Input)
                     {
                         planet.Resources[input.Key] = planet.Resources.GetValueOrDefault(input.Key, 0) - input.Value;
+                    }
+                    random = new Random();
+                    foreach (var output in recipe.Output)
+                    {
+                        if (random.NextDouble() < output.Value.Chance)
+                        {
+                            planet.Resources[output.Key] = planet.Resources.GetValueOrDefault(output.Key, 0) + output.Value.Quantity;
+                        }
                     }
                     planet.Energy += ((EnergyGenerator)block).EnergyOutput;
                     break;
