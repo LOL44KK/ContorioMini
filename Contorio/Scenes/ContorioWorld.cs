@@ -97,7 +97,7 @@ namespace Contorio.Scenes
         private string selectCategory = "logic";
         private int researchMenuSelectedItemList = 0;
         private int TABMenuSelectedItemList = 0;
-        private Dictionary<string, int> oreChance = new Dictionary<string, int>();
+        private Dictionary<string, double> oreChance = new Dictionary<string, double>();
         private int TransferBeaconMenuSelectedItemList = 0;
 
         public ContorioWorld(Renderer renderer)
@@ -252,7 +252,7 @@ namespace Contorio.Scenes
                 if (ore.Value.Type == GroundType.ORE)
                 {
                     itemListOreName.AddItem(ore.Key);
-                    oreChance.Add(ore.Key, 5);
+                    oreChance.Add(ore.Key, 0.0f);
                 }
             }
 
@@ -264,9 +264,9 @@ namespace Contorio.Scenes
                 1,
                 visible: false
             );
-            for (int i = 5; i < 100; i++)
+            for (double i = 0; i < 100; i++)
             {
-                itemListOreChance.AddItem("" + i);
+                itemListOreChance.AddItem("" + i / 100);
             }
 
             labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
@@ -721,7 +721,7 @@ namespace Contorio.Scenes
                 if (selectedItemList == 0) { if (next) itemListResearchList.NextItem(); else itemListResearchList.PreviousItem(); UpdateResearchCost(researchSystem, itemListResearchList.SelectedItem, labelResearchCost); }
                 if (selectedItemList == 1) { if (next) itemListPlanetSize.NextItem(); else itemListPlanetSize.PreviousItem(); }
                 if (selectedItemList == 2) { if (next) itemListOreName.NextItem(); else itemListOreName.PreviousItem(); itemListOreChance.SelectedItem = oreChance[itemListOreName.SelectedItem].ToString(); }
-                if (selectedItemList == 3) { if (next) itemListOreChance.NextItem(); else itemListOreChance.PreviousItem(); oreChance[itemListOreName.SelectedItem] = int.Parse(itemListOreChance.SelectedItem); }
+                if (selectedItemList == 3) { if (next) itemListOreChance.NextItem(); else itemListOreChance.PreviousItem(); oreChance[itemListOreName.SelectedItem] = double.Parse(itemListOreChance.SelectedItem); }
             }
 
             void UpdateSelectedItemList()

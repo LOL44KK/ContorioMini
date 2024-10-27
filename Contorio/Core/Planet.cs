@@ -84,7 +84,7 @@ namespace Contorio.Core
             }
         }
 
-        public Planet(int size, Dictionary<string, int> oreChance, string dirt="dirt")
+        public Planet(int size, Dictionary<string, double> oreChance, string dirt="dirt")
         {
             _blocks = new Dictionary<Point, BlockState>();
             _ground = new Dictionary<Point, GroundState>();
@@ -107,7 +107,7 @@ namespace Contorio.Core
                 {
                     foreach (var ore in oreChance.OrderBy(ore => ore.Value).Reverse())
                     {
-                        if (random.Next(0, 100) < ore.Value)
+                        if (random.NextDouble() < ore.Value)
                         {
                             _ground[new Point(x, y)] = new GroundState(ore.Key);
                         }

@@ -53,7 +53,7 @@ namespace Contorio.Core
             _player.Coord = new Point(_planets[0].Size / 2, _planets[0].Size / 2);
         }
 
-        public bool SearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        public bool SearchPlanet(int planetSize, Dictionary<string, double> oreChance)
         {
             int cost = CalculateCostSearchPlanet(planetSize, oreChance);
             if (_tokens.GetValueOrDefault("PL", 0) >= cost)
@@ -89,12 +89,12 @@ namespace Contorio.Core
             return true;
         }
 
-        public static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, int> oreChance)
+        public static int CalculateCostSearchPlanet(int planetSize, Dictionary<string, double> oreChance)
         {
-            int cost = 0;
+            int cost = planetSize * 16;
             foreach (var ore in oreChance)
             {
-                cost += ore.Value * (int)Math.Pow(planetSize, 1.5);
+                cost += ((int)(ore.Value * 100)) * (int)Math.Pow(planetSize, 2);
             }
             return cost;
         }

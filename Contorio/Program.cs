@@ -4,7 +4,16 @@
     {
         static void Main(string[] args)
         {
-            new Contorio().Run();
+            try
+            {
+                new Contorio().Run();
+            }
+            catch (Exception ex)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }
