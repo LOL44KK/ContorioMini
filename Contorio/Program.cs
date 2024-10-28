@@ -10,6 +10,7 @@
 //    На List<(string Name, double Chance)> oreChance
 // 5. Добавить ResourceManager PlanetPresets
 // 6. Сделать для BlockState фабрику
+// 7. В Menu добавить надпись с версией игры
 
 namespace Contorio
 {
