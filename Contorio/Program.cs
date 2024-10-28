@@ -1,4 +1,10 @@
-﻿namespace Contorio
+﻿// Contorio
+// На будущие
+// 1. Добавить в Mod PlanetPreset
+//    При генерациий мира сделать выбор присета планеты
+//    также при поиске
+
+namespace Contorio
 {
     internal class Program
     {

@@ -2,6 +2,8 @@
 
 namespace Contorio.Core.Managers
 {
+    // Добавить в Mod PlanetPreset
+    // При генерациий мира сделать выбор присета планеты
     public class ModManager
     {
         private static ModManager _instance;

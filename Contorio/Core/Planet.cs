@@ -60,56 +60,51 @@ namespace Contorio.Core
             _name = GeneratePlanetName.GenerateName();
             _size = 33;
 
-            for (int y = 0; y < 33; y++)
-            {
-                for (int x = 0; x < 33; x++)
+            GenerateLandscape(new PlanetPreset(
+                _size,
+                "dirt",
+                new List<(string Name, double Chance)>()
                 {
-                    _ground[new Point(x, y)] = new GroundState("dirt");
+                    // Руды с BaseMode
+                    ( "iron",   0.1 ),
+                    ( "copper", 0.1 ),
                 }
-            }
-
-            for (int y = 0; y < 30; y++)
-            {
-                for (int x = 0; x < 30; x++)
-                {
-                    if (new Random().Next(0, 20) == 9)
-                    {
-                        _ground[new Point(x, y)] = new GroundState("iron");
-                    }
-                    if (new Random().Next(0, 20) == 9)
-                    {
-                        _ground[new Point(x, y)] = new GroundState("copper");
-                    }
-                }
-            }
+            ));
         }
 
-        public Planet(int size, Dictionary<string, double> oreChance, string dirt="dirt")
+        public Planet(PlanetPreset preset)
         {
             _blocks = new Dictionary<Point, BlockState>();
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
             _name = GeneratePlanetName.GenerateName();
-            _size = size;
+            _size = preset.Size;
 
-            for (int y = 0; y < size; y++)
+            GenerateLandscape(preset);
+        }
+
+        private void GenerateLandscape(PlanetPreset preset)
+        {
+            // Генериация земли
+            for (int y = 0; y < preset.Size; y++)
             {
-                for (int x = 0; x < size; x++)
+                for (int x = 0; x < preset.Size; x++)
                 {
-                    _ground[new Point(x, y)] = new GroundState(dirt);
+                    _ground[new Point(x, y)] = new GroundState(preset.Dirt);
                 }
             }
 
+            // Генерация руд
             Random random = new Random();
-            for (int y = 0; y < size; y++)
+            for (int y = 0; y < preset.Size; y++)
             {
-                for (int x = 0; x < size; x++)
+                for (int x = 0; x < preset.Size; x++)
                 {
-                    foreach (var ore in oreChance.OrderBy(ore => ore.Value).Reverse())
+                    foreach (var ore in preset.Ores.OrderBy(ore => ore.Chance).Reverse())
                     {
-                        if (random.NextDouble() < ore.Value)
+                        if (random.NextDouble() < ore.Chance)
                         {
-                            _ground[new Point(x, y)] = new GroundState(ore.Key);
+                            _ground[new Point(x, y)] = new GroundState(ore.Name);
                         }
                     }
                 }
