@@ -3,6 +3,12 @@
 // 1. Добавить в Mod PlanetPreset
 //    При генерациий мира сделать выбор присета планеты
 //    также при поиске
+// 2. Добавить типы генерации планеты квадрат, круг ...
+// 3. Добавить структуры(Озера, речки) сделать руды структурой 
+// 4. В WorldScene 
+//    Заменить Dictionary<string, double> oreChance
+//    На List<(string Name, double Chance)> oreChance
+// 5. Добавить ResourceManager PlanetPresets
 
 namespace Contorio
 {
