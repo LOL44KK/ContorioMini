@@ -9,6 +9,7 @@
 //    Заменить Dictionary<string, double> oreChance
 //    На List<(string Name, double Chance)> oreChance
 // 5. Добавить ResourceManager PlanetPresets
+// 6. Сделать для BlockState фабрику
 
 namespace Contorio
 {
