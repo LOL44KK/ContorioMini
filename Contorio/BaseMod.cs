@@ -24,8 +24,9 @@ namespace Contorio
                 dirt: "dirt",
                 ores: new List<(string Name, double Chance)>()
                 {
-                    ("iron", 0.1),
-                    ("copper", 0.1),
+                    ( "iron",   0.1  ),
+                    ( "copper", 0.1  ),
+                    ( "uran",   0.03 ),
                 }
             );
             PlanetPresets.Add(basePlanetPreset);
@@ -65,6 +66,18 @@ namespace Contorio
                 product: "copper-ore"
             );
             Grounds.Add(copperOre);
+
+            Ore uranOre = new Ore(
+                name: "uran",
+                sprite: new Sprite(new Pixel[3, 4]
+                {
+                        { new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green) },
+                        { new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green) },
+                        { new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green) }
+                }),
+                product: "uran-ore"
+            );
+            Grounds.Add(uranOre);
 
 
 
@@ -330,28 +343,28 @@ namespace Contorio
             );
             Blocks.Add(transferBeacon);
 
-            EnergyGenerator coal_generator = new EnergyGenerator(
-                name: "coal_generator",
+            EnergyGenerator uran_generator = new EnergyGenerator(
+                name: "uran_generator",
                 sprite: new Sprite(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) },
-                    { new Pixel('#', ConsoleColor.DarkGray), new Pixel('&', ConsoleColor.DarkYellow), new Pixel('&', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
+                    { new Pixel('#', ConsoleColor.DarkGray), new Pixel('&', ConsoleColor.Green), new Pixel('&', ConsoleColor.Green), new Pixel('#', ConsoleColor.DarkGray) },
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) }
                 }),
                 research: new Research(
-                    "coal_generator",
+                    "uran_generator",
                     "energy",
                     null,
                     new Dictionary<string, int>()
-                    ),
+                ),
                 cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } },
                 energyOutput:3,
                 recipe: new Recipe(
-                    input: new Dictionary<string, int> { { "copper-ore", 1 } },
+                    input: new Dictionary<string, int> { { "uran-ore", 1 } },
                     output: new Dictionary<string, (int, float)>()
-                    )
-                );
-            Blocks.Add(coal_generator);
+                )
+            );
+            Blocks.Add(uran_generator);
         }
     }
 }
