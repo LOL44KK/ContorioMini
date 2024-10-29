@@ -18,15 +18,24 @@ namespace Contorio
     {
         static void Main(string[] args)
         {
-            try
+            bool DEBUG = true;
+
+            if (DEBUG)
             {
                 new Contorio().Run();
             }
-            catch (Exception ex)
+            else
             {
-                Console.Clear();
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine(ex.ToString());
+                try
+                {
+                    new Contorio().Run();
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(0, 0);
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
     }

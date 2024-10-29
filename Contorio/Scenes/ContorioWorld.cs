@@ -149,10 +149,13 @@ namespace Contorio.Scenes
                 if (researchMenu)
                 {
                     UpdateTokensInfo(world, labelTokensInfo);
-                    labelCostSearchPlanet.Text = "cost: " + World.CalculateCostSearchPlanet(new PlanetPreset(
-                        int.Parse(itemListPlanetSize.SelectedItem),
-                        "dirt", // Из BaseMode
-                        oreChance.Select(item => (Name: item.Key, Chance: item.Value)).ToList()
+                    labelCostSearchPlanet.Text = "cost: " + World.CalculateCostSearchPlanet(
+                        new PlanetPreset(
+                            // Из BaseMode
+                            resourceManager.PlanetPresets[0].Name,
+                            int.Parse(itemListPlanetSize.SelectedItem),
+                            resourceManager.PlanetPresets[0].Dirt,
+                            oreChance.Select(item => (Name: item.Key, Chance: item.Value)).ToList()
                     )) + " PL";
                 }
 
@@ -789,8 +792,10 @@ namespace Contorio.Scenes
                     break;
                 case ConsoleKey.G:
                     PlanetPreset planetPreset = new PlanetPreset(
+                        // Из BaseMode
+                        resourceManager.PlanetPresets[0].Name,
                         int.Parse(itemListPlanetSize.SelectedItem),
-                        "dirt", // Из BaseMode
+                        resourceManager.PlanetPresets[0].Dirt,
                         oreChance.Select(item => (Name: item.Key, Chance: item.Value)).ToList()
                     );
 

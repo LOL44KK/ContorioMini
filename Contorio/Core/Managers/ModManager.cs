@@ -2,8 +2,6 @@
 
 namespace Contorio.Core.Managers
 {
-    // Добавить в Mod PlanetPreset
-    // При генерациий мира сделать выбор присета планеты
     public class ModManager
     {
         private static ModManager _instance;
@@ -35,6 +33,7 @@ namespace Contorio.Core.Managers
         {
             List<Block> blocks = new List<Block>();
             List<Ground> grounds = new List<Ground>();
+            List<PlanetPreset> planetPresets = new List<PlanetPreset>();
             foreach (Mod mod in _mods)
             {
                 foreach (Block block in mod.Blocks)
@@ -45,8 +44,12 @@ namespace Contorio.Core.Managers
                 {
                     grounds.Add(ground);
                 }
+                foreach (PlanetPreset preset in mod.PlanetPresets)
+                {
+                    planetPresets.Add(preset);
+                }
             }
-            ResourceManager.Instance.Initialize(blocks, grounds);
+            ResourceManager.Instance.Initialize(blocks, grounds, planetPresets);
         }
     }
 }

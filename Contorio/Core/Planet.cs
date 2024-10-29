@@ -60,16 +60,7 @@ namespace Contorio.Core
             _name = GeneratePlanetName.GenerateName();
             _size = 33;
 
-            GenerateLandscape(new PlanetPreset(
-                _size,
-                "dirt",
-                new List<(string Name, double Chance)>()
-                {
-                    // Руды с BaseMode
-                    ( "iron",   0.1 ),
-                    ( "copper", 0.1 ),
-                }
-            ));
+            GenerateLandscape(ResourceManager.Instance.PlanetPresets[0]);
         }
 
         public Planet(PlanetPreset preset)

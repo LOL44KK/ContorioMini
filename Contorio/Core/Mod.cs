@@ -11,6 +11,7 @@ namespace Contorio.Core
 
         private List<Block> _blocks;
         private List<Ground> _grounds;
+        private List<PlanetPreset> _planetPresets;
 
         public string Name
         {
@@ -48,6 +49,12 @@ namespace Contorio.Core
             init { _grounds = value; }
         }
 
+        public List<PlanetPreset> PlanetPresets
+        {
+            get { return _planetPresets; }
+            init { _planetPresets = value; }
+        }
+
         public Mod()
         {
             _name = "None";
@@ -56,6 +63,7 @@ namespace Contorio.Core
             _author = "None";
             _blocks = new List<Block>();
             _grounds = new List<Ground>();
+            _planetPresets = new List<PlanetPreset>();
         }
     }
 }

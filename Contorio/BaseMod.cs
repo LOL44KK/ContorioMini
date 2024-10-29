@@ -11,10 +11,24 @@ namespace Contorio
             Name = "BaseMod";
             Description = "BaseMod";
             Author = "LOL4K";
-            Version = "0.7.0";
+            Version = "0.7.1";
 
             Blocks = new List<Block>();
             Grounds = new List<Ground>();
+            PlanetPresets = new List<PlanetPreset>();
+
+            //PlanetPreset
+            PlanetPreset basePlanetPreset = new PlanetPreset(
+                name: "Base",
+                size: 32,
+                dirt: "dirt",
+                ores: new List<(string Name, double Chance)>()
+                {
+                    ("iron", 0.1),
+                    ("copper", 0.1),
+                }
+            );
+            PlanetPresets.Add(basePlanetPreset);
 
             // Ground
             Ground dirt = new Ground(
