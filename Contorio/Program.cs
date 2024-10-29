@@ -4,11 +4,8 @@
 //    также при поиске
 // 2. Добавить типы генерации планеты квадрат, круг ...
 // 3. Добавить структуры(Озера, речки) сделать руды структурой 
-// 4. В WorldScene 
-//    Заменить Dictionary<string, double> oreChance
-//    На List<(string Name, double Chance)> oreChance
-// 5. Сделать для BlockState фабрику
-// 6. В Menu добавить надпись с версией игры
+// 4. Сделать для BlockState фабрику
+// 5. В Menu добавить надпись с версией игры
 
 namespace Contorio
 {
