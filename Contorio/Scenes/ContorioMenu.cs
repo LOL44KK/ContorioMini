@@ -156,9 +156,11 @@ namespace Contorio.Scenes
             {
                 case ConsoleKey.UpArrow:
                     itemListSavesList.PreviousItem();
+                    UpdatelabelCountSave();
                     break;
                 case ConsoleKey.DownArrow:
                     itemListSavesList.NextItem();
+                    UpdatelabelCountSave();
                     break;
                 case ConsoleKey.Enter:
                     _choice = itemListSavesList.SelectedItem;
