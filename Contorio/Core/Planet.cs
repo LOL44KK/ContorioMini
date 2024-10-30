@@ -76,7 +76,7 @@ namespace Contorio.Core
 
         private void GenerateLandscape(PlanetPreset preset)
         {
-            // Генериация земли
+            // Генериация пола
             for (int y = 0; y < preset.Size; y++)
             {
                 for (int x = 0; x < preset.Size; x++)
@@ -95,7 +95,14 @@ namespace Contorio.Core
                     {
                         if (random.NextDouble() < ore.Chance)
                         {
-                            _ground[new Point(x, y)] = new GroundState(ore.Name);
+                            Point[] cluster = ClusterGenerator.GenerateCluster(8, 16);
+                            foreach (Point p in cluster)
+                            {
+                                if (_ground.ContainsKey(new Point(p.X + x, p.Y + y)))
+                                {
+                                    _ground[new Point(p.X + x, p.Y + y)] = new GroundState(ore.Name);
+                                }
+                            }
                         }
                     }
                 }

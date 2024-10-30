@@ -24,9 +24,9 @@ namespace Contorio
                 dirt: "dirt",
                 ores: new List<(string Name, double Chance)>()
                 {
-                    ( "iron",   0.1  ),
-                    ( "copper", 0.1  ),
-                    ( "uran",   0.03 ),
+                    ( "iron",   0.01  ),
+                    ( "copper", 0.01  ),
+                    ( "uran",   0.005 ),
                 }
             );
             PlanetPresets.Add(basePlanetPreset);
