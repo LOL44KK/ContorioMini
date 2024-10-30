@@ -3,6 +3,7 @@
 using Contorio.Utils;
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
+using Contorio.Core.Factories;
 using Contorio.Core.Interfaces;
 
 namespace Contorio.Core
@@ -111,58 +112,22 @@ namespace Contorio.Core
 
         public bool SetBlock(Point coord, Block block)
         {
-            switch (block.Type)
+            _blocks[coord] = BlockStateFactory.CreateBlockState(block.Type, block.Name);
+
+            if (block.Type == BlockType.ENERGY_POINT || block.Type == BlockType.DRONE_STATION)
             {
-                case BlockType.DRONE_STATION:
-                    _blocks[coord] = new BlockState(block.Name);
-                    ConnectNearbyBlocks(coord, block);
-                    break;
-                case BlockType.ENERGY_POINT:
-                    _blocks[coord] = new BlockState(block.Name);
-                    ConnectNearbyBlocks(coord, block);
-                    break;
-                case BlockType.SOLAR_PANEL:
-                    _blocks[coord] = new SolarPanelState(
-                        block.Name,
-                        SearchEnergyPoint(coord)
-                    );
-                    break;
-                case BlockType.CRYPTOR:
-                    _blocks[coord] = new CryptorState(
-                        block.Name,
-                        SearchEnergyPoint(coord)
-                    );
-                    break;
-                case BlockType.DRILL:
-                    _blocks[coord] = new DrillState(
-                        block.Name,
-                        SearchDroneStation(coord),
-                        SearchEnergyPoint(coord)
-                    );
-                    break;
-                case BlockType.FACTORY:
-                    _blocks[coord] = new FactoryState(
-                       block.Name,
-                       SearchDroneStation(coord),
-                       SearchEnergyPoint(coord)
-                   );
-                    break;
-                case BlockType.TRANSFER_BEACON:
-                    _blocks[coord] = new TransferBeaconState(
-                        block.Name,
-                        SearchDroneStation(coord),
-                        SearchEnergyPoint(coord)
-                    );
-                    break;
-                case BlockType.ENERGY_GENERATOR:
-                    _blocks[coord] = new EnergyGeneratorState(
-                        block.Name,
-                        SearchDroneStation(coord),
-                        SearchEnergyPoint(coord)
-                    );
-                    break;
-                default:
-                    return false;
+                ConnectNearbyBlocks(coord, block);
+            }
+            else
+            {
+                if (_blocks[coord] is IConnectToEnergyPoint iConnectToEnergyPoint)
+                {
+                    iConnectToEnergyPoint.EnergyPoint = SearchEnergyPoint(coord);
+                }
+                if (_blocks[coord] is IConnectToDroneStation iConnectToDroneStation)
+                {
+                    iConnectToDroneStation.DroneStation = SearchDroneStation(coord);
+                }
             }
             return true;
         }
