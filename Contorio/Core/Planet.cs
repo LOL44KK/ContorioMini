@@ -59,7 +59,7 @@ namespace Contorio.Core
             _ground = new Dictionary<Point, GroundState>();
             _resources = new Dictionary<string, int>();
             _name = GeneratePlanetName.GenerateName();
-            _size = 33;
+            _size = ResourceManager.Instance.PlanetPresets[0].Size;
 
             GenerateLandscape(ResourceManager.Instance.PlanetPresets[0]);
         }
@@ -168,7 +168,7 @@ namespace Contorio.Core
                         iConnectToEnergyPoint.EnergyPoint = SearchEnergyPoint(blockState.Key);
                     }
                 }
-                else if(blockToRemove.Type == BlockType.DRONE_STATION)
+                else if (blockToRemove.Type == BlockType.DRONE_STATION)
                 {
                     if (blockState.Value is IConnectToDroneStation iConnectToDroneStation)
                     {
