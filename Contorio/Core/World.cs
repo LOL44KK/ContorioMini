@@ -94,7 +94,7 @@ namespace Contorio.Core
             int cost = preset.Size * 16;
             foreach (var ore in preset.Ores)
             {
-                cost += ((int)(ore.Chance * 100)) * (int)Math.Pow(preset.Size, 2);
+                cost += ((int)(ore.Chance * 10000)) * (int)Math.Pow(preset.Size, 2);
             }
             return cost;
         }

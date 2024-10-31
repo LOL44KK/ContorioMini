@@ -96,7 +96,7 @@ namespace Contorio.Core
                     {
                         if (random.NextDouble() < ore.Chance)
                         {
-                            Point[] cluster = ClusterGenerator.GenerateCluster(8, 16);
+                            Point[] cluster = ClusterGenerator.GenerateCluster(ore.MinClusterSize, ore.MaxClusterSize);
                             foreach (Point p in cluster)
                             {
                                 if (_ground.ContainsKey(new Point(p.X + x, p.Y + y)))

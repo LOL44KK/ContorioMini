@@ -5,7 +5,7 @@
         private string _name; 
         private int _size;
         private string _dirt;
-        private List<(string Name, double Chance)> _ores;
+        private List<OrePreset> _ores;
 
         public string Name
         {
@@ -25,13 +25,13 @@
             init { _dirt = value; }
         }
 
-        public List<(string Name, double Chance)> Ores
+        public List<OrePreset> Ores
         {
             get { return _ores; }
             init { _ores = value; }
         }
 
-        public PlanetPreset(string name, int size, string dirt, List<(string Name, double Chance)> ores)
+        public PlanetPreset(string name, int size, string dirt, List<OrePreset> ores)
         {
             _name = name;
             _size = size;

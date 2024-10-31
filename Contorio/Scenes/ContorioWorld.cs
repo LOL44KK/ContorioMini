@@ -6,6 +6,7 @@ using Contorio.CharGraphics.Widgets;
 using Contorio.Core;
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
+using System.Linq;
 
 namespace Contorio.Scenes
 {
@@ -153,10 +154,11 @@ namespace Contorio.Scenes
                         new PlanetPreset(
                             // Из BaseMode
                             resourceManager.PlanetPresets[0].Name,
-                            int.Parse(itemListPlanetSize.SelectedItem),
+                            int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
                             resourceManager.PlanetPresets[0].Dirt,
-                            oreChance.Select(item => (Name: item.Key, Chance: item.Value)).ToList()
-                    )) + " PL";
+                            resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
+                        )
+                    ) + " PL";
                 }
 
                 if (TABmenu)
@@ -271,9 +273,9 @@ namespace Contorio.Scenes
                 1,
                 visible: false
             );
-            for (double i = 0; i < 100; i++)
+            for (double i = 0; i < 1000; i += 5)
             {
-                itemListOreChance.AddItem("" + i / 100);
+                itemListOreChance.AddItem("" + i / 10000);
             }
 
             labelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
@@ -794,9 +796,9 @@ namespace Contorio.Scenes
                     PlanetPreset planetPreset = new PlanetPreset(
                         // Из BaseMode
                         resourceManager.PlanetPresets[0].Name,
-                        int.Parse(itemListPlanetSize.SelectedItem),
+                        int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
                         resourceManager.PlanetPresets[0].Dirt,
-                        oreChance.Select(item => (Name: item.Key, Chance: item.Value)).ToList()
+                        resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
                     );
 
                     if (world.SearchPlanet(planetPreset))

@@ -22,11 +22,11 @@ namespace Contorio
                 name: "Base",
                 size: 32,
                 dirt: "dirt",
-                ores: new List<(string Name, double Chance)>()
+                ores: new List<OrePreset>()
                 {
-                    ( "iron",   0.01  ),
-                    ( "copper", 0.01  ),
-                    ( "uran",   0.005 ),
+                    new OrePreset("iron",   0.01,  8, 16),
+                    new OrePreset("copper", 0.01,  8, 16),
+                    new OrePreset("uran",   0.005, 4, 12),
                 }
             );
             PlanetPresets.Add(basePlanetPreset);
