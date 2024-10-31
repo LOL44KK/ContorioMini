@@ -1,5 +1,12 @@
 ﻿namespace Contorio.Core.Types
 {
+    public enum PlanetType
+    {
+        CIRCLE,
+        SQUARE,
+        HEXAGON
+    }
+
     public class PlanetPreset
     {
         private string _name; 
