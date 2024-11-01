@@ -14,18 +14,23 @@ namespace Contorio.CharGraphics
             get { return _pixels; }
             set { _pixels = value; }
         }
+
         public int Width => _pixels.GetLength(1);
+
         public int Height => _pixels.GetLength(0);
+
         public bool Visible
         {
             get { return _visible; }
             set { _visible = value; }
         }
+
         public int Layer
         {
             get { return _layer; }
             set { _layer = value; }
         }
+
         public Point Position
         {
             get { return _position; }
