@@ -20,8 +20,9 @@ namespace Contorio
             //PlanetPreset
             PlanetPreset basePlanetPreset = new PlanetPreset(
                 name: "Base",
-                size: 32,
+                size: 33,
                 dirt: "dirt",
+                type: PlanetType.CIRCLE,
                 ores: new List<OrePreset>()
                 {
                     new OrePreset("iron",   0.01,  8, 16),

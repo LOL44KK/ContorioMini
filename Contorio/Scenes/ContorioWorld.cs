@@ -156,6 +156,7 @@ namespace Contorio.Scenes
                             resourceManager.PlanetPresets[0].Name,
                             int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
                             resourceManager.PlanetPresets[0].Dirt,
+                            resourceManager.PlanetPresets[0].Type,
                             resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
                         )
                     ) + " PL";
@@ -798,6 +799,7 @@ namespace Contorio.Scenes
                         resourceManager.PlanetPresets[0].Name,
                         int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
                         resourceManager.PlanetPresets[0].Dirt,
+                        resourceManager.PlanetPresets[0].Type,
                         resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
                     );
 

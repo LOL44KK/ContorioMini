@@ -78,31 +78,51 @@ namespace Contorio.Core
         private void GenerateLandscape(PlanetPreset preset)
         {
             // Генериация пола
-            for (int y = 0; y < preset.Size; y++)
+            switch (preset.Type)
             {
-                for (int x = 0; x < preset.Size; x++)
-                {
-                    _ground[new Point(x, y)] = new GroundState(preset.Dirt);
-                }
+                case PlanetType.SQUARE:
+                    for (int y = 0; y < preset.Size; y++)
+                    {
+                        for (int x = 0; x < preset.Size; x++)
+                        {
+                            _ground[new Point(x, y)] = new GroundState(preset.Dirt);
+                        }
+                    }
+                    break;
+                case PlanetType.CIRCLE:
+                    int radius = preset.Size / 2 + (preset.Size % 1);
+                    Point center = new Point(radius, radius);
+
+                    for (int y = 0; y < preset.Size; y++)
+                    {
+                        for (int x = 0; x < preset.Size; x++)
+                        {
+                            Point point = new Point(x, y);
+                            int dx = x - center.X;
+                            int dy = y - center.Y;
+                            if (dx * dx + dy * dy <= radius * radius)
+                            {
+                                _ground[point] = new GroundState(preset.Dirt);
+                            }
+                        }
+                    }
+                    break;
             }
 
             // Генерация руд
             Random random = new Random();
-            for (int y = 0; y < preset.Size; y++)
+            foreach (var groundState in _ground)
             {
-                for (int x = 0; x < preset.Size; x++)
+                foreach (var ore in preset.Ores.OrderBy(ore => ore.Chance).Reverse())
                 {
-                    foreach (var ore in preset.Ores.OrderBy(ore => ore.Chance).Reverse())
+                    if (random.NextDouble() < ore.Chance)
                     {
-                        if (random.NextDouble() < ore.Chance)
+                        Point[] cluster = ClusterGenerator.GenerateCluster(ore.MinClusterSize, ore.MaxClusterSize);
+                        foreach (Point p in cluster)
                         {
-                            Point[] cluster = ClusterGenerator.GenerateCluster(ore.MinClusterSize, ore.MaxClusterSize);
-                            foreach (Point p in cluster)
+                            if (_ground.ContainsKey(new Point(p.X + groundState.Key.X, p.Y + groundState.Key.Y)))
                             {
-                                if (_ground.ContainsKey(new Point(p.X + x, p.Y + y)))
-                                {
-                                    _ground[new Point(p.X + x, p.Y + y)] = new GroundState(ore.Name);
-                                }
+                                _ground[new Point(p.X + groundState.Key.X, p.Y + groundState.Key.Y)] = new GroundState(ore.Name);
                             }
                         }
                     }
