@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 
-namespace Contorio.CharGraphics.Widgets
+namespace Contorio.CharEngine.Widgets
 {
     class Message : Label
     {
@@ -41,7 +41,7 @@ namespace Contorio.CharGraphics.Widgets
             _stopwatch.Restart();
         }
 
-        public void Tick()
+        override public void Tick()
         {
             if (Visible)
             {

@@ -33,6 +33,7 @@
 //    также при поиске
 // 3. В Menu добавить надпись с версией игры
 
+
 namespace Contorio
 {
     internal class Program

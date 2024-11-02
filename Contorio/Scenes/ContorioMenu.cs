@@ -1,5 +1,5 @@
-﻿using Contorio.CharGraphics;
-using Contorio.CharGraphics.Widgets;
+﻿using Contorio.CharEngine;
+using Contorio.CharEngine.Widgets;
 using System.Drawing;
 
 namespace Contorio.Scenes
