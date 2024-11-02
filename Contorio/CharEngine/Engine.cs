@@ -29,29 +29,30 @@
 
         public void Run()
         {
-            if (_scene != null)
+            if (_scene == null)
             {
-                MainLoop();
+                throw new InvalidOperationException("Scene is not set.");
             }
-            else
-            {
-                throw new Exception("Not Scene");
-            }
+            MainLoop();
         }
 
         private void MainLoop()
         {
             while (true)
             {
+                // Оброботать события ввода
                 InputManager.Instance.Tick();
 
+                // Вызовы методов Tick
+                _scene.TickInvoke();
+
+                // Вызовы методa Tick во всех спрайтах
                 foreach (Sprite sprite in _scene.Sprites)
                 {
                     sprite.Tick();
                 }
 
-                _scene.TickInvoke();
-
+                // Обновление изображения
                 _renderer.Render();
             }
         }
