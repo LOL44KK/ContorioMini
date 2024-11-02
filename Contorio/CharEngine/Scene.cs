@@ -5,6 +5,7 @@
         public delegate void TickDelegate();
         public delegate void InputDelegate(ConsoleKey key);
 
+
         private List<Sprite> _sprites = new List<Sprite>();
 
         public List<Sprite> Sprites
