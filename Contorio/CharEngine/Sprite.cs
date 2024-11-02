@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contorio.CharGraphics
+namespace Contorio.CharEngine
 {
     public class Sprite
     {
@@ -54,6 +54,11 @@ namespace Contorio.CharGraphics
                     _pixels[i, j] = pixel;
                 }
             }
+        }
+
+        virtual public void Tick()
+        {
+            //Что-то
         }
     }
 }
