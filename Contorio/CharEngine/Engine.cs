@@ -10,9 +10,9 @@
             get { return _renderer; }
         }
 
-        public Engine()
+        public Engine(Renderer renderer)
         {
-            _renderer = new Renderer(120, 30);
+            _renderer = renderer;
         }
 
         public void SetScene(Scene scene)
