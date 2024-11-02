@@ -19,12 +19,12 @@
         {
             if (_scene != null)
             {
-                InputManager.Instance.RemoveInputHandler(_scene.InputInvoke);
+                InputManager.Instance.RemoveInputHandler(_scene.RaiseInput);
             }
 
             _scene = scene;
             _renderer.SetScene(scene);
-            InputManager.Instance.AddInputHandler(scene.InputInvoke);
+            InputManager.Instance.AddInputHandler(scene.RaiseInput);
         }
 
         public void Run()
@@ -41,7 +41,7 @@
             while (true)
             {
                 // Вызовы методов Tick
-                _scene.TickInvoke();
+                _scene.RaiseTick();
 
                 // Оброботать события ввода
                 InputManager.Instance.Tick();

@@ -11,11 +11,11 @@
         public List<Sprite> Sprites
         { 
             get { return _sprites; }
-            set { _sprites = value; }
+            init { _sprites = value; }
         }
 
-        public TickDelegate? Ticks;
-        public InputDelegate? Inputs;
+        public event TickDelegate? OnTick;
+        public event InputDelegate? OnInput;
 
         public Scene(List<Sprite> sprites)
         {
@@ -37,14 +37,14 @@
             _sprites.Remove(sprite);
         }
 
-        public void TickInvoke()
+        public void RaiseTick()
         {
-            Ticks?.Invoke();
+            OnTick?.Invoke();
         }
 
-        public void InputInvoke(ConsoleKey key)
+        public void RaiseInput(ConsoleKey key)
         {
-            Inputs?.Invoke(key);
+            OnInput?.Invoke(key);
         }
     }
 }

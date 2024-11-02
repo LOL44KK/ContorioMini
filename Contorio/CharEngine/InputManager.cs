@@ -18,7 +18,7 @@
 
         public delegate void InputHandler(ConsoleKey key);
 
-        private InputHandler? _inputHandlers;
+        private event InputHandler? _inputHandlers;
 
         public void Tick()
         {
