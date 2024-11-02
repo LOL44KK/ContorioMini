@@ -40,11 +40,11 @@
         {
             while (true)
             {
-                // Оброботать события ввода
-                InputManager.Instance.Tick();
-
                 // Вызовы методов Tick
                 _scene.TickInvoke();
+
+                // Оброботать события ввода
+                InputManager.Instance.Tick();
 
                 // Вызовы методa Tick во всех спрайтах
                 foreach (Sprite sprite in _scene.Sprites)
