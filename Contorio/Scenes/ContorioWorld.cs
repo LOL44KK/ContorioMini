@@ -486,7 +486,7 @@ namespace Contorio.Scenes
 
                 if (tileMap.Visible)
                 {
-                    HandleKeyPressMap(keyInfo);
+                    HandleKeyPressPlayerMovement(keyInfo);
                 }
 
                 if (!labelTransferBeaconMenu.Visible &&!buildingMode && !researchMenu && !TABmenu)
@@ -556,7 +556,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressMap(ConsoleKeyInfo keyInfo)
+        void HandleKeyPressPlayerMovement(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
             {

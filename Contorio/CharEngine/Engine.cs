@@ -4,6 +4,7 @@
     {
         private Renderer _renderer;
         private Scene? _scene;
+        private bool _online;
 
         public Renderer Renderer 
         {
@@ -13,6 +14,7 @@
         public Engine(Renderer renderer)
         {
             _renderer = renderer;
+            _online = true;
         }
 
         public void SetScene(Scene scene)
@@ -38,7 +40,7 @@
 
         private void MainLoop()
         {
-            while (true)
+            while (_online)
             {
                 // Вызовы методов Tick
                 _scene.RaiseTick();
@@ -55,6 +57,11 @@
                 // Обновление изображения
                 _renderer.Render();
             }
+        }
+
+        public void Quit()
+        {
+            _online = false;
         }
     }
 }
