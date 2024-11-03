@@ -46,7 +46,7 @@ namespace Contorio.CharEngine.Widgets
             _cellPaddingBottom = cellPaddingBottom;
         }
 
-        public void addLayer(int index)
+        public void AddLayer(int index)
         {
             _cells[index] = new Dictionary<Point, Cell>();
         }

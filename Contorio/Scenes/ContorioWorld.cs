@@ -190,8 +190,8 @@ namespace Contorio.Scenes
                 cellPaddingRight: 2,
                 cellPaddingBottom: 1
             );
-            tileMap.addLayer(0);
-            tileMap.addLayer(1);
+            tileMap.AddLayer(0);
+            tileMap.AddLayer(1);
 
             labelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
             blockPlayerCoord = new Sprite(resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
