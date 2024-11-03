@@ -18,14 +18,12 @@
             }
         }
 
-        public Сontainer(List<Sprite> sprites)
+        public Сontainer(bool visible = false) : this(new List<Sprite>(), visible) { }
+
+        public Сontainer(List<Sprite> sprites, bool visible = false)
         {
             _sprites = sprites;
-        }
-
-        public Сontainer()
-        {
-            _sprites = new List<Sprite>();
+            _visible = visible;
         }
 
         public void AddSprite(Sprite sprite)
