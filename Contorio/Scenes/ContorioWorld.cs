@@ -81,24 +81,21 @@ namespace Contorio.Scenes
         private ItemList itemListTransferBeaconMenuCount;
         private Label labelTransferBeaconMenuPreesEnterToBack;
 
-        // F3 UI
-        private Label labelFPS;
-
         // Message UI
         private Message messageMessage;
 
 
         // State variables
-        private bool researchMenu = false;
-        private bool TABmenu = false;
-        private bool buildingMode = true;
-        private bool categoryOrBlock = true;
-        private string selectBlock = "drill";
-        private string selectCategory = "logic";
-        private int researchMenuSelectedItemList = 0;
-        private int TABMenuSelectedItemList = 0;
-        private Dictionary<string, double> oreChance = new Dictionary<string, double>();
-        private int TransferBeaconMenuSelectedItemList = 0;
+        private bool researchMenu;
+        private bool TABmenu;
+        private bool buildingMode;
+        private bool categoryOrBlock;
+        private string selectBlock;
+        private string selectCategory;
+        private int researchMenuSelectedItemList;
+        private int TABMenuSelectedItemList;
+        private Dictionary<string, double> oreChance;
+        private int TransferBeaconMenuSelectedItemList;
 
         public ContorioWorld(Renderer renderer)
         {
@@ -120,14 +117,9 @@ namespace Contorio.Scenes
 
             SetupInitialState();
 
-            Stopwatch sw = Stopwatch.StartNew();
-
-            double ms = 0;
             _online = true;
             while (_online)
             {
-                sw.Restart();
-
                 //World
                 worldHandler.Tick();
 
@@ -135,7 +127,7 @@ namespace Contorio.Scenes
                 HandleKeyPress();
 
                 //UI
-                UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
+                UpdatePlanetInfo(world.Planets[player.Planet]);
                 UpdatePlayerResourcesInfo(labelPlayerResources, player);
 
 
@@ -149,16 +141,7 @@ namespace Contorio.Scenes
                 if (researchMenu)
                 {
                     UpdateTokensInfo(world, labelTokensInfo);
-                    labelCostSearchPlanet.Text = "cost: " + World.CalculateCostSearchPlanet(
-                        new PlanetPreset(
-                            // Из BaseMode
-                            resourceManager.PlanetPresets[0].Name,
-                            int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
-                            resourceManager.PlanetPresets[0].Dirt,
-                            resourceManager.PlanetPresets[0].Type,
-                            resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
-                        )
-                    ) + " PL";
+                    UpdateCostSearchPlanet();
                 }
 
                 if (TABmenu)
@@ -171,12 +154,9 @@ namespace Contorio.Scenes
                 //Message
                 messageMessage.Tick();
 
-                labelFPS.Text = "FPS: " + ((int)(1000 / ms)).ToString();
 
                 //Graphics
                 renderer.Render();
-
-                ms = sw.Elapsed.TotalMilliseconds;
             }
         }
 
@@ -255,15 +235,6 @@ namespace Contorio.Scenes
                 1,
                 visible: false
             );
-            oreChance.Clear();
-            foreach (var ore in resourceManager.Grounds)
-            {
-                if (ore.Value.Type == GroundType.ORE)
-                {
-                    itemListOreName.AddItem(ore.Key);
-                    oreChance.Add(ore.Key, 0.0f);
-                }
-            }
 
             labelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(75, 6), visible: false);
             itemListOreChance = new ItemList(
@@ -343,8 +314,6 @@ namespace Contorio.Scenes
             labelTransferBeaconMenuPreesEnterToBack = new Label("press Enter to back", ConsoleColor.White, new Point(60, 11), visible:false);
             labelTransferBeaconMenuPreesEnterToBack.Position = new Point((renderer.ScreenWidth / 2) - (labelTransferBeaconMenuPreesEnterToBack.Width / 2), labelTransferBeaconMenuPreesEnterToBack.Position.Y);
 
-            labelFPS = new Label("FPS: 0", ConsoleColor.White, new Point(111, 0), visible: false);
-
             messageMessage = new Message(renderer.ScreenWidth / 2, 29);
 
             scene.AddSprite(tileMap);
@@ -397,14 +366,32 @@ namespace Contorio.Scenes
             scene.AddSprite(itemListTransferBeaconMenuCount);
             scene.AddSprite(labelTransferBeaconMenuPreesEnterToBack);
 
-            scene.AddSprite(labelFPS);
-
             scene.AddSprite(messageMessage);
         }
 
         private void SetupInitialState()
         {
-            loadMap(tileMap, world.Planets[player.Planet]);
+            researchMenu = false;
+            TABmenu = false;
+            buildingMode = true;
+            categoryOrBlock = true;
+            selectBlock = "drill";
+            selectCategory = "logic";
+            researchMenuSelectedItemList = 0;
+            TABMenuSelectedItemList = 0;
+            oreChance = new Dictionary<string, double>();
+            TransferBeaconMenuSelectedItemList = 0;
+
+            foreach (var ore in resourceManager.Grounds)
+            {
+                if (ore.Value.Type == GroundType.ORE)
+                {
+                    itemListOreName.AddItem(ore.Key);
+                    oreChance.Add(ore.Key, 0.0f);
+                }
+            }
+
+            LoadMap(world.Planets[player.Planet]);
             UpdatePlanetList(itemListPlanetList, world);
             UpdateBlockCategory(researchSystem, itemListBlockCategory);
             UpdateBlockList(researchSystem, itemListBlockList, itemListBlockCategory.SelectedItem);
@@ -467,9 +454,6 @@ namespace Contorio.Scenes
                             }
                             return;
                         }
-                        break;
-                    case ConsoleKey.F3:
-                        labelFPS.Visible = !labelFPS.Visible;
                         break;
                     case ConsoleKey.G:
                         player.GodMode = !player.GodMode;
@@ -583,15 +567,15 @@ namespace Contorio.Scenes
                     itemListPlanetList.NextItem();
                     player.Planet = itemListPlanetList.SelectedIndex;
                     player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                    loadMap(tileMap, world.Planets[player.Planet]);
-                    UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
+                    LoadMap(world.Planets[player.Planet]);
+                    UpdatePlanetInfo(world.Planets[player.Planet]);
                     break;
                 case ConsoleKey.UpArrow:
                     itemListPlanetList.PreviousItem();
                     player.Planet = itemListPlanetList.SelectedIndex;
                     player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                    loadMap(tileMap, world.Planets[player.Planet]);
-                    UpdatePlanetInfo(labelPlanetInfo, world.Planets[player.Planet]);
+                    LoadMap(world.Planets[player.Planet]);
+                    UpdatePlanetInfo(world.Planets[player.Planet]);
                     break;
             }
         }
@@ -1004,8 +988,7 @@ namespace Contorio.Scenes
             itemListTransferBeaconMenuPlanetList.SelectedIndex = ((TransferBeaconState)world.Planets[player.Planet].Blocks[player.Coord]).Planet;
         }
 
-        //old method
-        private static void loadMap(TileMap tileMap, Planet planet)
+        private void LoadMap(Planet planet)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
 
@@ -1019,8 +1002,8 @@ namespace Contorio.Scenes
                 tileMap.SetCell(1, pair.Key, resourceManager.TileIds[pair.Value.Name]);
             }
         }
-
-        private static void UpdatePlanetInfo(Label planetInfo, Planet planet)
+        
+        private void UpdatePlanetInfo(Planet planet)
         {
             string text = $"PLANET\n" +
                           $" Name: {planet.Name}\n" +
@@ -1033,9 +1016,24 @@ namespace Contorio.Scenes
                     text += "  " + resource.Key + ": " + resource.Value + "\n";
                 }
             }
-            planetInfo.Text = text;
+            labelPlanetInfo.Text = text;
         }
 
+        private void UpdateCostSearchPlanet()
+        {
+            labelCostSearchPlanet.Text = "cost: " + World.CalculateCostSearchPlanet(
+                new PlanetPreset(
+                    // Из BaseMode
+                    resourceManager.PlanetPresets[0].Name,
+                    int.Parse(itemListPlanetSize.SelectedItem ?? "32"),
+                    resourceManager.PlanetPresets[0].Dirt,
+                    resourceManager.PlanetPresets[0].Type,
+                    resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
+                )
+            ) + " PL";
+        }
+
+        //old method
         private static void UpdatePlanetList(ItemList planetList, World world)
         {
             planetList.ClearItems();
