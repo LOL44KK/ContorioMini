@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 
 using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
