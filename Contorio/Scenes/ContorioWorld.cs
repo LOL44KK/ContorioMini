@@ -496,38 +496,38 @@ namespace Contorio.Scenes
 
                 if (tileMap.Visible)
                 {
-                    HandleKeyPressPlayerMovement(keyInfo);
+                    KeyPressPlayerMovement(keyInfo);
                 }
 
                 if (!labelTransferBeaconMenu.Visible &&!buildingMode && !researchMenu && !TABmenu)
                 {
-                    HandleKeyPressSwitchPlanet(keyInfo);
+                    KeyPressSwitchPlanet(keyInfo);
                 }
 
                 if (tileMap.Visible && buildingMode)
                 {
-                    HandleKeyPressBuilding(keyInfo);
+                    KeyPressBuilding(keyInfo);
                 }
 
                 if (researchMenu && !TABmenu)
                 {
-                    HandleKeyPressResearchMenu(keyInfo);
+                    KeyPressResearchMenu(keyInfo);
                 }
 
                 if (TABmenu && !researchMenu && !buildingMode)
                 {
-                    HandleKeyPressTABMenu(keyInfo);
+                    KeyPressTABMenu(keyInfo);
                 }
 
                 if (labelTransferBeaconMenu.Visible)
                 {
-                    HandleKeyPressTransferBeaconMenu(keyInfo);
+                    KeyPressTransferBeaconMenu(keyInfo);
                 }
             }
         }
 
 
-        private void HandleKeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
+        private void KeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
         {
             void UpdateSelectedItemList()
             {
@@ -566,7 +566,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressPlayerMovement(ConsoleKeyInfo keyInfo)
+        void KeyPressPlayerMovement(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
             {
@@ -585,7 +585,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressSwitchPlanet(ConsoleKeyInfo keyInfo)
+        void KeyPressSwitchPlanet(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
             {
@@ -600,7 +600,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressBuilding(ConsoleKeyInfo keyInfo)
+        void KeyPressBuilding(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
             {
@@ -666,7 +666,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressTABMenu(ConsoleKeyInfo keyInfo)
+        void KeyPressTABMenu(ConsoleKeyInfo keyInfo)
         {
             void UpdateSelectedItemList()
             {
@@ -727,7 +727,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void HandleKeyPressResearchMenu(ConsoleKeyInfo keyInfo)
+        void KeyPressResearchMenu(ConsoleKeyInfo keyInfo)
         {
             void HandleNavigation(int selectedItemList, bool next)
             {

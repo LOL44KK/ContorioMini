@@ -40,7 +40,7 @@ namespace Contorio.Scenes
 
             while (_online)
             {
-                HandleInput();
+                HandleKeyPress();
 
                 if (savesPath.Length == 0 && itemListMenu.SelectedItem == "LOAD GAME")
                 {
@@ -97,7 +97,7 @@ namespace Contorio.Scenes
         }
 
         //Input
-        void HandleInput()
+        void HandleKeyPress()
         {
             if (Console.KeyAvailable)
             {
@@ -106,19 +106,19 @@ namespace Contorio.Scenes
 
                 if (itemListMenu.Visible)
                 {
-                    HandleInputMainMenu(keyInfo.Key);
+                    KeyPressMainMenu(keyInfo.Key);
                     return;
                 }
 
                 if (itemListSavesList.Visible)
                 {
-                    HandleInputLoadMenu(keyInfo.Key);
+                    KeyPressLoadMenu(keyInfo.Key);
                 }
 
             }
         }
 
-        private void HandleInputMainMenu(ConsoleKey key)
+        private void KeyPressMainMenu(ConsoleKey key)
         {
             switch (key)
             {
@@ -150,7 +150,7 @@ namespace Contorio.Scenes
             }
         }
 
-        private void HandleInputLoadMenu(ConsoleKey key)
+        private void KeyPressLoadMenu(ConsoleKey key)
         {
             switch (key)
             {
