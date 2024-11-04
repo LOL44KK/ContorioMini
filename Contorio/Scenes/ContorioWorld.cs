@@ -426,10 +426,10 @@ namespace Contorio.Scenes
                         SetBuildingMode(false);
                         SetVisibleTransferBeaconMenu(false);
                         SetVisibleMap(researchMenu);
-                        setVisibleResearchMenu(!researchMenu);
+                        SetVisibleResearchMenu(!researchMenu);
                         break;
                     case ConsoleKey.Tab:
-                        setVisibleResearchMenu(false);
+                        SetVisibleResearchMenu(false);
                         SetBuildingMode(false);
                         SetVisibleTransferBeaconMenu(false);
                         SetVisibleMap(TABmenu);
@@ -443,7 +443,7 @@ namespace Contorio.Scenes
                             {
                                 SetVisibleTABMenu(false);
                                 SetBuildingMode(false);
-                                setVisibleResearchMenu(false);
+                                SetVisibleResearchMenu(false);
                                 SetVisibleMap(labelTransferBeaconMenu.Visible);
                                 SetVisibleTransferBeaconMenu(!labelTransferBeaconMenu.Visible);
 
@@ -462,6 +462,15 @@ namespace Contorio.Scenes
                         messageMessage.Show("Successfully saved", ConsoleColor.DarkGreen);
                         break;
                     case ConsoleKey.Escape:
+                        if (TABmenu || researchMenu || labelTransferBeaconMenu.Visible)
+                        {
+                            SetVisibleTABMenu(false);
+                            SetVisibleResearchMenu(false);
+                            SetVisibleTransferBeaconMenu(false);
+                            
+                            SetVisibleMap(true);
+                            break;
+                        }
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                         _online = false;
                         break;
@@ -819,7 +828,7 @@ namespace Contorio.Scenes
             }
         }
 
-        void setVisibleResearchMenu(bool visible)
+        void SetVisibleResearchMenu(bool visible)
         {
             researchMenu = visible;
             itemListResearchList.Visible = visible;
