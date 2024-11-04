@@ -405,8 +405,26 @@ namespace Contorio.Scenes
             UpdateCostBuilding(labelCostBuilding, selectBlock);
         }
 
+        // Game Func
+        private void SetBuildingMode(bool mode)
+        {
+            if (tileMap.Visible)
+            {
+                buildingMode = mode;
+                SetVisibleBuildingMode(mode);
+            }
+        }
+
+        private void SwitchPlanet(int index)
+        {
+            player.Planet = index;
+            player.Coord = new Point(world.Planets[index].Size / 2, world.Planets[index].Size / 2);
+            LoadMap(world.Planets[index]);
+            UpdatePlanetInfo(world.Planets[index]);
+        }
+
         //Input
-        void HandleKeyPress()
+        private void HandleKeyPress()
         {
             if (Console.KeyAvailable)
             {
@@ -509,7 +527,7 @@ namespace Contorio.Scenes
         }
 
 
-        void HandleKeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
+        private void HandleKeyPressTransferBeaconMenu(ConsoleKeyInfo keyInfo)
         {
             void UpdateSelectedItemList()
             {
@@ -573,17 +591,11 @@ namespace Contorio.Scenes
             {
                 case ConsoleKey.DownArrow:
                     itemListPlanetList.NextItem();
-                    player.Planet = itemListPlanetList.SelectedIndex;
-                    player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                    LoadMap(world.Planets[player.Planet]);
-                    UpdatePlanetInfo(world.Planets[player.Planet]);
+                    SwitchPlanet(itemListPlanetList.SelectedIndex);
                     break;
                 case ConsoleKey.UpArrow:
                     itemListPlanetList.PreviousItem();
-                    player.Planet = itemListPlanetList.SelectedIndex;
-                    player.Coord = new Point(world.Planets[player.Planet].Size / 2, world.Planets[player.Planet].Size / 2);
-                    LoadMap(world.Planets[player.Planet]);
-                    UpdatePlanetInfo(world.Planets[player.Planet]);
+                    SwitchPlanet(itemListPlanetList.SelectedIndex);
                     break;
             }
         }
@@ -812,20 +824,15 @@ namespace Contorio.Scenes
             tileMap.Visible = visible;
             blockPlayerCoord.Visible = visible;
             labelPlayerCoord.Visible = visible;
+            labelPlayerResources.Visible = visible;
         }
 
-        void SetBuildingMode(bool mode)
+        void SetVisibleBuildingMode(bool visible)
         {
-            buildingMode = mode;
-            blockPlayerSelectedBlock.Visible = mode;
-            itemListBlockList.Visible = mode;
-            itemListBlockCategory.Visible = mode;
-            labelCostBuilding.Visible = mode;
-
-            if (tileMap.Visible)
-            {
-                labelPlayerResources.Visible = true;
-            }
+            blockPlayerSelectedBlock.Visible = visible;
+            itemListBlockList.Visible = visible;
+            itemListBlockCategory.Visible = visible;
+            labelCostBuilding.Visible = visible;
         }
 
         void SetVisibleResearchMenu(bool visible)
