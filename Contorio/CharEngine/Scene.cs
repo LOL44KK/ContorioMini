@@ -1,21 +1,19 @@
 ﻿namespace Contorio.CharEngine
 {
+    public delegate void TickDelegate();
+
     public class Scene
     {
-        public delegate void TickDelegate();
-        public delegate void InputDelegate(ConsoleKey key);
-
-
         private List<Sprite> _sprites = new List<Sprite>();
+
+        public event TickDelegate? OnTick;
+        public event InputDelegate? OnInput;
 
         public List<Sprite> Sprites
         { 
             get { return _sprites; }
             init { _sprites = value; }
         }
-
-        public event TickDelegate? OnTick;
-        public event InputDelegate? OnInput;
 
         public Scene(List<Sprite> sprites)
         {
@@ -45,6 +43,28 @@
         public void RaiseInput(ConsoleKey key)
         {
             OnInput?.Invoke(key);
+        }
+
+        public void IncludeСontainer(Container container)
+        {
+            foreach (var sprite in container.Sprites)
+            {
+                _sprites.Add(sprite);
+            }
+
+            OnTick += container.RaiseTick;
+            OnInput += container.RaiseInput;
+        }
+
+        public void ExcludeContainer(Container container)
+        {
+            foreach (var sprite in container.Sprites)
+            {
+                _sprites.Remove(sprite);
+            }
+
+            OnTick -= container.RaiseTick;
+            OnInput -= container.RaiseInput;
         }
     }
 }

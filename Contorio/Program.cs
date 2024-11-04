@@ -7,10 +7,14 @@
 // 3. В Menu добавить надпись с версией игры
 
 
+using Contorio.CharEngine;
+using Contorio.CharEngine.Widgets;
+
 namespace Contorio
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
             bool DEBUG = true;

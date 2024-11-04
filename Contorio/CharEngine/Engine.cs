@@ -21,12 +21,12 @@
         {
             if (_scene != null)
             {
-                InputManager.Instance.RemoveInputHandler(_scene.RaiseInput);
+                InputManager.Instance.InputHandlers -= _scene.RaiseInput;
             }
 
             _scene = scene;
             _renderer.SetScene(scene);
-            InputManager.Instance.AddInputHandler(scene.RaiseInput);
+            InputManager.Instance.InputHandlers += scene.RaiseInput;
         }
 
         public void Run()
