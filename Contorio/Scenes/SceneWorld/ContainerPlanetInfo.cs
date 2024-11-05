@@ -1,7 +1,8 @@
-﻿using Contorio.CharEngine;
+﻿using System.Drawing;
+
+using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
-using System.Drawing;
 
 namespace Contorio.Scenes.SceneWorld
 {
@@ -41,11 +42,6 @@ namespace Contorio.Scenes.SceneWorld
         public override void Tick()
         {
             UpdatePlanetInfo(_world.Planets[_player.Planet]);
-        }
-
-        public override void Input(ConsoleKey key)
-        {
-
         }
 
         public void UpdatePlanetInfo(Planet planet)

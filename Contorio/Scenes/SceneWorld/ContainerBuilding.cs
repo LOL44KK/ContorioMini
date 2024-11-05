@@ -3,8 +3,8 @@
 using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
-using Contorio.Core.Managers;
 using Contorio.Core.Types;
+using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld
 {
@@ -55,6 +55,7 @@ namespace Contorio.Scenes.SceneWorld
             UpdateBlockList(ItemListBlockCategory.SelectedItem);
             _selectedBlock = ItemListBlockList.SelectedItem;
             UpdateSpriteBlockPlayerSelectedBlock(_selectedBlock);
+            UpdateCostBuilding(_selectedBlock);
         }
 
         public override void Input(ConsoleKey key)

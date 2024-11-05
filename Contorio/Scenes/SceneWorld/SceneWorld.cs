@@ -13,6 +13,7 @@ namespace Contorio.Scenes.SceneWorld
         public ContainerTileMap ContainerTileMap;
         public ContainerPlanetInfo ContainerPlanetInfo;
         public ContainerBuilding ContainerBuilding;
+        public ContainerResearch ContainerResearch;
 
         public Message MessageMessage;
 
@@ -28,6 +29,7 @@ namespace Contorio.Scenes.SceneWorld
             ContainerTileMap = new ContainerTileMap(_world);
             ContainerPlanetInfo = new ContainerPlanetInfo(_world);
             ContainerBuilding = new ContainerBuilding(this, _world);
+            ContainerResearch = new ContainerResearch(this, world);
 
             // AddSprite
             AddSprite(MessageMessage);
@@ -36,6 +38,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeСontainer(ContainerTileMap);
             IncludeСontainer(ContainerPlanetInfo);
             IncludeСontainer(ContainerBuilding);
+            IncludeСontainer(ContainerResearch);
 
             // OnTick
             OnTick += _worldHandler.Tick;
@@ -46,7 +49,6 @@ namespace Contorio.Scenes.SceneWorld
             // 
             ContainerTileMap.Enable = true;
             ContainerPlanetInfo.Enable = true;
-            ContainerBuilding.Enable = true;
         }
 
         private void Input(ConsoleKey key)
@@ -54,7 +56,16 @@ namespace Contorio.Scenes.SceneWorld
             switch (key)
             {
                 case ConsoleKey.B:
-                    ContainerBuilding.Enable = !ContainerBuilding.Enable;
+                    if (ContainerTileMap.Enable)
+                    {
+                        ContainerBuilding.Enable = !ContainerBuilding.Enable;
+                    }
+                    break;
+                case ConsoleKey.R:
+                    ContainerResearch.Enable = !ContainerResearch.Enable;
+                    
+                    ContainerTileMap.Enable  = !ContainerResearch.Enable;
+                    ContainerBuilding.Enable = false;
                     break;
             }
         }

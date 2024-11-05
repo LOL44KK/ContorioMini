@@ -1,6 +1,7 @@
 ﻿namespace Contorio.CharEngine
 {
     public delegate void TickDelegate();
+    public delegate void EnableDelegate();
 
     public class Scene
     {
@@ -8,6 +9,7 @@
 
         public event TickDelegate? OnTick;
         public event InputDelegate? OnInput;
+        public event EnableDelegate? OnEnable;
 
         public List<Sprite> Sprites
         { 
@@ -45,6 +47,11 @@
             OnInput?.Invoke(key);
         }
 
+        public void RaiseEnable() 
+        { 
+            OnEnable?.Invoke();
+        }
+
         public void IncludeСontainer(Container container)
         {
             foreach (var sprite in container.Sprites)
@@ -54,6 +61,7 @@
 
             OnTick += container.RaiseTick;
             OnInput += container.RaiseInput;
+            OnEnable += container.RaiseEnable;
         }
 
         public void ExcludeContainer(Container container)
@@ -65,6 +73,7 @@
 
             OnTick -= container.RaiseTick;
             OnInput -= container.RaiseInput;
+            OnEnable -= container.RaiseEnable;
         }
     }
 }

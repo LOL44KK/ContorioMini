@@ -8,6 +8,7 @@
 
         public event TickDelegate? OnTick;
         public event InputDelegate? OnInput;
+        public event EnableDelegate? OnEnable;
 
         public List<Sprite> Sprites
         {
@@ -33,8 +34,13 @@
             get { return _enable; }
             set
             {
-                Visible = value;
                 _enable = value;
+
+                Visible = value;
+                if (_enable)
+                {
+                    RaiseEnable();
+                }
             }
         }
 
@@ -48,6 +54,7 @@
 
             OnTick += Tick;
             OnInput += Input;
+            OnEnable += Ready;
         }
 
         public void AddSprite(Sprite sprite)
@@ -77,14 +84,24 @@
             }
         }
 
-        public virtual void Input(ConsoleKey key)
+        public void RaiseEnable()
         {
-            //
+            OnEnable?.Invoke();
         }
 
         public virtual void Tick()
         {
-            //
+            // Что-то
+        }
+
+        public virtual void Ready()
+        {
+            // Что-то
+        }
+
+        public virtual void Input(ConsoleKey key)
+        {
+            // Что-то
         }
     }
 }
