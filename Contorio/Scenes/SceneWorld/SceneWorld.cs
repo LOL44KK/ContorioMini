@@ -1,4 +1,5 @@
 ﻿using Contorio.CharEngine;
+using Contorio.CharEngine.Widgets;
 using Contorio.Core;
 
 namespace Contorio.Scenes.SceneWorld
@@ -13,16 +14,23 @@ namespace Contorio.Scenes.SceneWorld
         public ContainerPlanetInfo ContainerPlanetInfo;
         public ContainerBuilding ContainerBuilding;
 
+        public Message MessageMessage;
+
         public SceneWorld(World world)
         {
             _world = world;
             _player = _world.Player;
             _worldHandler = new WorldHandler(_world);
 
+            // InitializeComponent
+            MessageMessage = new Message(60, 29);
+
             ContainerTileMap = new ContainerTileMap(_world);
             ContainerPlanetInfo = new ContainerPlanetInfo(_world);
             ContainerBuilding = new ContainerBuilding(this, _world);
 
+            // AddSprite
+            AddSprite(MessageMessage);
 
             // Include Container
             IncludeСontainer(ContainerTileMap);

@@ -65,7 +65,7 @@ namespace Contorio.Scenes.SceneWorld
                     Block block = ResourceManager.Instance.Blocks[_selectedBlock];
                     if (!_world.Planets[_player.Planet].Ground.ContainsKey(_player.Coord))
                     {
-                        //messageMessage.Show("No building here", ConsoleColor.DarkRed);
+                        _rootScene.MessageMessage.Show("No building here", ConsoleColor.DarkRed);
                         break;
                     }
 
@@ -73,7 +73,7 @@ namespace Contorio.Scenes.SceneWorld
                     {
                         if (_player.Resources.GetValueOrDefault(resource.Key, 0) < resource.Value)
                         {
-                            //messageMessage.Show("not enough " + resource.Key, ConsoleColor.DarkRed);
+                            _rootScene.MessageMessage.Show("not enough " + resource.Key, ConsoleColor.DarkRed);
                             break;
                         }
                     }

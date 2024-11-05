@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Contorio.CharEngine.Widgets
 {
-    class Message : Label
+    public class Message : Label
     {
         private Stopwatch _stopwatch = new Stopwatch();
         private int _showMessageTime;
