@@ -8,7 +8,7 @@ using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld
 {
-    public class ContainerBuilding : Container
+    public class SceneBuilding : Scene
     {
         private SceneWorld _rootScene;
         private World _world;
@@ -22,7 +22,7 @@ namespace Contorio.Scenes.SceneWorld
         private string _selectedBlock;
         private int _selectedItemList;
 
-        public ContainerBuilding(SceneWorld rootScene, World world)
+        public SceneBuilding(SceneWorld rootScene, World world)
         {
             _rootScene = rootScene;
             _world = world;
@@ -81,12 +81,12 @@ namespace Contorio.Scenes.SceneWorld
 
                     if (_player.BuildBlock(_player.Coord, block, _world.Planets[_player.Planet]))
                     {
-                        _rootScene.ContainerTileMap.Map.SetCell(1, _player.Coord, ResourceManager.Instance.TileIds[_selectedBlock]);
+                        _rootScene.SceneTileMap.Map.SetCell(1, _player.Coord, ResourceManager.Instance.TileIds[_selectedBlock]);
                     }
                     break;
                 case ConsoleKey.E:
                     _player.DestroyBlock(_player.Coord, _world.Planets[_player.Planet]);
-                    _rootScene.ContainerTileMap.Map.RemoveCell(ContainerTileMap.LayerBlock, _player.Coord);
+                    _rootScene.SceneTileMap.Map.RemoveCell(SceneTileMap.LayerBlock, _player.Coord);
                     break;
                 case ConsoleKey.DownArrow:
                     HandleNavigation(true);

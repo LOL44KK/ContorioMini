@@ -40,6 +40,8 @@
 
         private void MainLoop()
         {
+            _scene.RaiseEnable();
+
             while (_online)
             {
                 // Вызовы методов Tick

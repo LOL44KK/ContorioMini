@@ -10,10 +10,10 @@ namespace Contorio.Scenes.SceneWorld
         private Player _player;
         private WorldHandler _worldHandler;
 
-        public ContainerTileMap ContainerTileMap;
-        public ContainerPlanetInfo ContainerPlanetInfo;
-        public ContainerBuilding ContainerBuilding;
-        public ContainerResearch ContainerResearch;
+        public SceneTileMap SceneTileMap;
+        public ScenePlanetInfo ScenePlanetInfo;
+        public SceneBuilding SceneBuilding;
+        public SceneResearch SceneResearch;
 
         public Message MessageMessage;
 
@@ -22,50 +22,52 @@ namespace Contorio.Scenes.SceneWorld
             _world = world;
             _player = _world.Player;
             _worldHandler = new WorldHandler(_world);
-
+            
             // InitializeComponent
             MessageMessage = new Message(60, 29);
 
-            ContainerTileMap = new ContainerTileMap(_world);
-            ContainerPlanetInfo = new ContainerPlanetInfo(_world);
-            ContainerBuilding = new ContainerBuilding(this, _world);
-            ContainerResearch = new ContainerResearch(this, world);
+            SceneTileMap = new SceneTileMap(_world);
+            ScenePlanetInfo = new ScenePlanetInfo(_world);
+            SceneBuilding = new SceneBuilding(this, _world);
+            SceneResearch = new SceneResearch(this, world);
 
             // AddSprite
             AddSprite(MessageMessage);
 
             // Include Container
-            IncludeСontainer(ContainerTileMap);
-            IncludeСontainer(ContainerPlanetInfo);
-            IncludeСontainer(ContainerBuilding);
-            IncludeСontainer(ContainerResearch);
+            IncludeScene(SceneTileMap);
+            IncludeScene(ScenePlanetInfo);
+            IncludeScene(SceneBuilding);
+            IncludeScene(SceneResearch);
 
             // OnTick
             OnTick += _worldHandler.Tick;
-
-            // OnInput
-            OnInput += Input;
-
-            // 
-            ContainerTileMap.Enable = true;
-            ContainerPlanetInfo.Enable = true;
         }
 
-        private void Input(ConsoleKey key)
+        public override void Ready()
+        {
+            ScenePlanetInfo.Enable = true;
+            SceneTileMap.Enable = true;
+
+            SceneBuilding.Enable = false;
+            SceneResearch.Enable = false;
+        }
+
+        public override void Input(ConsoleKey key)
         {
             switch (key)
             {
                 case ConsoleKey.B:
-                    if (ContainerTileMap.Enable)
+                    if (SceneTileMap.Enable)
                     {
-                        ContainerBuilding.Enable = !ContainerBuilding.Enable;
+                        SceneBuilding.Enable = !SceneBuilding.Enable;
                     }
                     break;
                 case ConsoleKey.R:
-                    ContainerResearch.Enable = !ContainerResearch.Enable;
+                    SceneResearch.Enable = !SceneResearch.Enable;
                     
-                    ContainerTileMap.Enable  = !ContainerResearch.Enable;
-                    ContainerBuilding.Enable = false;
+                    SceneTileMap.Enable  = !SceneResearch.Enable;
+                    SceneBuilding.Enable = false;
                     break;
             }
         }

@@ -6,7 +6,7 @@ using Contorio.Core;
 
 namespace Contorio.Scenes.SceneWorld
 {
-    public class ContainerPlanetInfo : Container
+    public class ScenePlanetInfo : Scene
     {
         private World _world;
         private Player _player;
@@ -15,7 +15,7 @@ namespace Contorio.Scenes.SceneWorld
         public Label LabelPlanetsLabel;
         public ItemList ItemListPlanetList;
 
-        public ContainerPlanetInfo(World world)
+        public ScenePlanetInfo(World world)
         {
             _world = world;
             _player = world.Player;

@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Contorio.Scenes.SceneWorld
 {
-    public class ContainerResearch : Container
+    public class SceneResearch : Scene
     {
         private SceneWorld _rootScene;
 
@@ -18,7 +18,7 @@ namespace Contorio.Scenes.SceneWorld
         public Label LabelResearchCost;
         public Label LabelEnterToResearch;
 
-        public ContainerResearch(SceneWorld rootScene, World world)
+        public SceneResearch(SceneWorld rootScene, World world)
         {
             _rootScene = rootScene;
             _world = world;
@@ -92,8 +92,8 @@ namespace Contorio.Scenes.SceneWorld
                         if (_world.StudyResearch(ItemListResearchList.SelectedItem))
                         {
                             UpdateResearchList();
-                            _rootScene.ContainerBuilding.UpdateBlockCategory();
-                            _rootScene.ContainerBuilding.UpdateBlockList(_rootScene.ContainerBuilding.ItemListBlockCategory.SelectedItem);
+                            _rootScene.SceneBuilding.UpdateBlockCategory();
+                            _rootScene.SceneBuilding.UpdateBlockList(_rootScene.SceneBuilding.ItemListBlockCategory.SelectedItem);
                         }
                     }
                     if (_researchSystem.CloseResearch.Count > 0)

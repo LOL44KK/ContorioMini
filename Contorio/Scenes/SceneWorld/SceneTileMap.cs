@@ -7,7 +7,7 @@ using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld
 {
-    public class ContainerTileMap : Container
+    public class SceneTileMap : Scene
     {
         private World _world;
         private Player _player;
@@ -19,7 +19,7 @@ namespace Contorio.Scenes.SceneWorld
         public const int LayerGround = 0;
         public const int LayerBlock = 1;
 
-        public ContainerTileMap(World world)
+        public SceneTileMap(World world)
         {
             _world = world;
             _player = world.Player;
@@ -42,8 +42,10 @@ namespace Contorio.Scenes.SceneWorld
             AddSprite(Map);
             AddSprite(LabelPlayerCoord);
             AddSprite(SpriteBlockPlayerCoord);
+        }
 
-            //
+        public override void Ready()
+        {
             LoadMap(_world.Planets[_world.Player.Planet]);
         }
 
