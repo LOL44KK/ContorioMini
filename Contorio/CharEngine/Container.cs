@@ -64,5 +64,21 @@
         {
             //
         }
+
+        public void RaiseInput(ConsoleKey key)
+        {
+            if (_enable)
+            {
+                Input(key);
+            }
+        }
+
+        public void RaiseTick()
+        {
+            if (_enable)
+            {
+                Tick();
+            }
+        }
     }
 }

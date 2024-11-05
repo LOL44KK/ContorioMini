@@ -16,8 +16,8 @@ namespace Contorio.Scenes.SceneWorld
         public Label LabelPlayerCoord;
         public Sprite SpriteBlockPlayerCoord;
 
-        public const int GroundLayer = 0;
-        public const int BlockLayer = 1;
+        public const int LayerGround = 0;
+        public const int LayerBlock = 1;
 
         public ContainerTileMap(World world)
         {
@@ -33,18 +33,18 @@ namespace Contorio.Scenes.SceneWorld
                 cellPaddingRight: 2,
                 cellPaddingBottom: 1
             );
-            Map.AddLayer(GroundLayer);
-            Map.AddLayer(BlockLayer);
-
+            Map.AddLayer(LayerGround);
+            Map.AddLayer(LayerBlock);
             LabelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
             SpriteBlockPlayerCoord = new Sprite(ResourceManager.Instance.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
-
-            LoadMap(_world.Planets[_world.Player.Planet]);
 
             // AddSprite
             AddSprite(Map);
             AddSprite(LabelPlayerCoord);
             AddSprite(SpriteBlockPlayerCoord);
+
+            //
+            LoadMap(_world.Planets[_world.Player.Planet]);
         }
 
         public override void Input(ConsoleKey key)
@@ -80,11 +80,11 @@ namespace Contorio.Scenes.SceneWorld
             Map.Clear();
             foreach (var groundState in planet.Ground)
             {
-                Map.SetCell(GroundLayer, groundState.Key, resourceManager.TileIds[groundState.Value.Name]);
+                Map.SetCell(LayerGround, groundState.Key, resourceManager.TileIds[groundState.Value.Name]);
             }
             foreach (var blockState in planet.Blocks)
             {
-                Map.SetCell(BlockLayer, blockState.Key, resourceManager.TileIds[blockState.Value.Name]);
+                Map.SetCell(LayerBlock, blockState.Key, resourceManager.TileIds[blockState.Value.Name]);
             }
         }
 
