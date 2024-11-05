@@ -24,14 +24,20 @@
             _containers = new List<Container>();
         }
 
-        public void AddSprite(int indexTab, Sprite sprite)
+        public int AddTab()
         {
-            _containers[indexTab].AddSprite(sprite);
+            _containers.Add(new Container());
+            return _containers.Count - 1;
         }
 
-        public void RemoveSprite(int indexTab, Sprite sprite)
+        public void AddSprite(int tabIndex, Sprite sprite)
         {
-            _containers[indexTab].RemoveSprite(sprite);
+            _containers[tabIndex].AddSprite(sprite);
+        }
+
+        public void RemoveSprite(int tabIndex, Sprite sprite)
+        {
+            _containers[tabIndex].RemoveSprite(sprite);
         }
 
         public void NextTab()
