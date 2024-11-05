@@ -6,9 +6,6 @@
         private bool _visible;
         private bool _enable;
 
-        public event TickDelegate? OnTick;
-        public event InputDelegate? OnInput;
-
         public List<Sprite> Sprites
         {
             get { return _sprites; }
@@ -58,20 +55,14 @@
             _sprites.Remove(sprite);
         }
 
-        public void RaiseTick()
+        public virtual void Input(ConsoleKey key)
         {
-            if (_enable)
-            {
-                OnTick?.Invoke();
-            }
+            //
         }
 
-        public void RaiseInput(ConsoleKey key)
+        public virtual void Tick()
         {
-            if (_enable)
-            {
-                OnInput?.Invoke(key);
-            }
+            //
         }
     }
 }

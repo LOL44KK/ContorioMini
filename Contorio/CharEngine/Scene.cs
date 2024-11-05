@@ -52,8 +52,8 @@
                 _sprites.Add(sprite);
             }
 
-            OnTick += container.RaiseTick;
-            OnInput += container.RaiseInput;
+            OnTick += container.Tick;
+            OnInput += container.Input;
         }
 
         public void ExcludeContainer(Container container)
@@ -63,8 +63,8 @@
                 _sprites.Remove(sprite);
             }
 
-            OnTick -= container.RaiseTick;
-            OnInput -= container.RaiseInput;
+            OnTick -= container.Tick;
+            OnInput -= container.Input;
         }
     }
 }

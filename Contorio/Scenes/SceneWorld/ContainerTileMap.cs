@@ -45,17 +45,9 @@ namespace Contorio.Scenes.SceneWorld
             AddSprite(Map);
             AddSprite(LabelPlayerCoord);
             AddSprite(SpriteBlockPlayerCoord);
-
-            // OnTick
-            OnTick += () => { Map.UpdatePixels(_world.Player.Coord); };
-            OnTick += () => { LabelPlayerCoord.Text = _player.Coord.X + "|" + _player.Coord.Y; };
-            OnTick += UpdateSpritePlayerCoordBlock;
-
-            // OnInput
-            OnInput += KeyPress;
         }
 
-        public void KeyPress(ConsoleKey key)
+        public override void Input(ConsoleKey key)
         {
             switch (key)
             {
@@ -72,6 +64,13 @@ namespace Contorio.Scenes.SceneWorld
                     _player.Move(1, 0);
                     break;
             }
+        }
+
+        public override void Tick()
+        {
+            Map.UpdatePixels(_world.Player.Coord);
+            LabelPlayerCoord.Text = _player.Coord.X + "|" + _player.Coord.Y;
+            UpdateSpritePlayerCoordBlock();
         }
 
         public void LoadMap(Planet planet)
