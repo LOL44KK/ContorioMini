@@ -8,15 +8,25 @@
 
 
 using Contorio.CharEngine;
-using Contorio.CharEngine.Widgets;
+using Contorio.Core;
+using Contorio.Core.Managers;
 
 namespace Contorio
 {
     internal class Program
     {
-
         static void Main(string[] args)
         {
+            ModManager.Instance.AddMode(new BaseMod());
+            ModManager.Instance.InitializeResources();
+
+            Renderer renderer = new Renderer(120, 30);
+            Engine engine = new Engine(renderer);
+            engine.SetScene(new Scenes.SceneWorld.SceneWorld(new World()));
+
+            engine.Run();
+
+            /*
             bool DEBUG = true;
 
             if (DEBUG)
@@ -36,6 +46,7 @@ namespace Contorio
                     Console.WriteLine(ex.ToString());
                 }
             }
+            */
         }
     }
 }
