@@ -36,6 +36,7 @@ namespace Contorio.Scenes.SceneWorld
         public Label LabelPressGtoSearchPlanet;
 
         public TabContainer TabContainer;
+        public ItemListContainer ItemListContainerSearchPlanet;
 
         public Dictionary<string, double> _oreChance;
 
@@ -114,6 +115,11 @@ namespace Contorio.Scenes.SceneWorld
             TabContainer.AddSprite(1, LabelPalkaPeredCostSearchPlanet);
             TabContainer.AddSprite(1, LabelCostSearchPlanet);
             TabContainer.AddSprite(1, LabelPressGtoSearchPlanet);
+            // ItemListContainer
+            ItemListContainerSearchPlanet = new ItemListContainer(inactiveListSelectedItemColor:ConsoleColor.White);
+            ItemListContainerSearchPlanet.AddItemList(ItemListPlanetSize);
+            ItemListContainerSearchPlanet.AddItemList(ItemListOreName);
+            ItemListContainerSearchPlanet.AddItemList(ItemListOreChance);
 
             // AddSprite
             AddSprite(LabelTokensInfo);
@@ -168,7 +174,7 @@ namespace Contorio.Scenes.SceneWorld
                     }
                     else if (TabContainer.SelectedTab == 1)
                     {
-
+                        ItemListContainerSearchPlanet.NextItemList();
                     }
                     break;
                 case ConsoleKey.UpArrow:
@@ -179,7 +185,19 @@ namespace Contorio.Scenes.SceneWorld
                     }
                     else if (TabContainer.SelectedTab == 1)
                     {
-
+                        ItemListContainerSearchPlanet.PreviousItemList();
+                    }
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (TabContainer.SelectedTab == 1)
+                    {
+                        ItemListContainerSearchPlanet.PreviousItem();
+                    }
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (TabContainer.SelectedTab == 1)
+                    {
+                        ItemListContainerSearchPlanet.NextItem();
                     }
                     break;
                 case ConsoleKey.D1:
