@@ -160,6 +160,7 @@ namespace Contorio.Scenes.SceneWorld
             }
 
             UpdateOreNameList(ResourceManager.Instance.PlanetPresets[0]);
+            UpdateCostSearchPlanet();
         }
 
         public override void Input(ConsoleKey key)
@@ -192,12 +193,30 @@ namespace Contorio.Scenes.SceneWorld
                     if (TabContainer.SelectedTab == 1)
                     {
                         ItemListContainerSearchPlanet.PreviousItem();
+                        if (ItemListContainerSearchPlanet.SelectedItemList == 1)
+                        {
+                            ItemListOreChance.SelectedItem = "" + _oreChance[ItemListOreName.SelectedItem];
+                        }
+                        if (ItemListContainerSearchPlanet.SelectedItemList == 2)
+                        {
+                            _oreChance[ItemListOreName.SelectedItem] = double.Parse(ItemListOreChance.SelectedItem);
+                        }
+                        UpdateCostSearchPlanet();
                     }
                     break;
                 case ConsoleKey.RightArrow:
                     if (TabContainer.SelectedTab == 1)
                     {
                         ItemListContainerSearchPlanet.NextItem();
+                        if (ItemListContainerSearchPlanet.SelectedItemList == 1)
+                        {
+                            ItemListOreChance.SelectedItem = "" + _oreChance[ItemListOreName.SelectedItem];
+                        }
+                        if (ItemListContainerSearchPlanet.SelectedItemList == 2)
+                        {
+                            _oreChance[ItemListOreName.SelectedItem] = double.Parse(ItemListOreChance.SelectedItem);
+                        }
+                        UpdateCostSearchPlanet();
                     }
                     break;
                 case ConsoleKey.D1:
@@ -247,11 +266,6 @@ namespace Contorio.Scenes.SceneWorld
         public override void Tick()
         {
             UpdateTokensInfo();
-
-            if (TabContainer.SelectedTab == 1)
-            {
-                UpdateCostSearchPlanet();
-            }
         }
 
         private void UpdateTokensInfo()
