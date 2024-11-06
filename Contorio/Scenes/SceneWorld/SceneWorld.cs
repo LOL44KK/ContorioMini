@@ -15,6 +15,7 @@ namespace Contorio.Scenes.SceneWorld
         public SceneBuilding SceneBuilding;
         public SceneResearch SceneResearch;
         public SceneTransfer SceneTransfer;
+        public SceneBlockUI SceneBlockUI;
 
         public Message MessageMessage;
 
@@ -30,8 +31,9 @@ namespace Contorio.Scenes.SceneWorld
             SceneTileMap = new SceneTileMap(_world);
             ScenePlanetInfo = new ScenePlanetInfo(_world);
             SceneBuilding = new SceneBuilding(this, _world);
-            SceneResearch = new SceneResearch(this, world);
-            SceneTransfer = new SceneTransfer(world);
+            SceneResearch = new SceneResearch(this, _world);
+            SceneTransfer = new SceneTransfer(_world);
+            SceneBlockUI = new SceneBlockUI(_world);
 
             // AddSprite
             AddSprite(MessageMessage);
@@ -42,6 +44,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeScene(SceneBuilding);
             IncludeScene(SceneResearch);
             IncludeScene(SceneTransfer);
+            IncludeScene(SceneBlockUI);
 
             // OnTick
             OnTick += _worldHandler.Tick;
@@ -55,6 +58,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneBuilding.Enable = false;
             SceneResearch.Enable = false;
             SceneTransfer.Enable = false;
+            SceneBlockUI.Enable = false;
         }
 
         public override void Input(ConsoleKey key)
@@ -68,6 +72,7 @@ namespace Contorio.Scenes.SceneWorld
                     SceneBuilding.Enable = false;
                     SceneResearch.Enable = false;
                     SceneTransfer.Enable = false;
+                    SceneBlockUI.Enable  = false;
                     break;
 
                 case ConsoleKey.R:
@@ -76,6 +81,7 @@ namespace Contorio.Scenes.SceneWorld
                     SceneTileMap.Enable  = !SceneResearch.Enable;
                     SceneBuilding.Enable = false;
                     SceneTransfer.Enable = false;
+                    SceneBlockUI.Enable  = false;
                     break;
 
                 case ConsoleKey.T:
@@ -84,12 +90,28 @@ namespace Contorio.Scenes.SceneWorld
                     SceneTileMap.Enable = !SceneTransfer.Enable;
                     SceneBuilding.Enable = false;
                     SceneResearch.Enable = false;
+                    SceneBlockUI.Enable  = false;
                     break;
 
                 case ConsoleKey.B:
                     if (SceneTileMap.Enable)
                     {
                         SceneBuilding.Enable = !SceneBuilding.Enable;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (SceneBlockUI.Enable)
+                    {
+                        SceneBlockUI.Enable = false;
+
+                        SceneTileMap.Enable = true;
+                    }
+                    else if (SceneTileMap.Enable && !SceneBuilding.Enable && SceneBlockUI.OpenUI(_player.Coord))
+                    {
+                        SceneTileMap.Enable  = false;
+                        SceneTransfer.Enable = false;
+                        SceneBuilding.Enable = false;
+                        SceneResearch.Enable = false;
                     }
                     break;
             }

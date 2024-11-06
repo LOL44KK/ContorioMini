@@ -9,6 +9,8 @@ namespace Contorio.Scenes.SceneWorld
 {
     public class SceneTileMap : Scene
     {
+        private SceneWorld _rootScece;
+
         private World _world;
         private Player _player;
 
