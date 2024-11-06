@@ -93,7 +93,7 @@ namespace Contorio.Scenes.SceneWorld
             );
             for (double i = 0; i < 1000; i += 5) ItemListOreChance.AddItem("" + i / 10000);
 
-            LabelPalkaPeredCostSearchPlanet = new Label("================", ConsoleColor.White, new Point(75, 7), visible: false);
+            LabelPalkaPeredCostSearchPlanet = new Label("=================", ConsoleColor.White, new Point(75, 7), visible: false);
             LabelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(75, 8), visible: false);
             LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(75, 9), visible: false);
 
