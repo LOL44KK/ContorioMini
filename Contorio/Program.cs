@@ -1,15 +1,12 @@
 ﻿// Contorio
 // На будущие
-// 1. Переписать WorldScene и MenuScene на новый подход
-//    с использованием Engine
-// 2. При генерациий мира сделать выбор присета планеты
+// 1. До переписать MenuScene
+// 2. В Menu добавить надпись с версией игры
+// 3. Подумать на структурой движка
+// 4. Подумать над менеджарами в Core
+// 5. При генерациий мира сделать выбор присета планеты
 //    также при поиске
-// 3. В Menu добавить надпись с версией игры
 
-
-using Contorio.CharEngine;
-using Contorio.Core;
-using Contorio.Core.Managers;
 
 namespace Contorio
 {
@@ -17,17 +14,6 @@ namespace Contorio
     {
         static void Main(string[] args)
         {
-            ModManager.Instance.AddMode(new BaseMod());
-            ModManager.Instance.InitializeResources();
-
-            Renderer renderer = new Renderer(120, 30);
-            Engine engine = new Engine(renderer);
-            engine.SetScene(new Scenes.SceneWorld.SceneWorld(new World()));
-
-            engine.Run();
-
-
-            /*
             bool DEBUG = true;
 
             if (DEBUG)
@@ -47,7 +33,6 @@ namespace Contorio
                     Console.WriteLine(ex.ToString());
                 }
             }
-            */
         }
     }
 }

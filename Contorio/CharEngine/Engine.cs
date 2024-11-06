@@ -35,6 +35,8 @@
             {
                 throw new InvalidOperationException("Scene is not set.");
             }
+
+            _online = true;
             MainLoop();
         }
 

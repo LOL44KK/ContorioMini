@@ -4,13 +4,11 @@ using System.Drawing;
 
 namespace Contorio.Scenes
 {
-    public class ContorioMenu
+    public class SceneMenu : Scene
     {
-        private Renderer renderer;
-        private Scene scene;
-        
-        private bool _online;
+        Engine _engine;
         private string? _choice;
+        
         public string? Choice 
         { 
             get { return _choice; }
@@ -25,38 +23,11 @@ namespace Contorio.Scenes
         // State variables
         private string[] savesPath = { };
 
-        public ContorioMenu(Renderer renderer)
+        public SceneMenu(Engine engine)
         {
-            this.renderer = renderer;
-            scene = new Scene();
+            _engine = engine;
 
-            InitializeUIElements();
-        }
-
-        public void Run()
-        {
-            renderer.SetScene(scene);
-            _online = true;
-
-            while (_online)
-            {
-                HandleKeyPress();
-
-                if (savesPath.Length == 0 && itemListMenu.SelectedItem == "LOAD GAME")
-                {
-                    itemListMenu.SelectedItemColor = ConsoleColor.DarkRed;
-                }
-                else
-                {
-                    itemListMenu.SelectedItemColor = ConsoleColor.DarkGreen;
-                }
-
-                renderer.Render();
-            }
-        }
-
-        private void InitializeUIElements()
-        {
+            // InitializeWidgets
             contorioSprite = new Sprite(
                 pixels: new Pixel[6, 70]
                 {
@@ -68,7 +39,7 @@ namespace Contorio.Scenes
                     { new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
                 }
             );
-            contorioSprite.Position = new Point(renderer.ScreenWidth / 2 - (contorioSprite.Width / 2), 0);
+            contorioSprite.Position = new Point(120 / 2 - (contorioSprite.Width / 2), 0);
 
             itemListMenu = new ItemList(
                 ConsoleColor.White,
@@ -90,31 +61,35 @@ namespace Contorio.Scenes
                 visible: false
             );
 
-            scene.AddSprite(contorioSprite);
-            scene.AddSprite(itemListMenu);
-            scene.AddSprite(labelCountSave);
-            scene.AddSprite(itemListSavesList);
+            AddSprite(contorioSprite);
+            AddSprite(itemListMenu);
+            AddSprite(labelCountSave);
+            AddSprite(itemListSavesList);
         }
 
-        //Input
-        void HandleKeyPress()
+        public override void Tick()
         {
-            if (Console.KeyAvailable)
+            if (savesPath.Length == 0 && itemListMenu.SelectedItem == "LOAD GAME")
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
-                savesPath = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.ctsave");
+                itemListMenu.SelectedItemColor = ConsoleColor.DarkRed;
+            }
+            else
+            {
+                itemListMenu.SelectedItemColor = ConsoleColor.DarkGreen;
+            }
+        }
 
-                if (itemListMenu.Visible)
-                {
-                    KeyPressMainMenu(keyInfo.Key);
-                    return;
-                }
-
-                if (itemListSavesList.Visible)
-                {
-                    KeyPressLoadMenu(keyInfo.Key);
-                }
-
+        public override void Input(ConsoleKey key)
+        {
+            savesPath = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.ctsave");
+            if (itemListMenu.Visible)
+            {
+                KeyPressMainMenu(key);
+                return;
+            }
+            if (itemListSavesList.Visible)
+            {
+                KeyPressLoadMenu(key);
             }
         }
 
@@ -132,12 +107,11 @@ namespace Contorio.Scenes
                     switch (itemListMenu.SelectedItem)
                     {
                         case "QUIT":
-                            _choice = null;
-                            _online = false;
+                            _engine.Quit();
                             break;
                         case "NEW GAME":
                             _choice = "new";
-                            _online = false;
+                            _engine.Quit();
                             break;
                         case "LOAD GAME":
                             if (savesPath.Length > 0)
@@ -164,7 +138,7 @@ namespace Contorio.Scenes
                     break;
                 case ConsoleKey.Enter:
                     _choice = itemListSavesList.SelectedItem;
-                    _online = false;
+                    _engine.Quit();
                     break;
                 case ConsoleKey.Escape:
                     setVisibleLoadMenu(false);
@@ -172,7 +146,6 @@ namespace Contorio.Scenes
             }
         }
 
-        //UI
         private void setVisibleLoadMenu(bool visible)
         {
             itemListMenu.Visible = !visible;
@@ -190,7 +163,7 @@ namespace Contorio.Scenes
                 {
                     itemListSavesList.AddItem(Path.GetFileName(file));
                 }
-                itemListSavesList.Position = new Point((renderer.ScreenWidth / 2) - (itemListSavesList.Width / 2), 13);
+                itemListSavesList.Position = new Point((120 / 2) - (itemListSavesList.Width / 2), 13);
                 UpdatelabelCountSave();
             }
         }
@@ -198,7 +171,7 @@ namespace Contorio.Scenes
         private void UpdatelabelCountSave()
         {
             labelCountSave.Text = (itemListSavesList.SelectedIndex + 1) + "/" + savesPath.Count();
-            labelCountSave.Position = new Point((renderer.ScreenWidth / 2) - (itemListSavesList.Width / 2), 12);
+            labelCountSave.Position = new Point((120 / 2) - (itemListSavesList.Width / 2), 12);
         }
     }
 }

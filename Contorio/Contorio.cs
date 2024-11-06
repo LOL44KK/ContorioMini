@@ -1,41 +1,46 @@
 ﻿using Contorio.CharEngine;
-using Contorio.Scenes;
 using Contorio.Core;
 using Contorio.Core.Managers;
+using Contorio.Scenes;
 
 namespace Contorio
 {
     public class Contorio
     {
-        private Renderer renderer;
-        public Contorio()
-        {
-            renderer = new Renderer(120, 30);
-        }
+        Renderer _renderer;
+        Engine _engine;
 
-        public void Run()
+        public Contorio()
         {
             ModManager.Instance.AddMode(new BaseMod());
             ModManager.Instance.InitializeResources();
 
-            ContorioMenu contorioMenu = new ContorioMenu(renderer);
-            ContorioWorld contorioWorld = new ContorioWorld(renderer);
+            _renderer = new Renderer(120, 30);
+            _engine = new Engine(_renderer);
+        }
+
+        public void Run()
+        {
+            SceneMenu SceneMenu = new SceneMenu(_engine);
 
             while (true)
             {
-                contorioMenu.Run();
+                _engine.SetScene(SceneMenu);
+                _engine.Run();
 
-                switch (contorioMenu.Choice)
+                switch (SceneMenu.Choice)
                 {
-                    case null:  //quit
+                    case null:  // Quit
                         return;
-                    case "new": //new game
+                    case "new": // NewGame
                         World world = new World();
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
-                        contorioWorld.Run(world);
+                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(world));
+                        _engine.Run();
                         break;
-                    default:    //load game
-                        contorioWorld.Run(SaveManager.LoadWorld(contorioMenu.Choice));
+                    default:    // LoadGame
+                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(SaveManager.LoadWorld(SceneMenu.Choice)));
+                        _engine.Run();
                         break;
                 }
             }
