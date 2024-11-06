@@ -14,6 +14,7 @@ namespace Contorio.Scenes.SceneWorld
         public ScenePlanetInfo ScenePlanetInfo;
         public SceneBuilding SceneBuilding;
         public SceneResearch SceneResearch;
+        public SceneTransfer SceneTransfer;
 
         public Message MessageMessage;
 
@@ -30,6 +31,7 @@ namespace Contorio.Scenes.SceneWorld
             ScenePlanetInfo = new ScenePlanetInfo(_world);
             SceneBuilding = new SceneBuilding(this, _world);
             SceneResearch = new SceneResearch(this, world);
+            SceneTransfer = new SceneTransfer(world);
 
             // AddSprite
             AddSprite(MessageMessage);
@@ -39,6 +41,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeScene(ScenePlanetInfo);
             IncludeScene(SceneBuilding);
             IncludeScene(SceneResearch);
+            IncludeScene(SceneTransfer);
 
             // OnTick
             OnTick += _worldHandler.Tick;
@@ -51,23 +54,43 @@ namespace Contorio.Scenes.SceneWorld
 
             SceneBuilding.Enable = false;
             SceneResearch.Enable = false;
+            SceneTransfer.Enable = false;
         }
 
         public override void Input(ConsoleKey key)
         {
             switch (key)
             {
-                case ConsoleKey.B:
-                    if (SceneTileMap.Enable)
-                    {
-                        SceneBuilding.Enable = !SceneBuilding.Enable;
-                    }
+                case ConsoleKey.Escape:
+                    ScenePlanetInfo.Enable = true;
+                    SceneTileMap.Enable = true;
+
+                    SceneBuilding.Enable = false;
+                    SceneResearch.Enable = false;
+                    SceneTransfer.Enable = false;
                     break;
+
                 case ConsoleKey.R:
                     SceneResearch.Enable = !SceneResearch.Enable;
                     
                     SceneTileMap.Enable  = !SceneResearch.Enable;
                     SceneBuilding.Enable = false;
+                    SceneTransfer.Enable = false;
+                    break;
+
+                case ConsoleKey.T:
+                    SceneTransfer.Enable = !SceneTransfer.Enable;
+
+                    SceneTileMap.Enable = !SceneTransfer.Enable;
+                    SceneBuilding.Enable = false;
+                    SceneResearch.Enable = false;
+                    break;
+
+                case ConsoleKey.B:
+                    if (SceneTileMap.Enable)
+                    {
+                        SceneBuilding.Enable = !SceneBuilding.Enable;
+                    }
                     break;
             }
         }

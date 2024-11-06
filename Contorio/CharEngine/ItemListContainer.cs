@@ -34,9 +34,8 @@ namespace Contorio.CharEngine
             get { return _selectedIndex; }
             set
             {
-                _itemLists[_selectedIndex].SelectedItemColor = _inactiveListSelectedItemColor;
                 _selectedIndex = value;
-                _itemLists[_selectedIndex].SelectedItemColor = _activeListSelectedItemColor;
+                InitializeItemListColors();
             }
         }
 
