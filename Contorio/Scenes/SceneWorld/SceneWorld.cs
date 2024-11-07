@@ -1,11 +1,14 @@
 ﻿using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
+using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld
 {
     public class SceneWorld : Scene
     {
+        private Engine _engine;
+
         private World _world;
         private Player _player;
         private WorldHandler _worldHandler;
@@ -19,8 +22,10 @@ namespace Contorio.Scenes.SceneWorld
 
         public Message MessageMessage;
 
-        public SceneWorld(World world)
+        public SceneWorld(Engine engine, World world)
         {
+            _engine = engine;
+
             _world = world;
             _player = _world.Player;
             _worldHandler = new WorldHandler(_world);
@@ -66,8 +71,14 @@ namespace Contorio.Scenes.SceneWorld
             switch (key)
             {
                 case ConsoleKey.Escape:
-                    ScenePlanetInfo.Enable = true;
+                    if (SceneTileMap.Enable)
+                    {
+                        _engine.Quit();
+                        break;
+                    }
+
                     SceneTileMap.Enable = true;
+                    ScenePlanetInfo.Enable = true;
 
                     SceneBuilding.Enable = false;
                     SceneResearch.Enable = false;
@@ -99,6 +110,7 @@ namespace Contorio.Scenes.SceneWorld
                         SceneBuilding.Enable = !SceneBuilding.Enable;
                     }
                     break;
+                
                 case ConsoleKey.Enter:
                     if (SceneBlockUI.Enable)
                     {
@@ -113,6 +125,11 @@ namespace Contorio.Scenes.SceneWorld
                         SceneBuilding.Enable = false;
                         SceneResearch.Enable = false;
                     }
+                    break;
+                
+                case ConsoleKey.H:
+                    SaveManager.SaveWorld(_world.Planets[0].Name + ".ctsave", _world);
+                    MessageMessage.Show("Successfully saved", ConsoleColor.DarkGreen);
                     break;
             }
         }

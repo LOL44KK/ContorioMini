@@ -23,6 +23,7 @@ namespace Contorio
         {
             SceneMenu SceneMenu = new SceneMenu(_engine);
 
+            World world;
             while (true)
             {
                 _engine.SetScene(SceneMenu);
@@ -33,13 +34,14 @@ namespace Contorio
                     case null:  // Quit
                         return;
                     case "new": // NewGame
-                        World world = new World();
+                        world = new World();
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
-                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(world));
+                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(_engine, world));
                         _engine.Run();
                         break;
                     default:    // LoadGame
-                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(SaveManager.LoadWorld(SceneMenu.Choice)));
+                        world = SaveManager.LoadWorld(SceneMenu.Choice);
+                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(_engine, world));
                         _engine.Run();
                         break;
                 }
