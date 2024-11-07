@@ -25,8 +25,7 @@ Terminal-based game about automation, factory construction, and planet.
 - **E** — remove a block.
 - **Arrow keys (Up, Down, Left, Right)** — navigate through lists.
 - **R** — token, research, and planet search menu.
-- **TAB** — resource transfer menu from planet to player, planet statistics (production speed).
-- **G** — god mode.
+- **T** — resource transfer menu from planet to player, planet statistics (production speed).
 
 # What's Not Done Yet
 - Content packs.
