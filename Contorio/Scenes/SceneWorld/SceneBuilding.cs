@@ -18,6 +18,8 @@ namespace Contorio.Scenes.SceneWorld
         public ItemList ItemListBlockCategory;
         public ItemList ItemListBlockList;
         public Label LabelCostBuilding;
+        public Label LabelPlayerResources;
+
 
         private string _selectedBlock;
         private int _selectedItemList;
@@ -43,19 +45,32 @@ namespace Contorio.Scenes.SceneWorld
                 9
             );
             LabelCostBuilding = new Label("COST", ConsoleColor.White, new Point(108, 0));
+            LabelPlayerResources = new Label("RESOURCES", ConsoleColor.White, new Point(95, 15));
+            
 
             // AddSprite
             AddSprite(SpriteBlockPlayerSelectedBlock);
             AddSprite(ItemListBlockCategory);
             AddSprite(ItemListBlockList);
             AddSprite(LabelCostBuilding);
+            AddSprite(LabelPlayerResources);
 
             //
             UpdateBlockCategory();
             UpdateBlockList(ItemListBlockCategory.SelectedItem);
             _selectedBlock = ItemListBlockList.SelectedItem;
+        }
+
+        public override void Ready()
+        {
+            _selectedBlock = ItemListBlockList.SelectedItem;
             UpdateSpriteBlockPlayerSelectedBlock(_selectedBlock);
             UpdateCostBuilding(_selectedBlock);
+        }
+
+        public override void Tick()
+        {
+            UpdatePlayerResources();
         }
 
         public override void Input(ConsoleKey key)
@@ -168,6 +183,15 @@ namespace Contorio.Scenes.SceneWorld
         public void UpdateSpriteBlockPlayerSelectedBlock(string blockName)
         {
             SpriteBlockPlayerSelectedBlock.Pixels = ResourceManager.Instance.Blocks[blockName].Sprite.Pixels;
+        }
+
+        public void UpdatePlayerResources()
+        {
+            LabelPlayerResources.Text = "RESOURCES\n";
+            foreach (var resource in _player.Resources)
+            {
+                LabelPlayerResources.Text += $"{resource.Key}: {resource.Value}\n";
+            }
         }
     }
 }

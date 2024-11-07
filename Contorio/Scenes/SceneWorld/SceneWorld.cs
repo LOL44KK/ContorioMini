@@ -1,4 +1,6 @@
-﻿using Contorio.CharEngine;
+﻿using System.Drawing;
+
+using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
 using Contorio.Core.Managers;
@@ -126,12 +128,35 @@ namespace Contorio.Scenes.SceneWorld
                         SceneResearch.Enable = false;
                     }
                     break;
-                
+
+                case ConsoleKey.DownArrow:
+                    if (SceneTileMap.Enable && !SceneBuilding.Enable)
+                    {
+                        ScenePlanetInfo.ItemListPlanetList.NextItem();
+                        SwitchPlanet(ScenePlanetInfo.ItemListPlanetList.SelectedIndex);
+                    }
+                    break;
+
+                case ConsoleKey.UpArrow:
+                    if (SceneTileMap.Enable && !SceneBuilding.Enable)
+                    {
+                        ScenePlanetInfo.ItemListPlanetList.PreviousItem();
+                        SwitchPlanet(ScenePlanetInfo.ItemListPlanetList.SelectedIndex);
+                    }
+                    break;
+
                 case ConsoleKey.H:
                     SaveManager.SaveWorld(_world.Planets[0].Name + ".ctsave", _world);
                     MessageMessage.Show("Successfully saved", ConsoleColor.DarkGreen);
                     break;
             }
+        }
+
+        private void SwitchPlanet(int planetIndex)
+        {
+            _player.Planet = planetIndex;
+            SceneTileMap.LoadMap(_world.Planets[planetIndex]);
+            _player.Coord = new Point(_world.Planets[planetIndex].Size / 2, _world.Planets[planetIndex].Size / 2);
         }
     }
 }

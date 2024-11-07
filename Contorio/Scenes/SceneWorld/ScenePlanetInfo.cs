@@ -42,6 +42,7 @@ namespace Contorio.Scenes.SceneWorld
         public override void Tick()
         {
             UpdatePlanetInfo(_world.Planets[_player.Planet]);
+            UpdatePlanetList();
         }
 
         public void UpdatePlanetInfo(Planet planet)
@@ -62,11 +63,13 @@ namespace Contorio.Scenes.SceneWorld
 
         public void UpdatePlanetList()
         {
+            string planetSelected = ItemListPlanetList.SelectedItem;
             ItemListPlanetList.ClearItems();
             foreach (var planet in _world.Planets)
             {
                 ItemListPlanetList.AddItem(planet.Name);
             }
+            ItemListPlanetList.SelectedItem = planetSelected;
         }
     }
 }

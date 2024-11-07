@@ -9,7 +9,7 @@ namespace Contorio.Scenes.SceneWorld
 {
     public class SceneTileMap : Scene
     {
-        private SceneWorld _rootScece;
+        ResourceManager _resourceManager;
 
         private World _world;
         private Player _player;
@@ -23,6 +23,7 @@ namespace Contorio.Scenes.SceneWorld
 
         public SceneTileMap(World world)
         {
+            _resourceManager = ResourceManager.Instance;
             _world = world;
             _player = world.Player;
 
@@ -30,7 +31,7 @@ namespace Contorio.Scenes.SceneWorld
             Map = new TileMap(
                 66,
                 30,
-                ResourceManager.Instance.TileSet,
+                _resourceManager.TileSet,
                 new Point(27, 1),
                 cellPaddingRight: 2,
                 cellPaddingBottom: 1
@@ -38,7 +39,7 @@ namespace Contorio.Scenes.SceneWorld
             Map.AddLayer(LayerGround);
             Map.AddLayer(LayerBlock);
             LabelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
-            SpriteBlockPlayerCoord = new Sprite(ResourceManager.Instance.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
+            SpriteBlockPlayerCoord = new Sprite(_resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
 
             // AddSprite
             AddSprite(Map);
@@ -79,16 +80,15 @@ namespace Contorio.Scenes.SceneWorld
 
         public void LoadMap(Planet planet)
         {
-            ResourceManager resourceManager = ResourceManager.Instance;
 
             Map.Clear();
             foreach (var groundState in planet.Ground)
             {
-                Map.SetCell(LayerGround, groundState.Key, resourceManager.TileIds[groundState.Value.Name]);
+                Map.SetCell(LayerGround, groundState.Key, _resourceManager.TileIds[groundState.Value.Name]);
             }
             foreach (var blockState in planet.Blocks)
             {
-                Map.SetCell(LayerBlock, blockState.Key, resourceManager.TileIds[blockState.Value.Name]);
+                Map.SetCell(LayerBlock, blockState.Key, _resourceManager.TileIds[blockState.Value.Name]);
             }
         }
 
@@ -98,11 +98,11 @@ namespace Contorio.Scenes.SceneWorld
             {
                 if (_world.Planets[_player.Planet].Blocks.ContainsKey(_player.Coord))
                 {
-                    SpriteBlockPlayerCoord.Pixels = ResourceManager.Instance.Blocks[_world.Planets[_player.Planet].Blocks[_player.Coord].Name].Sprite.Pixels;
+                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Blocks[_world.Planets[_player.Planet].Blocks[_player.Coord].Name].Sprite.Pixels;
                 }
                 else
                 {
-                    SpriteBlockPlayerCoord.Pixels = ResourceManager.Instance.Grounds[_world.Planets[_player.Planet].Ground[_player.Coord].Name].Sprite.Pixels;
+                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Grounds[_world.Planets[_player.Planet].Ground[_player.Coord].Name].Sprite.Pixels;
                 }
             }
             else
