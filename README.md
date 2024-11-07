@@ -16,7 +16,7 @@ Terminal-based game about automation, factory construction, and planet.
 - [Wiki](https://github.com/LOL44KK/ContorioMini/wiki)
 - [Install](https://github.com/LOL44KK/ContorioMini/releases/latest)
 - [Controls](#controls)
-- [What's Not Done Yet](#whats-not-done-yet)
+- [Future Plans](#future-plans)
 
 # Controls
 - **W, A, S, D** — character movement.
@@ -25,9 +25,8 @@ Terminal-based game about automation, factory construction, and planet.
 - **E** — remove a block.
 - **Arrow keys (Up, Down, Left, Right)** — navigate through lists.
 - **R** — token, research, and planet search menu.
-- **TAB** — resource transfer menu from planet to player, planet statistics (production speed).
-- **G** — god mode.
+- **T** — resource transfer menu from planet to player.
 
-# What's Not Done Yet
+# Future Plans
 - Content packs.
 - Add content for Blocks\Research.
