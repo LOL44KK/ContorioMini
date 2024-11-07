@@ -34,9 +34,12 @@ namespace Contorio.Scenes.SceneWorld
             AddSprite(LabelPlanetInfo);
             AddSprite(LabelPlanetsLabel);
             AddSprite(ItemListPlanetList);
+        }
 
-            //
+        public override void Ready()
+        {
             UpdatePlanetList();
+            ItemListPlanetList.SelectedItem = _world.Planets[_player.Planet].Name;
         }
 
         public override void Tick()

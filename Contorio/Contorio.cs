@@ -1,7 +1,8 @@
 ﻿using Contorio.CharEngine;
 using Contorio.Core;
 using Contorio.Core.Managers;
-using Contorio.Scenes;
+using Contorio.Scenes.SceneMenu;
+using Contorio.Scenes.SceneWorld;
 
 namespace Contorio
 {
@@ -36,12 +37,12 @@ namespace Contorio
                     case "new": // NewGame
                         world = new World();
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
-                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(_engine, world));
+                        _engine.SetScene(new SceneWorld(_engine, world));
                         _engine.Run();
                         break;
                     default:    // LoadGame
                         world = SaveManager.LoadWorld(SceneMenu.Choice);
-                        _engine.SetScene(new Scenes.SceneWorld.SceneWorld(_engine, world));
+                        _engine.SetScene(new SceneWorld(_engine, world));
                         _engine.Run();
                         break;
                 }
