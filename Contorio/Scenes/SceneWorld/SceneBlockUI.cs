@@ -5,6 +5,7 @@ using Contorio.CharEngine.Widgets;
 using Contorio.Core;
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
+using Contorio.CharEngine.Containers;
 
 namespace Contorio.Scenes.SceneWorld
 {

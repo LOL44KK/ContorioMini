@@ -1,6 +1,6 @@
 ﻿using Contorio.CharEngine.Widgets;
 
-namespace Contorio.CharEngine
+namespace Contorio.CharEngine.Containers
 {
     public class ItemListContainer
     {
@@ -111,4 +111,3 @@ namespace Contorio.CharEngine
         }
     }
 }
-    
