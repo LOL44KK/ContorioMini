@@ -28,7 +28,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             _researchSystem = world.ResearchSystem;
 
             // InitializeWidgets
-            LabelResearch = new Label("Research", ConsoleColor.White, new Point(60, 3), visible: false);
+            LabelResearch = new Label("Research", ConsoleColor.White, new Point(60, 3));
             ItemListResearchList = new ItemList(
                 ConsoleColor.Red,
                 ConsoleColor.DarkBlue,
@@ -36,8 +36,8 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                 20,
                 visible: false
             );
-            LabelResearchCost = new Label("Cost", ConsoleColor.White, new Point(78, 3), visible: false);
-            LabelEnterToResearch = new Label("Enter to research", ConsoleColor.White, new Point(60, 28), visible: false);
+            LabelResearchCost = new Label("Cost", ConsoleColor.White, new Point(78, 3));
+            LabelEnterToResearch = new Label("Enter to research", ConsoleColor.White, new Point(60, 28));
 
             // AddSprite
             AddSprite(LabelResearch);

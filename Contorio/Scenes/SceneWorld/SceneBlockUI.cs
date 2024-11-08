@@ -33,33 +33,30 @@ namespace Contorio.Scenes.SceneWorld
             _player = world.Player;
 
             // InitializeWidgets
-            LabelTransferBeaconMenu = new Label("Transfer Beacon MENU", ConsoleColor.White, new Point(60, 7), visible: false);
+            LabelTransferBeaconMenu = new Label("Transfer Beacon MENU", ConsoleColor.White, new Point(60, 7));
             LabelTransferBeaconMenu.Position = new Point((120 / 2) - (LabelTransferBeaconMenu.Width / 2), LabelTransferBeaconMenu.Position.Y);
-            LabelTransferBeaconMenuPlanet = new Label("planet: ", ConsoleColor.White, new Point(50, 8), visible: false);
+            LabelTransferBeaconMenuPlanet = new Label("planet: ", ConsoleColor.White, new Point(50, 8));
             ItemListTransferBeaconMenuPlanetList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
                 new Point(60, 8),
-                1,
-                visible: false
+                1
             );
-            LabelTransferBeaconMenuResource = new Label("resource: ", ConsoleColor.White, new Point(50, 9), visible: false);
+            LabelTransferBeaconMenuResource = new Label("resource: ", ConsoleColor.White, new Point(50, 9));
             ItemListTransferBeaconMenuResourcesList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
                 new Point(60, 9),
-                1,
-                visible: false
+                1
             );
-            LabelTransferBeaconMenuCount = new Label("count: ", ConsoleColor.White, new Point(50, 10), visible: false);
+            LabelTransferBeaconMenuCount = new Label("count: ", ConsoleColor.White, new Point(50, 10));
             ItemListTransferBeaconMenuCount = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
                 new Point(60, 10),
-                1,
-                visible: false
+                1
             );
-            LabelTransferBeaconMenuPreesEnterToBack = new Label("press Enter to back", ConsoleColor.White, new Point(60, 11), visible: false);
+            LabelTransferBeaconMenuPreesEnterToBack = new Label("press Enter to back", ConsoleColor.White, new Point(60, 11));
             LabelTransferBeaconMenuPreesEnterToBack.Position = new Point((120 / 2) - (LabelTransferBeaconMenuPreesEnterToBack.Width / 2), LabelTransferBeaconMenuPreesEnterToBack.Position.Y);
             
             // ContainerTransferBeacon

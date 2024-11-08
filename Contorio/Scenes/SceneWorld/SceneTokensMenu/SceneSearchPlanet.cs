@@ -42,39 +42,36 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             _oreChance = new Dictionary<string, double>();
 
             // InitializeWidgets
-            LabelSearchPlanet = new Label("SEARCH PLANET", ConsoleColor.White, new Point(60, 3), visible: false);
-            LabelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(60, 5), visible: false);
+            LabelSearchPlanet = new Label("SEARCH PLANET", ConsoleColor.White, new Point(60, 3));
+            LabelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(60, 5));
             ItemListPlanetSize = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
                 new Point(66, 5),
-                1,
-                visible: false
+                1
             );
             for (int i = 16; i < 130; i += 2) ItemListPlanetSize.AddItem("" + i);
 
-            LabelOreName = new Label("Ore name: ", ConsoleColor.White, new Point(60, 6), visible: false);
+            LabelOreName = new Label("Ore name: ", ConsoleColor.White, new Point(60, 6));
             ItemListOreName = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
                 new Point(70, 6),
-                1,
-                visible: false
+                1
             );
 
-            LabelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(60, 7), visible: false);
+            LabelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(60, 7));
             ItemListOreChance = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
                 new Point(68, 7),
-                1,
-                visible: false
+                1
             );
             for (double i = 0; i < 1000; i += 5) ItemListOreChance.AddItem("" + i / 10000);
 
-            LabelPalkaPeredCostSearchPlanet = new Label("=================", ConsoleColor.White, new Point(60, 8), visible: false);
-            LabelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(60, 9), visible: false);
-            LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(60, 10), visible: false);
+            LabelPalkaPeredCostSearchPlanet = new Label("=================", ConsoleColor.White, new Point(60, 8));
+            LabelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(60, 9));
+            LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(60, 10));
 
             // ItemListContainer
             ItemListContainerSearchPlanet = new ItemListContainer(inactiveListSelectedItemColor: ConsoleColor.White);

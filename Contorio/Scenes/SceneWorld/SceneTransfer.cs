@@ -30,15 +30,14 @@ namespace Contorio.Scenes.SceneWorld
             _player = world.Player;
 
             // InitializeWidgets
-            LabelPlanetResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1), visible: false);
+            LabelPlanetResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1));
             ItemListPlanetResourcesToPlayer = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
                 new Point(27, 2),
-                12,
-                visible: false
+                12
             );
-            LabelPlayerResourcesToPlanet = new Label("RESOURCES", ConsoleColor.White, new Point(93 - "RESOURCES".Length, 1), visible: false);
+            LabelPlayerResourcesToPlanet = new Label("RESOURCES", ConsoleColor.White, new Point(93 - "RESOURCES".Length, 1));
             ItemListPlayerResourcesToPlanet = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
@@ -47,19 +46,18 @@ namespace Contorio.Scenes.SceneWorld
                 alignment: Alignment.Right,
                 textAlignment: TextAlignment.Right
             );
-            LabelCountResource = new Label("Count: 0", ConsoleColor.White, new Point((120 / 2) - ("Count: 0".Length / 2), 1), visible: false);
-            LabelTransfer = new Label("transfer: ", ConsoleColor.White, new Point((120 / 2) - ("transfer: ".Length / 2), 2), visible: false);
+            LabelCountResource = new Label("Count: 0", ConsoleColor.White, new Point((120 / 2) - ("Count: 0".Length / 2), 1));
+            LabelTransfer = new Label("transfer: ", ConsoleColor.White, new Point((120 / 2) - ("transfer: ".Length / 2), 2));
             ItemListResourcesToPlayerCount = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
                 new Point(((120 / 2) - (1 / 2)) + "transfer: ".Length / 2, 2),
-                1,
-                visible: false
+                1
             );
             for (int i = 1; i < 10000; i *= 2) ItemListResourcesToPlayerCount.AddItem("" + i);
 
-            LabelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((120 / 2) - ("Prees E to transfer to player".Length / 2), 3), visible: false);
-            LabelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((120 / 2) - ("Prees F to transfer to planet".Length / 2), 4), visible: false);
+            LabelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((120 / 2) - ("Prees E to transfer to player".Length / 2), 3));
+            LabelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((120 / 2) - ("Prees F to transfer to planet".Length / 2), 4));
 
             // ItemListContainer
             ItemListContainer = new ItemListContainer();
