@@ -4,7 +4,6 @@ using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
 using Contorio.Core.Types;
-using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
 {

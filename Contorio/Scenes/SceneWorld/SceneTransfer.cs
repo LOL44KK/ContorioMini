@@ -1,9 +1,9 @@
-﻿using Contorio.CharEngine;
+﻿using System.Drawing;
+
+using Contorio.CharEngine;
 using Contorio.CharEngine.Containers;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
-using System.Drawing;
-using System.Numerics;
 
 namespace Contorio.Scenes.SceneWorld
 {

@@ -1,6 +1,7 @@
-﻿using Contorio.CharEngine;
+﻿using System.Drawing;
+
+using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
-using System.Drawing;
 
 namespace Contorio.Scenes.SceneMenu
 {
