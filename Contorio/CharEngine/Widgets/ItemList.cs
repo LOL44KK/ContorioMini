@@ -191,7 +191,6 @@ namespace Contorio.CharEngine.Widgets
                     string item = _items[itemIndex];
                     ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemColor : _textColor;
 
-                    // Рассчитываем смещение X на основе TextAlignment
                     int offsetX = 0;
                     switch (_textAlignment)
                     {
@@ -207,13 +206,11 @@ namespace Contorio.CharEngine.Widgets
                             break;
                     }
 
-                    // Заполняем пиксели для строки с учетом offsetX
                     for (int x = 0; x < item.Length; x++)
                     {
                         pixels[y, x + offsetX] = new Pixel(item[x], color);
                     }
 
-                    // Заполняем оставшиеся пиксели в строке пробелами
                     for (int x = 0; x < offsetX; x++)
                     {
                         pixels[y, x] = new Pixel(' ', color);
