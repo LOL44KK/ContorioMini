@@ -100,6 +100,7 @@ namespace Contorio.Scenes.SceneMenu
                         switch (ItemListMenu.SelectedItem)
                         {
                             case "QUIT":
+                                _choice = null;
                                 _engine.Quit();
                                 break;
                             case "NEW GAME":

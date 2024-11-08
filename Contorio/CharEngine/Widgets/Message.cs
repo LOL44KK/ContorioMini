@@ -22,7 +22,7 @@ namespace Contorio.CharEngine.Widgets
         }
 
         public Message(int centerScreenX, int positionY, int showMessageTime = 1000, int layer = 10)
-            : base("NONE", ConsoleColor.Red, new Point(0, positionY), layer, false, Alignment.Center, TextAlignment.Center)
+            : base("NONE", ConsoleColor.Red, new Point(centerScreenX, positionY), layer, false, Alignment.Center, TextAlignment.Center)
         {
             _centerScreenX = centerScreenX;
             _showMessageTime = showMessageTime;
