@@ -17,7 +17,7 @@
             _tileHeight = tileHeight;
         }
 
-        public TileSet(int tileWidth, int tileHeight, Pixel? backgroundPixel = null)
+        public TileSet(int tileWidth, int tileHeight)
         {
             _tiles = new List<Sprite>();
             _tileWidth = tileWidth;

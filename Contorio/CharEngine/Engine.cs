@@ -14,7 +14,7 @@
         public Engine(Renderer renderer)
         {
             _renderer = renderer;
-            _online = true;
+            _online = false;
         }
 
         public void SetScene(Scene scene)
