@@ -11,7 +11,7 @@ namespace Contorio
             Name = "BaseMod";
             Description = "BaseMod";
             Author = "LOL4K";
-            Version = "0.7.1";
+            Version = "0.7.2";
 
             Blocks = new List<Block>();
             Grounds = new List<Ground>();
@@ -52,7 +52,7 @@ namespace Contorio
                     { new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray) },
                     { new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray) }
                 }),
-            product: "iron-ore"
+                product: "iron-ore"
                 );
             Grounds.Add(ironOre);
 

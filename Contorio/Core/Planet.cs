@@ -53,17 +53,6 @@ namespace Contorio.Core
             set { _energy = value; }
         }
 
-        public Planet()
-        {
-            _blocks = new Dictionary<Point, BlockState>();
-            _ground = new Dictionary<Point, GroundState>();
-            _resources = new Dictionary<string, int>();
-            _name = GeneratePlanetName.GenerateName();
-            _size = ResourceManager.Instance.PlanetPresets[0].Size;
-
-            GenerateLandscape(ResourceManager.Instance.PlanetPresets[0]);
-        }
-
         public Planet(PlanetPreset preset)
         {
             _blocks = new Dictionary<Point, BlockState>();
@@ -74,6 +63,8 @@ namespace Contorio.Core
 
             GenerateLandscape(preset);
         }
+
+        public Planet() : this(ResourceManager.Instance.PlanetPresets[0]) { }
 
         private void GenerateLandscape(PlanetPreset preset)
         {
