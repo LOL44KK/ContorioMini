@@ -18,9 +18,9 @@ namespace Contorio.Scenes.SceneWorld
         public SceneTileMap SceneTileMap;
         public ScenePlanetInfo ScenePlanetInfo;
         public SceneBuilding SceneBuilding;
-        public SceneResearch SceneResearch;
         public SceneTransfer SceneTransfer;
         public SceneBlockUI SceneBlockUI;
+        public SceneTokensMenu.SceneTokensMenu SceneTokensMenu;
 
         public Message MessageMessage;
 
@@ -38,9 +38,9 @@ namespace Contorio.Scenes.SceneWorld
             SceneTileMap = new SceneTileMap(_world);
             ScenePlanetInfo = new ScenePlanetInfo(_world);
             SceneBuilding = new SceneBuilding(this, _world);
-            SceneResearch = new SceneResearch(this, _world);
             SceneTransfer = new SceneTransfer(_world);
             SceneBlockUI = new SceneBlockUI(_world);
+            SceneTokensMenu = new SceneTokensMenu.SceneTokensMenu(this, _world);
 
             // AddSprite
             AddSprite(MessageMessage);
@@ -49,7 +49,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeScene(SceneTileMap);
             IncludeScene(ScenePlanetInfo);
             IncludeScene(SceneBuilding);
-            IncludeScene(SceneResearch);
+            IncludeScene(SceneTokensMenu);
             IncludeScene(SceneTransfer);
             IncludeScene(SceneBlockUI);
 
@@ -63,7 +63,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneTileMap.Enable = true;
 
             SceneBuilding.Enable = false;
-            SceneResearch.Enable = false;
+            SceneTokensMenu.Enable = false;
             SceneTransfer.Enable = false;
             SceneBlockUI.Enable = false;
         }
@@ -83,15 +83,15 @@ namespace Contorio.Scenes.SceneWorld
                     ScenePlanetInfo.Enable = true;
 
                     SceneBuilding.Enable = false;
-                    SceneResearch.Enable = false;
+                    SceneTokensMenu.Enable = false;
                     SceneTransfer.Enable = false;
                     SceneBlockUI.Enable  = false;
                     break;
 
                 case ConsoleKey.R:
-                    SceneResearch.Enable = !SceneResearch.Enable;
+                    SceneTokensMenu.Enable = !SceneTokensMenu.Enable;
                     
-                    SceneTileMap.Enable  = !SceneResearch.Enable;
+                    SceneTileMap.Enable  = !SceneTokensMenu.Enable;
                     SceneBuilding.Enable = false;
                     SceneTransfer.Enable = false;
                     SceneBlockUI.Enable  = false;
@@ -102,7 +102,7 @@ namespace Contorio.Scenes.SceneWorld
 
                     SceneTileMap.Enable = !SceneTransfer.Enable;
                     SceneBuilding.Enable = false;
-                    SceneResearch.Enable = false;
+                    SceneTokensMenu.Enable = false;
                     SceneBlockUI.Enable  = false;
                     break;
 
@@ -125,7 +125,7 @@ namespace Contorio.Scenes.SceneWorld
                         SceneTileMap.Enable  = false;
                         SceneTransfer.Enable = false;
                         SceneBuilding.Enable = false;
-                        SceneResearch.Enable = false;
+                        SceneTokensMenu.Enable = false;
                     }
                     break;
 
