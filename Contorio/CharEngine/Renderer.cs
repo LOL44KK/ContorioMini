@@ -7,8 +7,8 @@
         private int _screenHeight;
         private Pixel[,] _previousFrame;
 
-        public Scene Scene 
-        { 
+        public Scene Scene
+        {
             get { return _scene; }
         }
 
@@ -61,6 +61,18 @@
 
             foreach (var sprite in visibleSprites)
             {
+                int spriteStartX = sprite.Position.X;
+
+                switch (sprite.Alignment)
+                {
+                    case Alignment.Center:
+                        spriteStartX -= sprite.Width / 2;
+                        break;
+                    case Alignment.Right:
+                        spriteStartX -= sprite.Width;
+                        break;
+                }
+
                 for (int y = 0; y < sprite.Height; y++)
                 {
                     for (int x = 0; x < sprite.Width; x++)
@@ -68,7 +80,7 @@
                         Pixel pixel = sprite.Pixels[y, x];
                         if (pixel.C != ' ')
                         {
-                            int globalX = x + sprite.Position.X;
+                            int globalX = x + spriteStartX;
                             int globalY = y + sprite.Position.Y;
 
                             if (globalX >= 0 && globalX < _screenWidth && globalY >= 0 && globalY < _screenHeight)

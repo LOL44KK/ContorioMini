@@ -2,15 +2,23 @@
 
 namespace Contorio.CharEngine
 {
+    public enum Alignment
+    {
+        Left,
+        Center,
+        Right
+    }
+
     public class Sprite
     {
         protected Pixel[,] _pixels;
         protected bool _visible;
         protected int _layer;
         protected Point _position;
+        protected Alignment _alignment; 
 
         public Pixel[,] Pixels
-        { 
+        {
             get { return _pixels; }
             set { _pixels = value; }
         }
@@ -37,12 +45,19 @@ namespace Contorio.CharEngine
             set { _position = value; }
         }
 
-        public Sprite(Pixel[,] pixels, int layer = 0, bool visible = true, Point? position = null)
+        public Alignment Alignment
+        {
+            get { return _alignment; }
+            set { _alignment = value; }
+        }
+
+        public Sprite(Pixel[,] pixels, int layer = 0, bool visible = true, Point? position = null, Alignment alignment = Alignment.Left)
         {
             _pixels = pixels;
             _layer = layer;
             _visible = visible;
             _position = position ?? new Point(0, 0);
+            _alignment = alignment;
         }
 
         public void FillPixels(Pixel pixel)
@@ -58,7 +73,7 @@ namespace Contorio.CharEngine
 
         virtual public void Tick()
         {
-            //Что-то
+            // Update logic for the sprite, if needed
         }
     }
 }

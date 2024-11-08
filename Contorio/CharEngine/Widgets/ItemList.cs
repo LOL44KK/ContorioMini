@@ -11,6 +11,7 @@ namespace Contorio.CharEngine.Widgets
         private int _visibleItemCount;
         private ConsoleColor _textColor;
         private ConsoleColor _selectedItemColor;
+        private TextAlignment _textAlignment;
 
         public int SelectedIndex
         {
@@ -27,8 +28,8 @@ namespace Contorio.CharEngine.Widgets
         }
 
         public string? SelectedItem
-        { 
-            get 
+        {
+            get
             {
                 if (_items.Count == 0)
                 {
@@ -68,13 +69,23 @@ namespace Contorio.CharEngine.Widgets
             }
         }
 
+        public TextAlignment TextAlignment
+        {
+            get { return _textAlignment; }
+            set
+            {
+                _textAlignment = value;
+                UpdatePixels();
+            }
+        }
+
         public ReadOnlyCollection<string> Items
         {
             get { return new ReadOnlyCollection<string>(_items); }
         }
 
-        public ItemList(ConsoleColor textColor, ConsoleColor selectedItemColor, Point position, int visibleItemCount, int layer = 0, bool visible = true)
-            : base(new Pixel[visibleItemCount, 0], layer, visible, position)
+        public ItemList(ConsoleColor textColor, ConsoleColor selectedItemColor, Point position, int visibleItemCount, int layer = 0, bool visible = true, Alignment alignment = Alignment.Left, TextAlignment textAlignment = TextAlignment.Left)
+            : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
         {
             _items = new List<string>();
             _textColor = textColor;
@@ -82,6 +93,7 @@ namespace Contorio.CharEngine.Widgets
             _selectedIndex = 0;
             _scrollOffset = 0;
             _visibleItemCount = visibleItemCount;
+            _textAlignment = textAlignment;
         }
 
         public void AddItem(string item)
@@ -179,12 +191,34 @@ namespace Contorio.CharEngine.Widgets
                     string item = _items[itemIndex];
                     ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemColor : _textColor;
 
-                    for (int x = 0; x < item.Length; x++)
+                    // Рассчитываем смещение X на основе TextAlignment
+                    int offsetX = 0;
+                    switch (_textAlignment)
                     {
-                        pixels[y, x] = new Pixel(item[x], color);
+                        case TextAlignment.Center:
+                            offsetX = (width - item.Length) / 2;
+                            break;
+                        case TextAlignment.Right:
+                            offsetX = width - item.Length;
+                            break;
+                        case TextAlignment.Left:
+                        default:
+                            offsetX = 0;
+                            break;
                     }
 
-                    for (int x = item.Length; x < width; x++)
+                    // Заполняем пиксели для строки с учетом offsetX
+                    for (int x = 0; x < item.Length; x++)
+                    {
+                        pixels[y, x + offsetX] = new Pixel(item[x], color);
+                    }
+
+                    // Заполняем оставшиеся пиксели в строке пробелами
+                    for (int x = 0; x < offsetX; x++)
+                    {
+                        pixels[y, x] = new Pixel(' ', color);
+                    }
+                    for (int x = item.Length + offsetX; x < width; x++)
                     {
                         pixels[y, x] = new Pixel(' ', color);
                     }
