@@ -23,6 +23,7 @@ namespace Contorio.Scenes.SceneMenu
         public Container ContainerMain;
 
         public SceneLoadGame SceneLoadGame;
+        public SceneNewGame SceneNewGame;
 
         public SceneMenu(Engine engine)
         {
@@ -30,6 +31,7 @@ namespace Contorio.Scenes.SceneMenu
 
             // InitializeComponent
             SceneLoadGame = new SceneLoadGame(_engine, this);
+            SceneNewGame = new SceneNewGame();
 
             // InitializeWidgets
             SpriteContorio = new Sprite(
@@ -60,6 +62,7 @@ namespace Contorio.Scenes.SceneMenu
 
             // IncludeScene
             IncludeScene(SceneLoadGame);
+            IncludeScene(SceneNewGame);
 
             // AddSprite
             AddSprite(SpriteContorio);
@@ -73,6 +76,7 @@ namespace Contorio.Scenes.SceneMenu
         {
             ContainerMain.Visible = true;
             SceneLoadGame.Enable = false;
+            SceneNewGame.Enable = false;
         }
 
         public override void Tick()
@@ -106,8 +110,10 @@ namespace Contorio.Scenes.SceneMenu
                                 _engine.Quit();
                                 break;
                             case "NEW GAME":
-                                _choice = "new";
-                                _engine.Quit();
+                                ContainerMain.Visible = false;
+                                SceneNewGame.Enable = true;
+                                //_choice = "new";
+                                //_engine.Quit();
                                 break;
                             case "LOAD GAME":
                                 if (SceneLoadGame.SavesPath.Length > 0)
@@ -120,10 +126,11 @@ namespace Contorio.Scenes.SceneMenu
                     }
                     break;
                 case ConsoleKey.Escape:
-                    if (SceneLoadGame.Enable)
+                    if (SceneLoadGame.Enable || SceneNewGame.Enable)
                     {
-                        SceneLoadGame.Enable = false;
                         ContainerMain.Visible = true;
+                        SceneLoadGame.Enable = false;
+                        SceneNewGame.Enable = false;
                     }
                     break;
             }
