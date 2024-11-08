@@ -5,9 +5,8 @@ namespace Contorio.CharEngine.Widgets
 {
     public class Message : Label
     {
-        private Stopwatch _stopwatch = new Stopwatch();
+        private Stopwatch _stopwatch;
         private int _showMessageTime;
-        private int _centerScreenX;
 
         public int ShowMessageTime
         {
@@ -15,16 +14,10 @@ namespace Contorio.CharEngine.Widgets
             set { _showMessageTime = value; }
         }
 
-        public int CenterScreenX
+        public Message(int positionX, int positionY, int showMessageTime = 1000, int layer = 10)
+            : base("NONE", ConsoleColor.Red, new Point(positionX, positionY), layer, false, Alignment.Center, TextAlignment.Center)
         {
-            get { return _centerScreenX; } 
-            set { _centerScreenX = value; }
-        }
-
-        public Message(int centerScreenX, int positionY, int showMessageTime = 1000, int layer = 10)
-            : base("NONE", ConsoleColor.Red, new Point(centerScreenX, positionY), layer, false, Alignment.Center, TextAlignment.Center)
-        {
-            _centerScreenX = centerScreenX;
+            _stopwatch = new Stopwatch();
             _showMessageTime = showMessageTime;
         }
 
