@@ -63,7 +63,6 @@
 
         public Scene(bool enable = true, bool visible = true) : this(new List<Sprite>(), enable, visible) { }
 
-
         public void AddSprite(Sprite sprite)
         {
             _sprites.Add(sprite);
@@ -101,7 +100,7 @@
             {
                 _sprites.Add(sprite);
             }
-
+            
             OnTick += scene.RaiseTick;
             OnInput += scene.RaiseInput;
             OnEnable += scene.RaiseEnable;

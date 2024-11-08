@@ -108,8 +108,11 @@ namespace Contorio.Scenes.SceneMenu
                                 _engine.Quit();
                                 break;
                             case "LOAD GAME":
-                                ContainerMain.Visible = false;
-                                SceneLoadGame.Enable = true;
+                                if (SceneLoadGame.SavesPath.Length > 0)
+                                {
+                                    ContainerMain.Visible = false;
+                                    SceneLoadGame.Enable = true;
+                                }
                                 break;
                         }
                     }
