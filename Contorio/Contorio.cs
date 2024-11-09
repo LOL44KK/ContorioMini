@@ -41,7 +41,7 @@ namespace Contorio
                         _engine.Run();
                         break;
                     default:    // LoadGame
-                        world = SaveManager.LoadWorld(SceneMenu.Choice);
+                        world = SaveManager.LoadWorld(SceneMenu.SceneLoadGame.ItemListSavesList.SelectedItem ?? throw new("ERORR"));
                         _engine.SetScene(new SceneWorld(_engine, world));
                         _engine.Run();
                         break;

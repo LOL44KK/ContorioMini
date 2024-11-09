@@ -9,33 +9,40 @@ namespace Contorio.Scenes.SceneMenu
 {
     public class SceneNewGame : Scene
     {
+        Engine _engine;
+
         ResourceManager _resourceManager;
 
-        ItemList ItemListPlanetPresets;
-        Label LabelInfoPlanetPreset;
+        public Label LabelPlanetPreset;
+        public ItemList ItemListPlanetPresets;
+        public Label LabelInfoWorldPreset;
 
-        public SceneNewGame()
+        public SceneNewGame(Engine engine)
         {
+            _engine = engine;
             _resourceManager = ResourceManager.Instance;
 
             // InitializeWidgets
+            LabelPlanetPreset = new Label("WORLD PRESET", ConsoleColor.White, new Point(60, 9), alignment: Alignment.Center);
             ItemListPlanetPresets = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
-                new Point(45, 10),
-                15
+                new Point(60, 10),
+                15,
+                alignment: Alignment.Center
             );
-            LabelInfoPlanetPreset = new Label("INFO", ConsoleColor.White, new Point(70, 10));
+            LabelInfoWorldPreset = new Label("INFO", ConsoleColor.White, new Point(0, 15));
 
             // AddSprite
+            AddSprite(LabelPlanetPreset);
             AddSprite(ItemListPlanetPresets);
-            AddSprite(LabelInfoPlanetPreset);
+            AddSprite(LabelInfoWorldPreset);
         }
 
         public override void Ready()
         {
             UpdateItemListPlanetPreset();
-            UpdateInfoPlanetPreset();
+            UpdateInfoWorldPreset();
         }
 
         public override void Input(ConsoleKey key)
@@ -44,11 +51,11 @@ namespace Contorio.Scenes.SceneMenu
             {
                 case ConsoleKey.DownArrow:
                     ItemListPlanetPresets.NextItem();
-                    UpdateInfoPlanetPreset();
+                    UpdateInfoWorldPreset();
                     break;
                 case ConsoleKey.UpArrow:
                     ItemListPlanetPresets.PreviousItem();
-                    UpdateInfoPlanetPreset();
+                    UpdateInfoWorldPreset();
                     break;
                 case ConsoleKey.Enter:
                     break;
@@ -64,22 +71,23 @@ namespace Contorio.Scenes.SceneMenu
             }
         }
 
-        public void UpdateInfoPlanetPreset()
+        public void UpdateInfoWorldPreset()
         {
             PlanetPreset planetPreset = _resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex];
 
-            LabelInfoPlanetPreset.Text  = $"Name: {planetPreset.Name}\n";
-            LabelInfoPlanetPreset.Text += $"Starting Planet\n";
+            LabelInfoWorldPreset.Text  = $"INFO PRESET\n";
+            LabelInfoWorldPreset.Text += $"Name: {planetPreset.Name}\n";
+            LabelInfoWorldPreset.Text += $"Starting Planet\n";
 
-            LabelInfoPlanetPreset.Text += $"Size: {planetPreset.Size}\n";
-            LabelInfoPlanetPreset.Text += $"Soil Type: {planetPreset.Dirt}\n";
-            LabelInfoPlanetPreset.Text += $"Planet Type: {planetPreset.Type}\n";
-            LabelInfoPlanetPreset.Text += "Ores: \n";
-            foreach (var ore in planetPreset.Ores)
+            LabelInfoWorldPreset.Text += $"Size: {planetPreset.Size}\n";
+            LabelInfoWorldPreset.Text += $"Soil Type: {planetPreset.Dirt}\n";
+            LabelInfoWorldPreset.Text += $"Planet Type: {planetPreset.Type}\n";
+            LabelInfoWorldPreset.Text += $"Ores\n";
+            for (int i = 0; i < planetPreset.Ores.Count; i++)
             {
-                LabelInfoPlanetPreset.Text += $"{ore.Name} (Chance: {ore.Chance}%, Cluster: {ore.MinClusterSize}-{ore.MaxClusterSize});\n";
+                OrePreset ore = planetPreset.Ores[i];
+                LabelInfoWorldPreset.Text += $"{i+1}. {ore.Name} (Chance: {ore.Chance}%, Cluster: {ore.MinClusterSize}-{ore.MaxClusterSize});\n";
             }
-
         }
     }
 }
