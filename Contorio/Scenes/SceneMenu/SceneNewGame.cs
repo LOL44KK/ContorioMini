@@ -94,6 +94,7 @@ namespace Contorio.Scenes.SceneMenu
                 OrePreset ore = planetPreset.Ores[i];
                 LabelInfoWorldPreset.Text += $"{i+1}. {ore.Name} (Chance: {ore.Chance}%, Cluster: {ore.MinClusterSize}-{ore.MaxClusterSize});\n";
             }
+            LabelInfoWorldPreset.Position = new Point(LabelInfoWorldPreset.Position.X, 31 - LabelInfoWorldPreset.Height);
         }
     }
 }
