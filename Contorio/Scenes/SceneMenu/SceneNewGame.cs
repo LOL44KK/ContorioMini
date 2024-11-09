@@ -35,7 +35,7 @@ namespace Contorio.Scenes.SceneMenu
                 alignment: Alignment.Center,
                 textAlignment: TextAlignment.Center
             );
-            LabelInfoWorldPreset = new Label("INFO", ConsoleColor.White, new Point(0, 15));
+            LabelInfoWorldPreset = new Label("INFO", ConsoleColor.White, new Point(0, 30));
 
             // AddSprite
             AddSprite(LabelPlanetPreset);
