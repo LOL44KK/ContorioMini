@@ -10,6 +10,7 @@ namespace Contorio.Scenes.SceneMenu
     public class SceneNewGame : Scene
     {
         Engine _engine;
+        SceneMenu _rootScene;
 
         ResourceManager _resourceManager;
 
@@ -17,19 +18,22 @@ namespace Contorio.Scenes.SceneMenu
         public ItemList ItemListPlanetPresets;
         public Label LabelInfoWorldPreset;
 
-        public SceneNewGame(Engine engine)
+        public SceneNewGame(Engine engine, SceneMenu rootScene)
         {
             _engine = engine;
+            _rootScene = rootScene;
+
             _resourceManager = ResourceManager.Instance;
 
             // InitializeWidgets
-            LabelPlanetPreset = new Label("WORLD PRESET", ConsoleColor.White, new Point(60, 9), alignment: Alignment.Center);
+            LabelPlanetPreset = new Label("WORLD  PRESET", ConsoleColor.White, new Point(60, 9), alignment: Alignment.Center);
             ItemListPlanetPresets = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
-                new Point(60, 10),
+                new Point(60, 11),
                 15,
-                alignment: Alignment.Center
+                alignment: Alignment.Center,
+                textAlignment: TextAlignment.Center
             );
             LabelInfoWorldPreset = new Label("INFO", ConsoleColor.White, new Point(0, 15));
 
@@ -58,6 +62,8 @@ namespace Contorio.Scenes.SceneMenu
                     UpdateInfoWorldPreset();
                     break;
                 case ConsoleKey.Enter:
+                    _rootScene.Choice = "new";
+                    _engine.Quit();
                     break;
             }
         }

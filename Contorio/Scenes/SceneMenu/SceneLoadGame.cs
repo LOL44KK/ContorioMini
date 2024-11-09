@@ -56,7 +56,7 @@ namespace Contorio.Scenes.SceneMenu
                     UpdateLabelCountSave();
                     break;
                 case ConsoleKey.Enter:
-                    _sceneMenu.Choice = ItemListSavesList.SelectedItem;
+                    _sceneMenu.Choice = "load";
                     _engine.Quit();
                     break;
             }

@@ -18,8 +18,8 @@ namespace Contorio
             PlanetPresets = new List<PlanetPreset>();
 
             //PlanetPreset
-            PlanetPreset basePlanetPreset = new PlanetPreset(
-                name: "Base",
+            PlanetPreset baseCIRCLEPlanetPreset = new PlanetPreset(
+                name: "Base CIRCLE",
                 size: 33,
                 dirt: "dirt",
                 type: PlanetType.CIRCLE,
@@ -30,7 +30,21 @@ namespace Contorio
                     new OrePreset("uran",   0.005, 4, 12),
                 }
             );
-            PlanetPresets.Add(basePlanetPreset);
+            PlanetPresets.Add(baseCIRCLEPlanetPreset);
+
+            PlanetPreset baseSQUAREPlanetPreset = new PlanetPreset(
+                name: "Base SQUARE",
+                size: 32,
+                dirt: "dirt",
+                type: PlanetType.SQUARE,
+                ores: new List<OrePreset>()
+                {
+                    new OrePreset("iron",   0.01,  8, 16),
+                    new OrePreset("copper", 0.01,  8, 16),
+                    new OrePreset("uran",   0.005, 4, 12),
+                }
+            );
+            PlanetPresets.Add(baseSQUAREPlanetPreset);
 
             // Ground
             Ground dirt = new Ground(

@@ -36,11 +36,14 @@ namespace Contorio
                         return;
                     case "new": // NewGame
                         world = new World();
+                        world.Planets.Add(new Planet(ResourceManager.Instance.PlanetPresets[SceneMenu.SceneNewGame.ItemListPlanetPresets.SelectedIndex]));
+                        world.Player.Move(world.Planets[0].Size / 2, world.Planets[0].Size / 2);
+                        
                         SaveManager.SaveWorld($"{world.Planets[0].Name}.ctsave", world);
                         _engine.SetScene(new SceneWorld(_engine, world));
                         _engine.Run();
                         break;
-                    default:    // LoadGame
+                    case "load": // LoadGame
                         world = SaveManager.LoadWorld(SceneMenu.SceneLoadGame.ItemListSavesList.SelectedItem ?? throw new("ERORR"));
                         _engine.SetScene(new SceneWorld(_engine, world));
                         _engine.Run();

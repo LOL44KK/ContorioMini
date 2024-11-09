@@ -31,7 +31,7 @@ namespace Contorio.Scenes.SceneMenu
 
             // InitializeComponent
             SceneLoadGame = new SceneLoadGame(_engine, this);
-            SceneNewGame = new SceneNewGame(_engine);
+            SceneNewGame = new SceneNewGame(_engine, this);
 
             // InitializeWidgets
             SpriteContorio = new Sprite(
@@ -110,10 +110,8 @@ namespace Contorio.Scenes.SceneMenu
                                 _engine.Quit();
                                 break;
                             case "NEW GAME":
-                                //ContainerMain.Visible = false;
-                                //SceneNewGame.Enable = true;
-                                _choice = "new";
-                                _engine.Quit();
+                                ContainerMain.Visible = false;
+                                SceneNewGame.Enable = true;
                                 break;
                             case "LOAD GAME":
                                 if (SceneLoadGame.SavesPath.Length > 0)

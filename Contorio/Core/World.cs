@@ -42,15 +42,12 @@ namespace Contorio.Core
             _tokens = new Dictionary<string, int>();
             _player = new Player();
 
-            _planets.Add(new Planet());
-
             List<Research> tempResearcheList = new List<Research>();
             foreach (var item in ResourceManager.Instance.Blocks)
             {
                 tempResearcheList.Add(item.Value.Research);
             }
             _researchSystem = new ResearchSystem(tempResearcheList);
-            _player.Coord = new Point(_planets[0].Size / 2, _planets[0].Size / 2);
         }
 
         public bool SearchPlanet(PlanetPreset preset)
