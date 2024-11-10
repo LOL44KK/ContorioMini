@@ -81,12 +81,14 @@ namespace Contorio.Core
                     }
                     break;
                 case PlanetType.CIRCLE:
-                    int radius = preset.Size / 2 + (preset.Size % 1);
+                    int newSize = preset.Size + ((preset.Size + 1) % 2);
+                    int radius = preset.Size / 2;
+                    
                     Point center = new Point(radius, radius);
 
-                    for (int y = 0; y < preset.Size; y++)
+                    for (int y = 0; y < newSize; y++)
                     {
-                        for (int x = 0; x < preset.Size; x++)
+                        for (int x = 0; x < newSize; x++)
                         {
                             Point point = new Point(x, y);
                             int dx = x - center.X;
@@ -97,6 +99,7 @@ namespace Contorio.Core
                             }
                         }
                     }
+                    _size = newSize;
                     break;
             }
 

@@ -20,7 +20,7 @@ namespace Contorio
             //PlanetPreset
             PlanetPreset baseCIRCLEPlanetPreset = new PlanetPreset(
                 name: "Base CIRCLE",
-                size: 33,
+                size: 32,
                 dirt: "dirt",
                 type: PlanetType.CIRCLE,
                 ores: new List<OrePreset>()

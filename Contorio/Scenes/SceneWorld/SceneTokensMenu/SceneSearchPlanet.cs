@@ -19,6 +19,8 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         private ResearchSystem _researchSystem;
 
         public Label LabelSearchPlanet;
+        public Label LabelPlanetPreset;
+        public ItemList ItemListPlanetPresets;
         public Label LabelPlanetSize;
         public ItemList ItemListPlanetSize;
         public Label LabelOreName;
@@ -29,7 +31,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         public Label LabelCostSearchPlanet;
         public Label LabelPressGtoSearchPlanet;
 
-        public ItemListContainer ItemListContainerSearchPlanet;
+        public ItemListContainer ItemListContainer;
 
         public Dictionary<string, double> _oreChance;
 
@@ -43,43 +45,54 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
 
             // InitializeWidgets
             LabelSearchPlanet = new Label("SEARCH PLANET", ConsoleColor.White, new Point(60, 3));
-            LabelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(60, 5));
+            LabelPlanetPreset = new Label("Preset: ", ConsoleColor.White, new Point(60, 5));
+            ItemListPlanetPresets = new ItemList(
+                ConsoleColor.White,
+                ConsoleColor.White,
+                new Point(68, 5),
+                1
+            );
+
+            LabelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(60, 6));
             ItemListPlanetSize = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
-                new Point(66, 5),
+                new Point(66, 6),
                 1
             );
             for (int i = 16; i < 130; i += 2) ItemListPlanetSize.AddItem("" + i);
 
-            LabelOreName = new Label("Ore name: ", ConsoleColor.White, new Point(60, 6));
+            LabelOreName = new Label("Ore name: ", ConsoleColor.White, new Point(60, 7));
             ItemListOreName = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
-                new Point(70, 6),
+                new Point(70, 7),
                 1
             );
 
-            LabelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(60, 7));
+            LabelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(60, 8));
             ItemListOreChance = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.White,
-                new Point(68, 7),
+                new Point(68, 8),
                 1
             );
             for (double i = 0; i < 1000; i += 5) ItemListOreChance.AddItem("" + i / 10000);
 
-            LabelPalkaPeredCostSearchPlanet = new Label("=================", ConsoleColor.White, new Point(60, 8));
-            LabelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(60, 9));
-            LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(60, 10));
+            LabelPalkaPeredCostSearchPlanet = new Label("=================", ConsoleColor.White, new Point(60, 9));
+            LabelCostSearchPlanet = new Label("Cost: 0 PL", ConsoleColor.White, new Point(60, 10));
+            LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(60, 11));
 
             // ItemListContainer
-            ItemListContainerSearchPlanet = new ItemListContainer(inactiveListSelectedItemColor: ConsoleColor.White);
-            ItemListContainerSearchPlanet.AddItemList(ItemListPlanetSize);
-            ItemListContainerSearchPlanet.AddItemList(ItemListOreName);
-            ItemListContainerSearchPlanet.AddItemList(ItemListOreChance);
+            ItemListContainer = new ItemListContainer(inactiveListSelectedItemColor: ConsoleColor.White);
+            ItemListContainer.AddItemList(ItemListPlanetPresets);
+            ItemListContainer.AddItemList(ItemListPlanetSize);
+            ItemListContainer.AddItemList(ItemListOreName);
+            ItemListContainer.AddItemList(ItemListOreChance);
 
             AddSprite(LabelSearchPlanet);
+            AddSprite(LabelPlanetPreset);
+            AddSprite(ItemListPlanetPresets);
             AddSprite(LabelPlanetSize);
             AddSprite(ItemListPlanetSize);
             AddSprite(LabelOreName);
@@ -93,7 +106,8 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
 
         public override void Ready()
         {
-            UpdateOreNameList(ResourceManager.Instance.PlanetPresets[0]);
+            UpdatePlanetPresets();
+            UpdateOreNameList(_resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex]);
             UpdateCostSearchPlanet();
         }
 
@@ -102,30 +116,40 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             switch (key)
             {
                 case ConsoleKey.DownArrow:
-                    ItemListContainerSearchPlanet.NextItemList();
+                    ItemListContainer.NextItemList();
                     break;
                 case ConsoleKey.UpArrow:
-                    ItemListContainerSearchPlanet.PreviousItemList();
+                    ItemListContainer.PreviousItemList();
                     break;
                 case ConsoleKey.LeftArrow:
-                    ItemListContainerSearchPlanet.PreviousItem();
-                    if (ItemListContainerSearchPlanet.SelectedItemList == 1)
+                    ItemListContainer.PreviousItem();
+                    if (ItemListContainer.SelectedItemList == 0)
+                    {
+                        UpdateOreNameList(_resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex]);
+                        ItemListOreChance.SelectedIndex = 0;
+                    }
+                    if (ItemListContainer.SelectedItemList == 2)
                     {
                         ItemListOreChance.SelectedItem = "" + _oreChance[ItemListOreName.SelectedItem];
                     }
-                    if (ItemListContainerSearchPlanet.SelectedItemList == 2)
+                    if (ItemListContainer.SelectedItemList == 3)
                     {
                         _oreChance[ItemListOreName.SelectedItem] = double.Parse(ItemListOreChance.SelectedItem);
                     }
                     UpdateCostSearchPlanet();
                     break;
                 case ConsoleKey.RightArrow:
-                    ItemListContainerSearchPlanet.NextItem();
-                    if (ItemListContainerSearchPlanet.SelectedItemList == 1)
+                    ItemListContainer.NextItem();
+                    if (ItemListContainer.SelectedItemList == 0)
+                    {
+                        UpdateOreNameList(_resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex]);
+                        ItemListOreChance.SelectedIndex = 0;
+                    }
+                    if (ItemListContainer.SelectedItemList == 2)
                     {
                         ItemListOreChance.SelectedItem = "" + _oreChance[ItemListOreName.SelectedItem];
                     }
-                    if (ItemListContainerSearchPlanet.SelectedItemList == 2)
+                    if (ItemListContainer.SelectedItemList == 3)
                     {
                         _oreChance[ItemListOreName.SelectedItem] = double.Parse(ItemListOreChance.SelectedItem);
                     }
@@ -134,22 +158,41 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                 case ConsoleKey.G:
                     if (_world.Tokens.GetValueOrDefault("PL", 0) >= CalculateCostSearchPlanet())
                     {
-                        _world.SearchPlanet(
-                            new PlanetPreset(
-                                // Из BaseMode
-                                _resourceManager.PlanetPresets[0].Name,
-                                int.Parse(ItemListPlanetSize.SelectedItem ?? "32"),
-                                _resourceManager.PlanetPresets[0].Dirt,
-                                _resourceManager.PlanetPresets[0].Type,
-                                _resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, _oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
-                            )
-                        );
+                        _world.SearchPlanet(GetPlanetPreset());
                     }
                     else
                     {
                         _rootScene.MessageMessage.Show("not enough PL", ConsoleColor.DarkRed);
                     }
                     break;
+            }
+        }
+        private PlanetPreset GetPlanetPreset()
+        {
+            return
+                new PlanetPreset(
+                    _resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex].Name,
+                    int.Parse(ItemListPlanetSize.SelectedItem ?? "32"),
+                    _resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex].Dirt,
+                    _resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex].Type,
+                    _resourceManager.PlanetPresets[ItemListPlanetPresets.SelectedIndex].Ores
+                    .Select(ore => new OrePreset(ore.Name, _oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize))
+                    .ToList()
+                );
+        }
+
+
+        private int CalculateCostSearchPlanet()
+        {
+            return World.CalculateCostSearchPlanet(GetPlanetPreset());
+        }
+
+        private void UpdatePlanetPresets()
+        {
+            ItemListPlanetPresets.ClearItems();
+            foreach (var preset in _resourceManager.PlanetPresets)
+            {
+                ItemListPlanetPresets.AddItem(preset.Name);
             }
         }
 
@@ -167,20 +210,6 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         private void UpdateCostSearchPlanet()
         {
             LabelCostSearchPlanet.Text = "cost: " + CalculateCostSearchPlanet() + " PL";
-        }
-
-        private int CalculateCostSearchPlanet()
-        {
-            return World.CalculateCostSearchPlanet(
-                new PlanetPreset(
-                    // Из BaseMode
-                    _resourceManager.PlanetPresets[0].Name,
-                    int.Parse(ItemListPlanetSize.SelectedItem ?? "32"),
-                    _resourceManager.PlanetPresets[0].Dirt,
-                    _resourceManager.PlanetPresets[0].Type,
-                    _resourceManager.PlanetPresets[0].Ores.Select(ore => new OrePreset(ore.Name, _oreChance[ore.Name], ore.MinClusterSize, ore.MaxClusterSize)).ToList()
-                )
-            );
         }
     }
 }
