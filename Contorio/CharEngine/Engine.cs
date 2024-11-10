@@ -1,20 +1,32 @@
-﻿namespace Contorio.CharEngine
+﻿using System.Diagnostics;
+
+namespace Contorio.CharEngine
 {
     public class Engine
     {
         private Renderer _renderer;
         private Scene? _scene;
         private bool _online;
+        
+        private int _maxFPS;
 
         public Renderer Renderer 
         {
             get { return _renderer; }
         }
 
-        public Engine(Renderer renderer)
+        public int MaxFPS
+        {
+            get { return _maxFPS; }
+            set { _maxFPS = value; }
+        }
+
+        public Engine(Renderer renderer, int maxFPS = 165)
         {
             _renderer = renderer;
             _online = false;
+
+            _maxFPS = maxFPS;
         }
 
         public void SetScene(Scene scene)
@@ -46,19 +58,15 @@
 
             while (_online)
             {
-                // Вызовы методов Tick
                 _scene.RaiseTick();
 
-                // Оброботать события ввода
                 InputManager.Instance.Tick();
 
-                // Вызовы методa Tick во всех спрайтах
                 foreach (Sprite sprite in _scene.Sprites)
                 {
                     sprite.Tick();
                 }
 
-                // Обновление изображения
                 _renderer.Render();
             }
         }
