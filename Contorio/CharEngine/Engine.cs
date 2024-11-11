@@ -10,6 +10,8 @@ namespace Contorio.CharEngine
         
         private int _maxFPS;
 
+        private double _ms;
+
         public Renderer Renderer 
         {
             get { return _renderer; }
@@ -19,6 +21,11 @@ namespace Contorio.CharEngine
         {
             get { return _maxFPS; }
             set { _maxFPS = value; }
+        }
+
+        public int FPS
+        {
+            get { return (int)(1000 / _ms); }
         }
 
         public Engine(Renderer renderer, int maxFPS = 165)
@@ -54,10 +61,15 @@ namespace Contorio.CharEngine
 
         private void MainLoop()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             _scene.RaiseEnable();
 
             while (_online)
             {
+                stopwatch.Restart();
+
+
                 _scene.RaiseTick();
 
                 InputManager.Instance.Tick();
@@ -68,6 +80,15 @@ namespace Contorio.CharEngine
                 }
 
                 _renderer.Render();
+
+
+                double elapsed = stopwatch.Elapsed.TotalMilliseconds;
+                int delay = (int)((1000 / _maxFPS) - elapsed);
+                if (delay > 0)
+                {
+                    Thread.Sleep(delay);
+                }
+                _ms = elapsed + delay;
             }
         }
 
