@@ -114,6 +114,7 @@ namespace Contorio.Scenes.SceneWorld
                     if (SceneTileMap.Enable)
                     {
                         SceneBuilding.Enable = !SceneBuilding.Enable;
+                        SceneDebugUI.Enable = false;
                     }
                     break;
 
