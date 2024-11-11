@@ -21,6 +21,7 @@ namespace Contorio.Scenes.SceneWorld
         public SceneTransfer SceneTransfer;
         public SceneBlockUI SceneBlockUI;
         public SceneTokensMenu.SceneTokensMenu SceneTokensMenu;
+        public SceneDebugUI SceneDebugUI;
 
         public Message MessageMessage;
 
@@ -41,6 +42,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneTransfer = new SceneTransfer(_world);
             SceneBlockUI = new SceneBlockUI(_world);
             SceneTokensMenu = new SceneTokensMenu.SceneTokensMenu(this, _world);
+            SceneDebugUI = new SceneDebugUI(_engine, _world);
 
             // AddSprite
             AddSprite(MessageMessage);
@@ -52,6 +54,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeScene(SceneTokensMenu);
             IncludeScene(SceneTransfer);
             IncludeScene(SceneBlockUI);
+            IncludeScene(SceneDebugUI);
 
             // OnTick
             OnTick += _worldHandler.Tick;
@@ -66,6 +69,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneTokensMenu.Enable = false;
             SceneTransfer.Enable = false;
             SceneBlockUI.Enable = false;
+            SceneDebugUI.Enable = false;
         }
 
         public override void Input(ConsoleKey key)
@@ -111,6 +115,11 @@ namespace Contorio.Scenes.SceneWorld
                     {
                         SceneBuilding.Enable = !SceneBuilding.Enable;
                     }
+                    break;
+
+                case ConsoleKey.F3:
+                    SceneDebugUI.Enable = !SceneDebugUI.Enable;
+                    SceneBuilding.Enable = false;
                     break;
                 
                 case ConsoleKey.Enter:
