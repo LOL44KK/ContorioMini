@@ -1,6 +1,10 @@
 ﻿// Contorio
 // На будущие
-// 1. В Menu добавить надпись с версией игры
+// 1. Переделать ResearchSystem
+//    _openResearch и _closeResearch вместо Research будет хранится названия иследования
+//    Dictionary<string(названия иследования), bool(изучено ли)>
+// 2. Начать делать ресурс паки
+// 3. В Menu добавить надпись с версией игры
 
 
 namespace Contorio
