@@ -1,70 +1,70 @@
 ﻿using Contorio.Core.Types;
+using Contorio.Core.Managers;
 
 namespace Contorio.Core
 {
     public class ResearchSystem
     {
-        private Dictionary<string, Research> _openResearch;
-        private Dictionary<string, Research> _closeResearch;
+        private Dictionary<string, bool> _researchs;
 
-        public Dictionary<string, Research> OpenResearch
+        public Dictionary<string, bool> Researchs
         {
-            get { return _openResearch; }
-            init { _openResearch = value; }
+            get { return _researchs; } 
+            init { _researchs = value; }
         }
 
-        public Dictionary<string, Research> CloseResearch
+        public int CountCloseResearchs
         {
-            get { return _closeResearch; }
-            init { _closeResearch = value; }
+            get 
+            {
+                int count = 0;
+                foreach (var research in _researchs)
+                {
+                    if (research.Value == false)
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            }
         }
 
         public ResearchSystem()
         {
-            _openResearch = new Dictionary<string, Research>();
-            _closeResearch = new Dictionary<string, Research>();
+            _researchs = new Dictionary<string, bool>();
         }
 
-        public ResearchSystem(List<Research> closeResearch, List<Research>? openResearch=null)
+        public ResearchSystem(List<Research> researchs)
         {
-            _openResearch = new Dictionary<string, Research>();
-            _closeResearch = new Dictionary<string, Research>();
-
-            foreach (var research in closeResearch)
+            _researchs = new Dictionary<string, bool>();
+            
+            foreach (var research in researchs)
             {
-                _closeResearch.Add(research.Name, research);
-            }
-            if (openResearch != null)
-            {
-                foreach (var research in openResearch)
-                {
-                    _openResearch.Add(research.Name, research);
-                }
+                _researchs.Add(research.Name, false);
             }
 
-            foreach (var research in _closeResearch)
+            foreach (var research in researchs)
             {
-                if (research.Value.ResearchCost.Count == 0)
+                if (research.ResearchCost.Count == 0)
                 {
-                    UnlockResearch(research.Key);
+                    _researchs[research.Name] = true;
                 }
             }
         }
 
         public bool UnlockResearch(string researchName)
         {
-            if (_closeResearch.ContainsKey(researchName))
+            if (_researchs.ContainsKey(researchName))
             {
-                Research research = _closeResearch[researchName];
+                Research research = ResourceManager.Instance.Researches[researchName];
                 if (research.RequiredResearch != null)
                 {
-                    if (!_openResearch.ContainsKey(research.RequiredResearch))
+                    if (!_researchs.GetValueOrDefault(research.RequiredResearch, false))
                     {
                         return false;
                     }
                 }
-                _openResearch.Add(researchName, research);
-                _closeResearch.Remove(researchName);
+                _researchs[researchName] = true;
                 return true;
             }
             return false;

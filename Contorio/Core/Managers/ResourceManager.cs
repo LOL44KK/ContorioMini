@@ -23,6 +23,7 @@ namespace Contorio.Core.Managers
         private Dictionary<string, Block> _blocks;
         private Dictionary<string, Ground> _grounds;
         private List<PlanetPreset> _planetPresets;
+        private Dictionary<string, Research> _researches;
         
         private TileSet _tileSet;
         private Dictionary<string, int> _tileIds;
@@ -30,6 +31,7 @@ namespace Contorio.Core.Managers
         public Dictionary<string, Block> Blocks { get { return _blocks; } }
         public Dictionary<string, Ground> Grounds { get { return _grounds; } }
         public List<PlanetPreset> PlanetPresets { get { return _planetPresets; } }
+        public Dictionary<string, Research> Researches { get { return _researches; } }
 
         public TileSet TileSet { get { return _tileSet; } }
         public IReadOnlyDictionary<string, int> TileIds 
@@ -42,16 +44,18 @@ namespace Contorio.Core.Managers
             _blocks = new Dictionary<string, Block>();
             _grounds = new Dictionary<string, Ground>();
             _planetPresets = new List<PlanetPreset>();
+            _researches = new Dictionary<string, Research>();
 
             _tileSet = new TileSet(4, 3);
             _tileIds = new Dictionary<string, int>();
         }
 
-        public void Initialize(List<Block> blocks, List<Ground> grounds, List<PlanetPreset> planetPresets)
+        public void Initialize(List<Block> blocks, List<Ground> grounds, List<PlanetPreset> planetPresets, List<Research> researches)
         {
             _blocks.Clear();
             _grounds.Clear();
             _planetPresets.Clear();
+            _researches.Clear();
             foreach (Block block in blocks)
             {
                 _blocks.Add(block.Name, block);
@@ -63,6 +67,10 @@ namespace Contorio.Core.Managers
             foreach (PlanetPreset preset in planetPresets)
             {
                 _planetPresets.Add(preset);
+            }
+            foreach(Research research in researches)
+            {
+                _researches.Add(research.Name, research);
             }
             InitializeTileSet();
         }

@@ -34,11 +34,13 @@ namespace Contorio.Core.Managers
             List<Block> blocks = new List<Block>();
             List<Ground> grounds = new List<Ground>();
             List<PlanetPreset> planetPresets = new List<PlanetPreset>();
+            List<Research> research = new List<Research>();
             foreach (Mod mod in _mods)
             {
                 foreach (Block block in mod.Blocks)
                 {
                     blocks.Add(block);
+                    research.Add(block.Research);
                 }
                 foreach (Ground ground in mod.Grounds)
                 {
@@ -49,7 +51,7 @@ namespace Contorio.Core.Managers
                     planetPresets.Add(preset);
                 }
             }
-            ResourceManager.Instance.Initialize(blocks, grounds, planetPresets);
+            ResourceManager.Instance.Initialize(blocks, grounds, planetPresets, research);
         }
     }
 }

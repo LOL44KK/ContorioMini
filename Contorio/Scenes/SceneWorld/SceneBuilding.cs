@@ -145,9 +145,12 @@ namespace Contorio.Scenes.SceneWorld
         public void UpdateBlockCategory()
         {
             SortedSet<string> categoryes = new SortedSet<string>();
-            foreach (var research in _world.ResearchSystem.OpenResearch)
+            foreach (var researchName in _world.ResearchSystem.Researchs)
             {
-                categoryes.Add(research.Value.Category);
+                if (researchName.Value)
+                {
+                    categoryes.Add(ResourceManager.Instance.Researches[researchName.Key].Category);
+                }
             }
 
             ItemListBlockCategory.ClearItems();
@@ -160,11 +163,15 @@ namespace Contorio.Scenes.SceneWorld
         public void UpdateBlockList(string category)
         {
             ItemListBlockList.ClearItems();
-            foreach (var research in _world.ResearchSystem.OpenResearch)
+            foreach (var researchName in _world.ResearchSystem.Researchs)
             {
-                if (research.Value.Category == category)
+                if (researchName.Value)
                 {
-                    ItemListBlockList.AddItem(research.Value.Name);
+                    Research research = ResourceManager.Instance.Researches[researchName.Key];
+                    if (research.Category == category)
+                    {
+                        ItemListBlockList.AddItem(research.Name);
+                    }
                 }
             }
         }

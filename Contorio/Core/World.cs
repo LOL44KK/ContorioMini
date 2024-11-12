@@ -64,26 +64,30 @@ namespace Contorio.Core
 
         public bool StudyResearch(string researchName)
         {
-            foreach (var token in _researchSystem.CloseResearch[researchName].ResearchCost)
+            if (ResourceManager.Instance.Researches.TryGetValue(researchName, out Research? research))
             {
-                if (_tokens.GetValueOrDefault(token.Key, 0) < token.Value)
+                foreach (var token in research.ResearchCost)
                 {
-                    return false;
+                    if (_tokens.GetValueOrDefault(token.Key, 0) < token.Value)
+                    {
+                        return false;
+                    }
                 }
-            }
-            if (_researchSystem.CloseResearch[researchName].RequiredResearch != null)
-            {
-                if (!_researchSystem.OpenResearch.ContainsKey(_researchSystem.CloseResearch[researchName].RequiredResearch))
+                if (research.RequiredResearch != null)
                 {
-                    return false;
+                    if (!_researchSystem.Researchs.GetValueOrDefault(research.RequiredResearch, false))
+                    {
+                        return false;
+                    }
                 }
+                foreach (var token in research.ResearchCost)
+                {
+                    _tokens[token.Key] -= token.Value;
+                }
+                _researchSystem.UnlockResearch(researchName);
+                return true;
             }
-            foreach (var token in _researchSystem.CloseResearch[researchName].ResearchCost)
-            {
-                _tokens[token.Key] -= token.Value;
-            }
-            _researchSystem.UnlockResearch(researchName);
-            return true;
+            return false;
         }
 
         public static int CalculateCostSearchPlanet(PlanetPreset preset)

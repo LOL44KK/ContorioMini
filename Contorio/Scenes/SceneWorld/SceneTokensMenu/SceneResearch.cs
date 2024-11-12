@@ -4,12 +4,15 @@ using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core;
 using Contorio.Core.Types;
+using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
 {
     public class SceneResearch : Scene
     {
         private SceneWorld _rootScene;
+
+        private ResourceManager _resourceManager;
 
         private World _world;
         private ResearchSystem _researchSystem;
@@ -23,6 +26,8 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         public SceneResearch(SceneWorld rootScene, World world)
         {
             _rootScene = rootScene;
+
+            _resourceManager = ResourceManager.Instance;
 
             _world = world;
             _researchSystem = world.ResearchSystem;
@@ -48,7 +53,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
 
         public override void Ready()
         {
-            if (_researchSystem.CloseResearch.Count > 0)
+            if (_researchSystem.CountCloseResearchs > 0)
             {
                 UpdateResearchList();
                 UpdateResearchCost(ItemListResearchList.SelectedItem);
@@ -74,7 +79,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                     UpdateResearchCost(ItemListResearchList.SelectedItem);
                     break;
                 case ConsoleKey.Enter:
-                    if (_researchSystem.CloseResearch.Count > 0)
+                    if (_researchSystem.CountCloseResearchs > 0)
                     {
                         UnlockResearch(ItemListResearchList.SelectedItem);
                     }
@@ -85,7 +90,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         public void UnlockResearch(string researchName)
         {
             Research research;
-            if (_researchSystem.CloseResearch.TryGetValue(researchName, out research))
+            if (_resourceManager.Researches.TryGetValue(researchName, out research))
             {
                 foreach (var token in research.ResearchCost)
                 {
@@ -96,7 +101,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                 }
                 if (research.RequiredResearch != null)
                 {
-                    if (!_researchSystem.OpenResearch.ContainsKey(research.RequiredResearch))
+                    if (!_resourceManager.Researches.ContainsKey(research.RequiredResearch))
                     {
                         _rootScene.MessageMessage.Show("not studied " + research.RequiredResearch, ConsoleColor.DarkRed);
                     }
@@ -110,7 +115,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                 }
             }
 
-            if (_researchSystem.CloseResearch.Count > 0)
+            if (_researchSystem.CountCloseResearchs > 0)
             {
                 UpdateResearchCost(ItemListResearchList.SelectedItem);
             }
@@ -125,22 +130,22 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
         private void UpdateResearchList()
         {
             ItemListResearchList.ClearItems();
-            foreach (var research in _world.ResearchSystem.CloseResearch)
+            foreach (var research in _world.ResearchSystem.Researchs.Where(res => res.Value == false))
             {
-                ItemListResearchList.AddItem(research.Value.Name);
+                ItemListResearchList.AddItem(research.Key);
             }
         }
 
         private void UpdateResearchCost(string name)
         {
             LabelResearchCost.Text = "Cost\n";
-            foreach (var token in _world.ResearchSystem.CloseResearch[name].ResearchCost)
+            foreach (var token in _resourceManager.Researches[name].ResearchCost)
             {
                 LabelResearchCost.Text += token.Key + ": " + token.Value + "\n";
             }
-            if (_world.ResearchSystem.CloseResearch[name].RequiredResearch != null)
+            if (_resourceManager.Researches[name].RequiredResearch != null)
             {
-                LabelResearchCost.Text += "Required: " + _world.ResearchSystem.CloseResearch[name].RequiredResearch;
+                LabelResearchCost.Text += "Required: " + _resourceManager.Researches[name].RequiredResearch;
             }
         }
     }
