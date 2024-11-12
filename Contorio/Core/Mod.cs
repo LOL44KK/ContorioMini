@@ -1,15 +1,4 @@
-﻿// Mod file struct
-//
-// ├── ModName
-//     ├── mod.json
-//     ├── blocks
-//         ├── testBlock.json
-//         ├── ...
-//     ├── grounds
-//         ├── testGround.json
-//         ├── ...
-
-using Contorio.Core.Presets;
+﻿using Contorio.Core.Presets;
 using Contorio.Core.Types;
 
 namespace Contorio.Core
