@@ -28,5 +28,4 @@ Terminal-based game about automation, factory construction, and planet.
 - **T** — resource transfer menu from planet to player.
 
 # Future Plans
-- Content packs.
 - Add content for Blocks\Research.
