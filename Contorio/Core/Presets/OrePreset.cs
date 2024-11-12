@@ -1,4 +1,4 @@
-﻿namespace Contorio.Core.Types
+﻿namespace Contorio.Core.Presets
 {
     public class OrePreset
     {

@@ -1,4 +1,4 @@
-﻿namespace Contorio.Core.Types
+﻿namespace Contorio.Core.Presets
 {
     public enum PlanetType
     {
@@ -8,7 +8,7 @@
 
     public class PlanetPreset
     {
-        private string _name; 
+        private string _name;
         private int _size;
         private string _dirt;
         private PlanetType _type;

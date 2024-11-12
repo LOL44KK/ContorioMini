@@ -3,7 +3,7 @@
 using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.Core.Managers;
-using Contorio.Core.Types;
+using Contorio.Core.Presets;
 
 namespace Contorio.Scenes.SceneMenu
 {
