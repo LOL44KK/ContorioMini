@@ -3,6 +3,7 @@
 using Contorio.CharEngine;
 using Contorio.CharEngine.Widgets;
 using Contorio.CharEngine.Containers;
+using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneMenu
 {
@@ -19,6 +20,7 @@ namespace Contorio.Scenes.SceneMenu
 
         public Sprite SpriteContorio;
         public ItemList ItemListMenu;
+        public Label LabelVersion;
 
         public Container ContainerMain;
 
@@ -55,6 +57,11 @@ namespace Contorio.Scenes.SceneMenu
             ItemListMenu.AddItem("NEW GAME");
             ItemListMenu.AddItem("LOAD GAME");
             ItemListMenu.AddItem("QUIT");
+            LabelVersion = new Label(
+                ResourceManager.ContorioMiniVersion,
+                ConsoleColor.White,
+                new Point(0, 29)
+            );
 
             // ContainerMain
             ContainerMain = new Container();
@@ -67,6 +74,7 @@ namespace Contorio.Scenes.SceneMenu
             // AddSprite
             AddSprite(SpriteContorio);
             AddSprite(ItemListMenu);
+            AddSprite(LabelVersion);
 
             // Костя:)
             OnInput += Inputt;

@@ -4,7 +4,6 @@ using Contorio.Core.Types;
 
 namespace Contorio.Core.Managers
 {
-    //Singleton
     public class ResourceManager
     {
         private static ResourceManager _instance;
@@ -19,6 +18,8 @@ namespace Contorio.Core.Managers
                 return _instance;
             }
         }
+
+        public static string ContorioMiniVersion = "v0.7.4";
 
         private Dictionary<string, Block> _blocks;
         private Dictionary<string, Ground> _grounds;

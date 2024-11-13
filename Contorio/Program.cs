@@ -1,9 +1,4 @@
-﻿// Contorio
-// На будущие
-// 1. В Menu добавить надпись с версией игры
-
-
-namespace Contorio
+﻿namespace Contorio
 {
     internal class Program
     {
