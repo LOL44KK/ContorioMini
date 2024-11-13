@@ -3,6 +3,7 @@ using Contorio.Core.Types;
 
 namespace Contorio.Core.Managers
 {
+    // Разработка заморожена на неопределенное время
     public class ModManager
     {
         private static ModManager _instance;
