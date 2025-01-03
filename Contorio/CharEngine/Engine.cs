@@ -6,7 +6,7 @@ namespace Contorio.CharEngine
     {
         private Renderer _renderer;
         private Scene? _scene;
-        private bool _online;
+        private bool _running;
         
         private int _maxFPS;
 
@@ -31,7 +31,7 @@ namespace Contorio.CharEngine
         public Engine(Renderer renderer, int maxFPS = 165)
         {
             _renderer = renderer;
-            _online = false;
+            _running = false;
 
             _maxFPS = maxFPS;
         }
@@ -55,7 +55,7 @@ namespace Contorio.CharEngine
                 throw new InvalidOperationException("Scene is not set.");
             }
 
-            _online = true;
+            _running = true;
             MainLoop();
         }
 
@@ -65,7 +65,7 @@ namespace Contorio.CharEngine
 
             _scene.RaiseEnable();
 
-            while (_online)
+            while (_running)
             {
                 stopwatch.Restart();
 
@@ -94,7 +94,7 @@ namespace Contorio.CharEngine
 
         public void Quit()
         {
-            _online = false;
+            _running = false;
         }
     }
 }

@@ -60,7 +60,9 @@ namespace Contorio.Scenes.SceneMenu
             LabelVersion = new Label(
                 ResourceManager.ContorioMiniVersion,
                 ConsoleColor.White,
-                new Point(0, 29)
+                new Point(120, 29),
+                alignment:Alignment.Right,
+                textAlignment:TextAlignment.Right
             );
 
             // ContainerMain
