@@ -156,8 +156,12 @@ namespace Contorio.Scenes.SceneWorld
                     break;
 
                 case ConsoleKey.H:
-                    SaveManager.SaveWorld(_world.Planets[0].Name + ".ctsave", _world);
+                    SaveWorld();
                     MessageMessage.Show("Successfully saved", ConsoleColor.DarkGreen);
+                    break;
+
+                case ConsoleKey.G:
+                    _player.GodMode = !_player.GodMode;
                     break;
             }
         }
@@ -167,6 +171,11 @@ namespace Contorio.Scenes.SceneWorld
             _player.Planet = planetIndex;
             SceneTileMap.LoadMap(_world.Planets[planetIndex]);
             _player.Coord = new Point(_world.Planets[planetIndex].Size / 2, _world.Planets[planetIndex].Size / 2);
+        }
+
+        private void SaveWorld()
+        {
+            SaveManager.SaveWorld(_world.Planets[0].Name + ".ctsave", _world);
         }
     }
 }

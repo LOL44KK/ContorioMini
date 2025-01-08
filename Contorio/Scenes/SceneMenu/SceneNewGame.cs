@@ -86,7 +86,7 @@ namespace Contorio.Scenes.SceneMenu
             LabelInfoWorldPreset.Text += $"Starting Planet\n";
 
             LabelInfoWorldPreset.Text += $"Size: {planetPreset.Size}\n";
-            LabelInfoWorldPreset.Text += $"Soil Type: {planetPreset.Dirt}\n";
+            LabelInfoWorldPreset.Text += $"Ground Type: {planetPreset.Dirt}\n";
             LabelInfoWorldPreset.Text += $"Planet Type: {planetPreset.Type}\n";
             LabelInfoWorldPreset.Text += $"Ores\n";
             for (int i = 0; i < planetPreset.Ores.Count; i++)

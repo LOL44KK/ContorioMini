@@ -81,17 +81,25 @@ namespace Contorio.Core
             return true;
         }
 
-        public void DestroyBlock(Point coord, Planet planet)
+        public bool DestroyBlock(Point coord, Planet planet)
         {
             if (planet.Blocks.ContainsKey(coord))
             {
+                if (_godMode)
+                {
+                    planet.RemoveBlock(coord);
+                    return true;
+                }
+
                 Block block = ResourceManager.Instance.Blocks[planet.Blocks[coord].Name];
                 foreach (var resource in block.Cost)
                 {
                     _resources[resource.Key] = _resources.GetValueOrDefault(resource.Key, 0) + resource.Value;
                 }
                 planet.RemoveBlock(coord);
+                return true;
             }
+            return false;
         }
     }
 }
