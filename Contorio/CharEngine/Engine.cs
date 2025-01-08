@@ -63,14 +63,14 @@ namespace Contorio.CharEngine
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            _scene.RaiseEnable();
+            _scene?.RaiseEnable();
 
             while (_running)
             {
                 stopwatch.Restart();
 
 
-                _scene.RaiseTick();
+                _scene?.RaiseTick();
 
                 InputManager.Instance.Tick();
 
