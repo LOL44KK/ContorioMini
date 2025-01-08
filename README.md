@@ -13,7 +13,6 @@
 Terminal-based game about automation, factory construction, and planet.
 
 # Table of Contents
-- [Wiki](https://github.com/LOL44KK/ContorioMini/wiki)
 - [Install](https://github.com/LOL44KK/ContorioMini/releases/latest)
 - [Controls](#controls)
 - [Future Plans](#future-plans)
