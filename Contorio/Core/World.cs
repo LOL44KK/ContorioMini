@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-using Contorio.Core.Types;
+﻿using Contorio.Core.Types;
 using Contorio.Core.Managers;
 using Contorio.Core.Presets;
 
@@ -49,6 +47,12 @@ namespace Contorio.Core
                 tempResearcheList.Add(item.Value.Research);
             }
             _researchSystem = new ResearchSystem(tempResearcheList);
+        }
+
+        public World(PlanetPreset basePlanetPreset) : this()
+        {
+            _planets.Add(new Planet(basePlanetPreset));
+            _player.Move(basePlanetPreset.Size / 2, basePlanetPreset.Size / 2);
         }
 
         public bool SearchPlanet(PlanetPreset preset)
