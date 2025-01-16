@@ -71,9 +71,12 @@ namespace Contorio.CharEngine
             }
         }
 
+        /// <summary>
+        /// Выполняется каждый кадр (тик) игрового цикла.
+        /// </summary>
         virtual public void Tick()
         {
-            // Update logic for the sprite, if needed
+            // Реализация обновления спрайта
         }
     }
 }
