@@ -61,57 +61,75 @@
 
             foreach (var sprite in visibleSprites)
             {
-                int spriteStartX = sprite.Position.X;
+                RenderSprite(sprite, currentFrame);
+            }
 
-                switch (sprite.Alignment)
-                {
-                    case Alignment.Center:
-                        spriteStartX -= sprite.Width / 2;
-                        break;
-                    case Alignment.Right:
-                        spriteStartX -= sprite.Width;
-                        break;
-                }
+            UpdateConsole(currentFrame);
 
-                for (int y = 0; y < sprite.Height; y++)
+            _previousFrame = currentFrame;
+        }
+
+        private void RenderSprite(Sprite sprite, Pixel[,] frame)
+        {
+            int spriteStartX = sprite.Position.X;
+
+            switch (sprite.Alignment)
+            {
+                case Alignment.Center:
+                    spriteStartX -= sprite.Width / 2;
+                    break;
+                case Alignment.Right:
+                    spriteStartX -= sprite.Width;
+                    break;
+            }
+
+            for (int y = 0; y < sprite.Height; y++)
+            {
+                for (int x = 0; x < sprite.Width; x++)
                 {
-                    for (int x = 0; x < sprite.Width; x++)
+                    Pixel pixel = sprite.Pixels[y, x];
+                    if (pixel.C != ' ')
                     {
-                        Pixel pixel = sprite.Pixels[y, x];
-                        if (pixel.C != ' ')
-                        {
-                            int globalX = x + spriteStartX;
-                            int globalY = y + sprite.Position.Y;
+                        int globalX = x + spriteStartX;
+                        int globalY = y + sprite.Position.Y;
 
-                            if (globalX >= 0 && globalX < _screenWidth && globalY >= 0 && globalY < _screenHeight)
-                            {
-                                currentFrame[globalY, globalX] = pixel;
-                            }
+                        if (globalX >= 0 && globalX < _screenWidth && globalY >= 0 && globalY < _screenHeight)
+                        {
+                            frame[globalY, globalX] = pixel;
                         }
                     }
                 }
             }
+        }
 
-            ConsoleColor prevColor = Console.ForegroundColor;
+        private void UpdateConsole(Pixel[,] frame)
+        {
+            int cursorX = -1, cursorY = -1;
+            ConsoleColor consoleColor = Console.ForegroundColor;
             for (int y = 0; y < _screenHeight; y++)
             {
                 for (int x = 0; x < _screenWidth; x++)
                 {
-                    Pixel currentPixel = currentFrame[y, x];
+                    Pixel currentPixel = frame[y, x];
                     Pixel previousPixel = _previousFrame[y, x];
                     if (currentPixel.C != previousPixel.C || currentPixel.Color != previousPixel.Color)
                     {
-                        Console.SetCursorPosition(x, y);
-                        if (prevColor != currentPixel.Color)
+                        if (cursorY != y || cursorX != x)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            cursorX = x;
+                            cursorY = y;
+                        }
+                        if (consoleColor != currentPixel.Color)
                         {
                             Console.ForegroundColor = currentPixel.Color;
-                            prevColor = currentPixel.Color;
+                            consoleColor = currentPixel.Color;
                         }
                         Console.Write(currentPixel.C);
+                        cursorX++;
                     }
                 }
             }
-            _previousFrame = currentFrame;
         }
     }
 }
