@@ -15,7 +15,6 @@ Terminal-based game about automation, factory construction, and planet.
 # Table of Contents
 - [Install](https://github.com/LOL44KK/ContorioMini/releases/latest)
 - [Controls](#controls)
-- [Future Plans](#future-plans)
 
 # Controls
 - **W, A, S, D** — character movement.
@@ -25,6 +24,3 @@ Terminal-based game about automation, factory construction, and planet.
 - **Arrow keys (Up, Down, Left, Right)** — navigate through lists.
 - **R** — token, research, and planet search menu.
 - **T** — resource transfer menu from planet to player.
-
-# Future Plans
-- Add content for Blocks\Research.
