@@ -19,7 +19,7 @@ namespace Contorio.Core.Managers
             }
         }
 
-        public static string ContorioMiniVersion = "v0.7.4";
+        public static string ContorioMiniVersion = "v0.7.5";
 
         private Dictionary<string, Block> _blocks;
         private Dictionary<string, Ground> _grounds;

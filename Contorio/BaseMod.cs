@@ -12,7 +12,7 @@ namespace Contorio
             Name = "BaseMod";
             Description = "BaseMod";
             Author = "LOL4K";
-            Version = "0.7.3";
+            Version = "0.7.5";
 
             Blocks = new List<Block>();
             Grounds = new List<Ground>();
