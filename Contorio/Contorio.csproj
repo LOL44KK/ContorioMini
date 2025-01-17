@@ -5,7 +5,17 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+		<SignAssembly>True</SignAssembly>
+		<FileVersion>0.7.5.0</FileVersion>
+		<PackageIcon></PackageIcon>
+		<ApplicationIcon>ico.ico</ApplicationIcon>
+		<AssemblyVersion>0.7.5.0</AssemblyVersion>
+		<PackageLicenseFile></PackageLicenseFile>
+		<PackageReadmeFile></PackageReadmeFile>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="ico.ico" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
