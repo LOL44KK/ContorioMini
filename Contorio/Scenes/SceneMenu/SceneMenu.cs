@@ -31,7 +31,7 @@ namespace Contorio.Scenes.SceneMenu
         {
             _engine = engine;
 
-            // InitializeComponent
+            // InitializeScene
             SceneLoadGame = new SceneLoadGame(_engine, this);
             SceneNewGame = new SceneNewGame(_engine, this);
 

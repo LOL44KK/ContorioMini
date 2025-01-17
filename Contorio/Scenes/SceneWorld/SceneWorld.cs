@@ -32,10 +32,11 @@ namespace Contorio.Scenes.SceneWorld
             _world = world;
             _player = _world.Player;
             _worldHandler = new WorldHandler(_world);
-            
-            // InitializeComponent
+
+            // InitializeWidgets
             MessageMessage = new Message(60, 29);
 
+            // InitializeScene
             SceneTileMap = new SceneTileMap(_world);
             ScenePlanetInfo = new ScenePlanetInfo(_world);
             SceneBuilding = new SceneBuilding(this, _world);
@@ -47,7 +48,7 @@ namespace Contorio.Scenes.SceneWorld
             // AddSprite
             AddSprite(MessageMessage);
 
-            // Include Container
+            // IncludeScene
             IncludeScene(SceneTileMap);
             IncludeScene(ScenePlanetInfo);
             IncludeScene(SceneBuilding);

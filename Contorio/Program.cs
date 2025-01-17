@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            bool DEBUG = false;
+            bool DEBUG = true;
 
             if (DEBUG)
             {

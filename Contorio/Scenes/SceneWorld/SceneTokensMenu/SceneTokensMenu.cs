@@ -25,7 +25,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             _rootScene = rootScene;
             _world = world;
 
-            // InitializeComponent
+            // InitializeScene
             SceneResearch = new SceneResearch(_rootScene, _world);
             SceneSearchPlanet = new SceneSearchPlanet(_rootScene, _world);
 

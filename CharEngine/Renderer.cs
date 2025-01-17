@@ -104,7 +104,8 @@
 
         private void UpdateConsole(Pixel[,] frame)
         {
-            int cursorX = -1, cursorY = -1;
+            int cursorPositionX = 0;
+            int cursorPositionY = 0;
             ConsoleColor consoleColor = Console.ForegroundColor;
             for (int y = 0; y < _screenHeight; y++)
             {
@@ -114,11 +115,11 @@
                     Pixel previousPixel = _previousFrame[y, x];
                     if (currentPixel.C != previousPixel.C || currentPixel.Color != previousPixel.Color)
                     {
-                        if (cursorY != y || cursorX != x)
+                        if (cursorPositionY != y || cursorPositionX != x)
                         {
                             Console.SetCursorPosition(x, y);
-                            cursorX = x;
-                            cursorY = y;
+                            cursorPositionX = x;
+                            cursorPositionY = y;
                         }
                         if (consoleColor != currentPixel.Color)
                         {
@@ -126,7 +127,7 @@
                             consoleColor = currentPixel.Color;
                         }
                         Console.Write(currentPixel.C);
-                        cursorX++;
+                        cursorPositionX++;
                     }
                 }
             }
