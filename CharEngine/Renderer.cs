@@ -1,4 +1,4 @@
-﻿namespace Contorio.CharEngine
+﻿namespace CharEngine
 {
     public class Renderer
     {

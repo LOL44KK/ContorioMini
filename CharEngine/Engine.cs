@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Contorio.CharEngine
+namespace CharEngine
 {
     public class Engine
     {

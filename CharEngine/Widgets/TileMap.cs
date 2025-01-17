@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contorio.CharEngine.Widgets
+namespace CharEngine.Widgets
 {
     public struct Cell 
     {

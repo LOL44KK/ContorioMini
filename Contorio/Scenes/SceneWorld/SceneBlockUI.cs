@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 
-using Contorio.CharEngine;
-using Contorio.CharEngine.Widgets;
+using CharEngine;
+using CharEngine.Widgets;
+using CharEngine.Containers;
 using Contorio.Core;
 using Contorio.Core.Types;
 using Contorio.Core.Managers;
-using Contorio.CharEngine.Containers;
 
 namespace Contorio.Scenes.SceneWorld
 {

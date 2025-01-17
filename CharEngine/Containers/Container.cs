@@ -1,4 +1,4 @@
-﻿namespace Contorio.CharEngine.Containers
+﻿namespace CharEngine.Containers
 {
     public class Container
     {

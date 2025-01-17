@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 
-using Contorio.CharEngine;
-using Contorio.CharEngine.Widgets;
+using CharEngine;
+using CharEngine.Widgets;
 using Contorio.Core;
 using Contorio.Core.Types;
 using Contorio.Core.Interfaces;

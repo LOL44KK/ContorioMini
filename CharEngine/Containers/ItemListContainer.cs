@@ -1,6 +1,6 @@
-﻿using Contorio.CharEngine.Widgets;
+﻿using CharEngine.Widgets;
 
-namespace Contorio.CharEngine.Containers
+namespace CharEngine.Containers
 {
     public class ItemListContainer
     {

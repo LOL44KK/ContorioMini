@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-using Contorio.CharEngine;
-using Contorio.CharEngine.Widgets;
-using Contorio.CharEngine.Containers;
+using CharEngine;
+using CharEngine.Widgets;
+using CharEngine.Containers;
 using Contorio.Core;
 using Contorio.Core.Managers;
 using Contorio.Core.Presets;

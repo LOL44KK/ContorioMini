@@ -1,4 +1,4 @@
-﻿using Contorio.CharEngine;
+﻿using CharEngine;
 using Contorio.Core.Interfaces;
 
 namespace Contorio.Core.Types

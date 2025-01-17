@@ -1,4 +1,4 @@
-﻿using Contorio.CharEngine;
+﻿using CharEngine;
 using Contorio.Core;
 using Contorio.Core.Managers;
 using Contorio.Scenes.SceneMenu;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
 
-namespace Contorio.CharEngine.Widgets
+namespace CharEngine.Widgets
 {
     public class ItemList : Sprite
     {

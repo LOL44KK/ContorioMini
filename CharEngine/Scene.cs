@@ -1,4 +1,4 @@
-﻿namespace Contorio.CharEngine
+﻿namespace CharEngine
 {
     public delegate void TickDelegate();
     public delegate void EnableDelegate();

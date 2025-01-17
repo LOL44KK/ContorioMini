@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Contorio.CharEngine
+namespace CharEngine
 {
     public enum Alignment
     {

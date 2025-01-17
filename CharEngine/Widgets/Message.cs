@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 
-namespace Contorio.CharEngine.Widgets
+namespace CharEngine.Widgets
 {
     public class Message : Label
     {
