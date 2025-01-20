@@ -38,7 +38,8 @@ namespace CharEngine.Widgets
             set { _cellPaddingBottom = value; }
         }
 
-        public TileMap(int width, int height, TileSet tileSet, Point position, int cellPaddingRight = 0, int cellPaddingBottom = 0) : base(new Pixel[height, width], position:position)
+        public TileMap(int width, int height, TileSet tileSet, Point position, int cellPaddingRight = 0, int cellPaddingBottom = 0) 
+            : base(new Pixel[height, width], position:position)
         {
             _tileSet = tileSet;
             _cells = new Dictionary<int, Dictionary<Point, Cell>>();
@@ -80,11 +81,11 @@ namespace CharEngine.Widgets
 
         public void UpdatePixels(Point coord)
         {
-            FillPixels(new Pixel(' ', ConsoleColor.Green));
+            FillPixels(new Pixel(' ', ConsoleColor.Black));
 
             int i = 0;
             int j = 0;
-
+            
             foreach (int layer in _cells.Keys)
             {
                 int numberOfTilesY = Height / TileSet.TileHeight;
@@ -101,8 +102,7 @@ namespace CharEngine.Widgets
                     j = 0;
                     for (int x = startX; x < finishX; x++)
                     {
-                        Cell cell;
-                        if (_cells[layer].TryGetValue(new Point(x, y), out cell))
+                        if (_cells[layer].TryGetValue(new Point(x, y), out Cell cell))
                         {
                             for (int tileY = 0; tileY < TileSet.TileHeight; tileY++)
                             {
