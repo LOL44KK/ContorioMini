@@ -83,9 +83,9 @@ namespace Contorio.Core
                 }
             }
 
+            // Оброботка Блока
             Recipe recipe;
             Random random;
-            // Оброботка Блока
             switch (block.Type)
             {
                 case BlockType.SOLAR_PANEL:
@@ -177,7 +177,7 @@ namespace Contorio.Core
                     break;
             }
 
-            //
+            // Потребление энергии после обработки
             if (energyInput != null)
             {
                 planet.Energy -= energyInput.EnergyInput;
