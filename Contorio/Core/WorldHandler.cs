@@ -56,17 +56,6 @@ namespace Contorio.Core
                 return;
             }
 
-            // Проверка на потребление электричества
-            IEnergyInput? energyInput = null;
-            if (block is IEnergyInput iEnergyInput)
-            {
-                if (planet.Energy < iEnergyInput.EnergyInput)
-                {
-                    return;
-                }
-                energyInput = iEnergyInput;
-            }
-
             // Проверка на базовые подключения
             if (blockState is IConnectToDroneStation iConnectToDroneStation)
             {
@@ -82,6 +71,21 @@ namespace Contorio.Core
                     return;
                 }
             }
+
+            // Проверка на потребление электричества
+            IEnergyInput? energyInput = null;
+            if (block is IEnergyInput iEnergyInput)
+            {
+                if (planet.Energy < iEnergyInput.EnergyInput)
+                {
+                    return;
+                }
+                energyInput = iEnergyInput;
+            }
+
+            // Надо переписать с использованием паттерна Strategy 
+            // Или как вариант в классе Block добавить метод Process
+            // Который буедт отвечать за обработку блока
 
             // Оброботка Блока
             Recipe recipe;
