@@ -194,6 +194,8 @@ namespace Contorio.Core
             return true;
         }
 
+
+        // Надо объединить методы SearchDroneStation и SearchEnergyPoint
         private Point? SearchDroneStation(Point startCoord)
         {
             ResourceManager resourceManager = ResourceManager.Instance;
@@ -227,7 +229,7 @@ namespace Contorio.Core
                 {
                     double distance = startCoord.DistanceTo(block.Key);
                     int range = ((EnergyPoint)resourceManager.Blocks[block.Value.Name]).Range;
-
+                    
                     if (distance < range && distance < closestDistance)
                     {
                         closestDistance = distance;
