@@ -104,8 +104,8 @@
 
         private void UpdateConsole(Pixel[,] frame)
         {
-            int cursorPositionX = 0;
-            int cursorPositionY = 0;
+            int cursorPositionX = -1;
+            int cursorPositionY = -1;
             ConsoleColor consoleColor = Console.ForegroundColor;
             for (int y = 0; y < _screenHeight; y++)
             {
