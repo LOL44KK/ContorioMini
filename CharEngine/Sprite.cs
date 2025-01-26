@@ -60,6 +60,9 @@ namespace CharEngine
             _alignment = alignment;
         }
 
+        /// <summary>
+        /// Заполняет спрайт одним указанным пикселем.
+        /// </summary>
         public void FillPixels(Pixel pixel)
         {
             for (int i = 0; i < _pixels.GetLength(0); i++)

@@ -2,6 +2,7 @@
 {
     public class TileSet
     {
+        // Надо заменить Sprite на матрицу Pixel[,]
         List<Sprite> _tiles;
         private int _tileWidth;
         private int _tileHeight;
