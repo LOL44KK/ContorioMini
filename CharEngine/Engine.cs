@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿// Wishlist:
+// - Добавить класс матрицы Pixel[,]
+
+using System.Diagnostics;
 
 namespace CharEngine
 {
