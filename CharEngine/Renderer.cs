@@ -5,7 +5,7 @@
         private Scene _scene;
         private int _screenWidth;
         private int _screenHeight;
-        private Pixel[,] _previousFrame;
+        private Pixel[,] _lastFrame;
 
         public Scene Scene
         {
@@ -30,13 +30,14 @@
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
             Console.CursorVisible = false;
+            Console.SetWindowSize(_screenWidth, _screenHeight);
 
-            _previousFrame = new Pixel[screenHeight, screenWidth];
+            _lastFrame = new Pixel[screenHeight, screenWidth];
             for (int y = 0; y < screenHeight; y++)
             {
                 for (int x = 0; x < screenWidth; x++)
                 {
-                    _previousFrame[y, x] = new Pixel(' ', ConsoleColor.Black);
+                    _lastFrame[y, x] = new Pixel(' ', ConsoleColor.Black);
                 }
             }
         }
@@ -66,7 +67,7 @@
 
             UpdateConsole(currentFrame);
 
-            _previousFrame = currentFrame;
+            _lastFrame = currentFrame;
         }
 
         private void RenderSprite(Sprite sprite, Pixel[,] frame)
@@ -112,7 +113,7 @@
                 for (int x = 0; x < _screenWidth; x++)
                 {
                     Pixel currentPixel = frame[y, x];
-                    Pixel previousPixel = _previousFrame[y, x];
+                    Pixel previousPixel = _lastFrame[y, x];
                     if (currentPixel.C != previousPixel.C || currentPixel.Color != previousPixel.Color)
                     {
                         if (cursorPositionY != y || cursorPositionX != x)
