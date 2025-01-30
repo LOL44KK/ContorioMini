@@ -189,7 +189,7 @@ namespace Contorio.Scenes.SceneWorld
 
         public void UpdateSpriteBlockPlayerSelectedBlock(string blockName)
         {
-            SpriteBlockPlayerSelectedBlock.Pixels = ResourceManager.Instance.Blocks[blockName].Sprite.Pixels;
+            SpriteBlockPlayerSelectedBlock.Pixels = ResourceManager.Instance.Blocks[blockName].PixelCanvas.Pixels;
         }
 
         public void UpdatePlayerResources()

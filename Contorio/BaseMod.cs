@@ -51,7 +51,7 @@ namespace Contorio
             Ground dirt = new Ground(
                 type: GroundType.DIR,
                 name: "dirt",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green) },
                     { new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green), new Pixel('.', ConsoleColor.Green) },
@@ -61,7 +61,7 @@ namespace Contorio
 
             Ore ironOre = new Ore(
                 name: "iron",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray) },
                     { new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray), new Pixel('O', ConsoleColor.DarkGray) },
@@ -73,7 +73,7 @@ namespace Contorio
 
             Ore copperOre = new Ore(
                 name: "copper",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
                     { new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('O', ConsoleColor.DarkYellow) },
@@ -85,7 +85,7 @@ namespace Contorio
 
             Ore uranOre = new Ore(
                 name: "uran",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                         { new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green) },
                         { new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green), new Pixel('O', ConsoleColor.Green) },
@@ -100,7 +100,7 @@ namespace Contorio
             // Block
             DroneStation droneStation = new DroneStation(
                 name: "drone_station",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('%', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel('%', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel(' ', ConsoleColor.White), new Pixel('#', ConsoleColor.White), new Pixel(' ', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
@@ -119,7 +119,7 @@ namespace Contorio
 
             EnergyPoint energyPoint = new EnergyPoint(
                 name: "energy_point",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel(' ', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel(' ', ConsoleColor.DarkYellow) },
                     { new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow), new Pixel('*', ConsoleColor.DarkYellow) },
@@ -138,7 +138,7 @@ namespace Contorio
 
             Drill drill = new Drill(
                 name: "drill",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
@@ -158,7 +158,7 @@ namespace Contorio
 
             Drill drill_MK2 = new Drill(
                 name: "drill-MK2",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.White), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
@@ -178,7 +178,7 @@ namespace Contorio
 
             Drill drill_MK3 = new Drill(
                 name: "drill-MK3",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('|', ConsoleColor.White), new Pixel('-', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
                     { new Pixel('|', ConsoleColor.White), new Pixel('|', ConsoleColor.Magenta), new Pixel('|', ConsoleColor.White), new Pixel(' ', ConsoleColor.White) },
@@ -198,7 +198,7 @@ namespace Contorio
 
             SolarPanel solarPanel = new SolarPanel(
                 name: "solar_panel",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) },
                     { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue) },
@@ -217,7 +217,7 @@ namespace Contorio
 
             SolarPanel solarPanel_MK2 = new SolarPanel(
                 name: "solar_panel-MK2",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue) },
                     { new Pixel('#', ConsoleColor.Blue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.Blue) },
@@ -236,7 +236,7 @@ namespace Contorio
 
             SolarPanel solarPanel_MK3 = new SolarPanel(
                 name: "solar_panel-MK3",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
                     { new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue), new Pixel('#', ConsoleColor.DarkBlue) },
@@ -255,7 +255,7 @@ namespace Contorio
 
             Factory smelterIron = new Factory(
                 name: "smelter-iron",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) },
@@ -278,7 +278,7 @@ namespace Contorio
 
             Factory smelterCopper = new Factory(
                 name: "smelter-copper",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel(' ', ConsoleColor.DarkGray) },
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('$', ConsoleColor.DarkRed), new Pixel('O', ConsoleColor.DarkYellow), new Pixel('#', ConsoleColor.DarkGray) },
@@ -301,7 +301,7 @@ namespace Contorio
 
             Cryptor cryptorRS = new Cryptor(
                 name: "cryptor-RS",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('╔', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('═', ConsoleColor.DarkCyan), new Pixel('╗', ConsoleColor.DarkCyan) },
                     { new Pixel('║', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('╬', ConsoleColor.DarkCyan), new Pixel('║', ConsoleColor.DarkCyan) },
@@ -321,7 +321,7 @@ namespace Contorio
 
             Cryptor cryptorPL = new Cryptor(
                 name: "cryptor-PL",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('╔', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('═', ConsoleColor.DarkYellow), new Pixel('╗', ConsoleColor.DarkYellow) },
                     { new Pixel('║', ConsoleColor.DarkYellow), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('╬', ConsoleColor.DarkBlue), new Pixel('║', ConsoleColor.DarkYellow) },
@@ -341,7 +341,7 @@ namespace Contorio
 
             TransferBeacon transferBeacon = new TransferBeacon(
                 name: "transfer_beacon",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('╔', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('═', ConsoleColor.DarkMagenta), new Pixel('╗', ConsoleColor.DarkMagenta) },
                     { new Pixel('║', ConsoleColor.DarkMagenta), new Pixel(' ', ConsoleColor.DarkMagenta), new Pixel(' ', ConsoleColor.DarkMagenta), new Pixel('║', ConsoleColor.DarkMagenta) },
@@ -361,7 +361,7 @@ namespace Contorio
 
             EnergyGenerator uran_generator = new EnergyGenerator(
                 name: "uran_generator",
-                sprite: new Sprite(new Pixel[3, 4]
+                pixelCanvas: new PixelCanvas(new Pixel[3, 4]
                 {
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray), new Pixel('#', ConsoleColor.DarkGray) },
                     { new Pixel('#', ConsoleColor.DarkGray), new Pixel('&', ConsoleColor.Green), new Pixel('&', ConsoleColor.Green), new Pixel('#', ConsoleColor.DarkGray) },

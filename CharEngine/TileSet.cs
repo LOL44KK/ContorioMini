@@ -2,16 +2,15 @@
 {
     public class TileSet
     {
-        // Надо заменить Sprite на матрицу Pixel[,]
-        List<Sprite> _tiles;
+        List<PixelCanvas> _tiles;
         private int _tileWidth;
         private int _tileHeight;
 
-        public List<Sprite> Tiles => _tiles;
+        public List<PixelCanvas> Tiles => _tiles;
         public int TileWidth => _tileWidth;
         public int TileHeight => _tileHeight;
 
-        public TileSet(List<Sprite> tiles, int tileWidth, int tileHeight)
+        public TileSet(List<PixelCanvas> tiles, int tileWidth, int tileHeight)
         {
             _tiles = tiles;
             _tileWidth = tileWidth;
@@ -20,12 +19,12 @@
 
         public TileSet(int tileWidth, int tileHeight)
         {
-            _tiles = new List<Sprite>();
+            _tiles = new List<PixelCanvas>();
             _tileWidth = tileWidth;
             _tileHeight = tileHeight;
         }
 
-        public void AddTile(Sprite tile)
+        public void AddTile(PixelCanvas tile)
         {
             if (tile.Width == _tileWidth && tile.Height == _tileHeight)
             {

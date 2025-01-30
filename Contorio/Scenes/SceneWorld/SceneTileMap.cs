@@ -98,11 +98,11 @@ namespace Contorio.Scenes.SceneWorld
             {
                 if (_world.Planets[_player.Planet].Blocks.ContainsKey(_player.Coord))
                 {
-                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Blocks[_world.Planets[_player.Planet].Blocks[_player.Coord].Name].Sprite.Pixels;
+                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Blocks[_world.Planets[_player.Planet].Blocks[_player.Coord].Name].PixelCanvas.Pixels;
                 }
                 else
                 {
-                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Grounds[_world.Planets[_player.Planet].Ground[_player.Coord].Name].Sprite.Pixels;
+                    SpriteBlockPlayerCoord.Pixels = _resourceManager.Grounds[_world.Planets[_player.Planet].Ground[_player.Coord].Name].PixelCanvas.Pixels;
                 }
             }
             else
