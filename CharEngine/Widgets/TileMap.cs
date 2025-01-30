@@ -83,41 +83,46 @@ namespace CharEngine.Widgets
         {
             FillPixels(Pixel.Empty);
 
-            int i = 0;
-            int j = 0;
-            
+            int startY = (int)Math.Ceiling(coord.Y - (Height / 2.0) / (TileSet.TileHeight + _cellPaddingBottom));
+            int finishY = (int)Math.Ceiling(coord.Y + (Height / 2.0) / (TileSet.TileHeight + _cellPaddingBottom));
+            int startX = (int)Math.Ceiling(coord.X - (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
+            int finishX = (int)Math.Ceiling(coord.X + (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
+
             foreach (int layer in _cells.Keys)
             {
-                int numberOfTilesY = Height / TileSet.TileHeight;
-                int numberOfTilesX = Width / TileSet.TileWidth;
+                RenderLayer(layer, startY, finishY, startX, finishX);
+            }
+        }
 
-                int startY = (int)Math.Ceiling(coord.Y - (Height / 2.0) / (TileSet.TileHeight + _cellPaddingBottom));
-                int finishY = (int)Math.Ceiling(coord.Y + (Height / 2.0) / (TileSet.TileHeight + _cellPaddingBottom));
-                int startX = (int)Math.Ceiling(coord.X - (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
-                int finishX = (int)Math.Ceiling(coord.X + (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
-
-                i = 0;
-                for (int y = startY; y < finishY; y++)
+        private void RenderLayer(int layer, int startY, int finishY, int startX, int finishX)
+        {
+            int rowOffset = 0;
+            for (int y = startY; y < finishY; y++)
+            {
+                int colOffset = 0;
+                for (int x = startX; x < finishX; x++)
                 {
-                    j = 0;
-                    for (int x = startX; x < finishX; x++)
+                    if (_cells[layer].TryGetValue(new Point(x, y), out Cell cell))
                     {
-                        if (_cells[layer].TryGetValue(new Point(x, y), out Cell cell))
-                        {
-                            for (int tileY = 0; tileY < TileSet.TileHeight; tileY++)
-                            {
-                                for (int tileX = 0; tileX < TileSet.TileWidth; tileX++)
-                                {
-                                    if (j + tileX < Width && i + tileY < Height)
-                                    {
-                                        _pixels[i + tileY, j + tileX] = _tileSet.Tiles[cell.TileId].Pixels[tileY, tileX];
-                                    }
-                                }
-                            }
-                        }
-                        j += TileSet.TileWidth + _cellPaddingRight;
+                        RenderTile(cell, rowOffset, colOffset);
                     }
-                    i += TileSet.TileHeight + _cellPaddingBottom;
+                    colOffset += TileSet.TileWidth + _cellPaddingRight;
+                }
+                rowOffset += TileSet.TileHeight + _cellPaddingBottom;
+            }
+        }
+
+        private void RenderTile(Cell cell, int rowOffset, int colOffset)
+        {
+            var tile = _tileSet.Tiles[cell.TileId];
+            for (int tileY = 0; tileY < TileSet.TileHeight; tileY++)
+            {
+                for (int tileX = 0; tileX < TileSet.TileWidth; tileX++)
+                {
+                    if (colOffset + tileX < Width && rowOffset + tileY < Height)
+                    {
+                        _pixels[rowOffset + tileY, colOffset + tileX] = tile[tileY, tileX];
+                    }
                 }
             }
         }
