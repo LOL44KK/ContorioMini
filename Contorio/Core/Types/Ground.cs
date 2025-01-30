@@ -14,16 +14,16 @@ namespace Contorio.Core.Types
     {
         private GroundType _type;
         private string _name;
-        private Sprite _sprite;
+        private PixelCanvas _pixelCanvas;
         public GroundType Type => _type;
         public string Name => _name;
-        public Sprite Sprite => _sprite;
+        public PixelCanvas PixelCanvas => _pixelCanvas;
 
-        public Ground(GroundType type, string name, Sprite sprite)
+        public Ground(GroundType type, string name, PixelCanvas pixelCanvas)
         {
             _type = type;
             _name = name;
-            _sprite = sprite;
+            _pixelCanvas = pixelCanvas;
         }
     }
 
@@ -33,7 +33,7 @@ namespace Contorio.Core.Types
 
         public string Product => _product;
 
-        public Ore(string name, Sprite sprite, string product) : base(GroundType.ORE, name, sprite)
+        public Ore(string name, PixelCanvas pixelCanvas, string product) : base(GroundType.ORE, name, pixelCanvas)
         {
             _product = product;
         }

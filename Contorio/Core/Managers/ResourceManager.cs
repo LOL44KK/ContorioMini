@@ -83,12 +83,12 @@ namespace Contorio.Core.Managers
 
             foreach (Ground ground in _grounds.Values)
             {
-                _tileSet.AddTile(ground.Sprite);
+                _tileSet.AddTile(ground.PixelCanvas);
                 _tileIds[ground.Name] = _tileSet.Tiles.Count - 1;
             }
             foreach (Block block in _blocks.Values)
             {
-                _tileSet.AddTile(block.Sprite);
+                _tileSet.AddTile(block.PixelCanvas);
                 _tileIds[block.Name] = _tileSet.Tiles.Count - 1;
             }
         }

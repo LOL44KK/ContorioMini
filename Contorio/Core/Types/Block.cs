@@ -2,7 +2,7 @@
 using Contorio.Core.Interfaces;
 
 namespace Contorio.Core.Types
-{    
+{
     public enum BlockType
     {
         BLOCK,
@@ -21,22 +21,22 @@ namespace Contorio.Core.Types
     {
         private BlockType _type;
         private string _name;
-        private Sprite _sprite;
+        private PixelCanvas _pixelCanvas;
         private Research _research;
         private Dictionary<string, int> _cost;
 
         public BlockType Type => _type;
         public string Name => _name;
-        public Sprite Sprite => _sprite;
+        public PixelCanvas PixelCanvas => _pixelCanvas;
         public Research Research => _research;
 
         public Dictionary<string, int> Cost => _cost;
 
-        public Block(BlockType type, string name, Sprite sprite, Research research, Dictionary<string, int> cost)
+        public Block(BlockType type, string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost)
         {
             _type = type;
             _name = name;
-            _sprite = sprite;
+            _pixelCanvas = pixelCanvas;
             _research = research;
             _cost = cost;
         }
@@ -49,7 +49,7 @@ namespace Contorio.Core.Types
 
         public int Range => _range;
 
-        public DroneStation(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int range) : base(BlockType.DRONE_STATION, name, sprite, research, cost)
+        public DroneStation(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int range) : base(BlockType.DRONE_STATION, name, pixelCanvas, research, cost)
         {
             _range = range;
         }
@@ -62,7 +62,7 @@ namespace Contorio.Core.Types
 
         public int Range => _range;
 
-        public EnergyPoint(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int range) : base(BlockType.ENERGY_POINT, name, sprite, research, cost)
+        public EnergyPoint(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int range) : base(BlockType.ENERGY_POINT, name, pixelCanvas, research, cost)
         {
             _range = range;
         }
@@ -77,7 +77,7 @@ namespace Contorio.Core.Types
 
         public int EnergyInput => _energyInput;
 
-        public Drill(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int speed, int energyInput) : base(BlockType.DRILL, name, sprite, research, cost)
+        public Drill(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int speed, int energyInput) : base(BlockType.DRILL, name, pixelCanvas, research, cost)
         {
             _speed = speed;
             _energyInput = energyInput;
@@ -90,7 +90,7 @@ namespace Contorio.Core.Types
 
         public int EnergyOutput => _energyOutput;
 
-        public SolarPanel(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyOutput) : base(BlockType.SOLAR_PANEL, name, sprite, research, cost)
+        public SolarPanel(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int energyOutput) : base(BlockType.SOLAR_PANEL, name, pixelCanvas, research, cost)
         {
             _energyOutput = energyOutput;
         }
@@ -105,7 +105,7 @@ namespace Contorio.Core.Types
 
         public Recipe Recipe => _recipe;
 
-        public Factory(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, Recipe recipe) : base(BlockType.FACTORY, name, sprite, research, cost)
+        public Factory(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int energyInput, Recipe recipe) : base(BlockType.FACTORY, name, pixelCanvas, research, cost)
         {
             _energyInput = energyInput;
             _recipe = recipe;
@@ -120,7 +120,7 @@ namespace Contorio.Core.Types
         public int EnergyInput => _energyInput;
         public IReadOnlyDictionary<string, int> OutputToken => _outputToken;
 
-        public Cryptor(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, Dictionary<string, int> outputToken) : base(BlockType.CRYPTOR, name, sprite, research, cost)
+        public Cryptor(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int energyInput, Dictionary<string, int> outputToken) : base(BlockType.CRYPTOR, name, pixelCanvas, research, cost)
         {
             _energyInput = energyInput;
             _outputToken = outputToken;
@@ -136,7 +136,7 @@ namespace Contorio.Core.Types
 
         public int MaxTransferableCount => _maxTransferableCount;
 
-        public TransferBeacon(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyInput, int maxTransferableCount) : base(BlockType.TRANSFER_BEACON, name, sprite, research, cost) 
+        public TransferBeacon(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int energyInput, int maxTransferableCount) : base(BlockType.TRANSFER_BEACON, name, pixelCanvas, research, cost)
         {
             _energyInput = energyInput;
             _maxTransferableCount = maxTransferableCount;
@@ -151,7 +151,7 @@ namespace Contorio.Core.Types
         public int EnergyOutput => _energyOutput;
         public Recipe Recipe => _recipe;
 
-        public EnergyGenerator(string name, Sprite sprite, Research research, Dictionary<string, int> cost, int energyOutput, Recipe recipe) : base(BlockType.ENERGY_GENERATOR, name, sprite, research, cost)
+        public EnergyGenerator(string name, PixelCanvas pixelCanvas, Research research, Dictionary<string, int> cost, int energyOutput, Recipe recipe) : base(BlockType.ENERGY_GENERATOR, name, pixelCanvas, research, cost)
         {
             _energyOutput = energyOutput;
             _recipe = recipe;
