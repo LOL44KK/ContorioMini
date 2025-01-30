@@ -81,7 +81,7 @@ namespace CharEngine.Widgets
 
         public void UpdatePixels(Point coord)
         {
-            FillPixels(new Pixel(' ', ConsoleColor.Black));
+            FillPixels(Pixel.Empty);
 
             int i = 0;
             int j = 0;

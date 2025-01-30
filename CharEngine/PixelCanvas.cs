@@ -30,7 +30,7 @@
         public PixelCanvas(int width, int height)
         {
             _pixels = new Pixel[height, width];
-            Fill(new Pixel(' ', ConsoleColor.Black));
+            Fill(Pixel.Empty);
         }
 
         /// <summary>

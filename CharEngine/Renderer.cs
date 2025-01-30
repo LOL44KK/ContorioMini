@@ -37,7 +37,7 @@
             {
                 for (int x = 0; x < screenWidth; x++)
                 {
-                    _lastFrame[y, x] = new Pixel(' ', ConsoleColor.Black);
+                    _lastFrame[y, x] = Pixel.Empty;
                 }
             }
         }
@@ -56,7 +56,7 @@
             {
                 for (int x = 0; x < _screenWidth; x++)
                 {
-                    currentFrame[y, x] = new Pixel(' ', ConsoleColor.Black);
+                    currentFrame[y, x] = Pixel.Empty;
                 }
             }
 

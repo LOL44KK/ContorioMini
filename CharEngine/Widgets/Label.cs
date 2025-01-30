@@ -89,7 +89,7 @@ namespace CharEngine.Widgets
                     }
                     else
                     {
-                        pixels[y, x] = new Pixel(' ', ConsoleColor.Black);
+                        pixels[y, x] = Pixel.Empty;
                     }
                 }
             }
