@@ -73,8 +73,8 @@ namespace Contorio.Scenes.SceneWorld
 
         public override void Tick()
         {
-            Map.UpdatePixels(_world.Player.Coord);
-            LabelPlayerCoord.Text = _player.Coord.X + "|" + _player.Coord.Y;
+            Map.RenderVisibleArea(_world.Player.Coord);
+            UpdateLabelPlayerCoord();
             UpdateSpritePlayerCoordBlock();
         }
 
@@ -90,6 +90,11 @@ namespace Contorio.Scenes.SceneWorld
             {
                 Map.SetCell(LayerBlock, blockState.Key, _resourceManager.TileIds[blockState.Value.Name]);
             }
+        }
+
+        private void UpdateLabelPlayerCoord()
+        {
+            LabelPlayerCoord.Text = _player.Coord.X + "|" + _player.Coord.Y;
         }
 
         private void UpdateSpritePlayerCoordBlock()

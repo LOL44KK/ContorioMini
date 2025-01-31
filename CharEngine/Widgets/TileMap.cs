@@ -79,7 +79,7 @@ namespace CharEngine.Widgets
             }
         }
 
-        public void UpdatePixels(Point coord)
+        public void RenderVisibleArea(Point coord)
         {
             FillPixels(Pixel.Empty);
 

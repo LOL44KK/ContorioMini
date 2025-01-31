@@ -41,7 +41,7 @@ namespace CharEngine.Containers
 
         public ItemListContainer(List<ItemList> itemLists, ConsoleColor activeListSelectedItemColor, ConsoleColor inactiveListSelectedItemColor)
         {
-            _itemLists = new List<ItemList>();
+            _itemLists = itemLists;
             _selectedIndex = 0;
             _activeListSelectedItemColor = activeListSelectedItemColor;
             _inactiveListSelectedItemColor = inactiveListSelectedItemColor;
