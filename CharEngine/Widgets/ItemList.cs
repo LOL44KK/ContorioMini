@@ -172,70 +172,36 @@ namespace CharEngine.Widgets
 
         private void UpdatePixels()
         {
-            int width = _items.Count > 0 ? GetMaxItemWidth() : 0;
+            int width = _items.Any() ? _items.Max(item => item.Length) : 0;
             Pixel[,] pixels = new Pixel[_visibleItemCount, width];
 
             for (int y = 0; y < _visibleItemCount; y++)
             {
                 int itemIndex = y + _scrollOffset;
 
-                if (itemIndex >= _items.Count)
+                string item = (itemIndex < _items.Count) ? _items[itemIndex] : new string(' ', width);
+                ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemColor : _textColor;
+
+                int offsetX = 0;
+                switch (_textAlignment)
                 {
-                    for (int x = 0; x < width; x++)
-                    {
-                        pixels[y, x] = new Pixel(' ', _textColor);
-                    }
+                    case TextAlignment.Center:
+                        offsetX = (width - item.Length) / 2;
+                        break;
+                    case TextAlignment.Right:
+                        offsetX = width - item.Length;
+                        break;
                 }
-                else
+
+                for (int x = 0; x < width; x++)
                 {
-                    string item = _items[itemIndex];
-                    ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemColor : _textColor;
-
-                    int offsetX = 0;
-                    switch (_textAlignment)
-                    {
-                        case TextAlignment.Center:
-                            offsetX = (width - item.Length) / 2;
-                            break;
-                        case TextAlignment.Right:
-                            offsetX = width - item.Length;
-                            break;
-                        case TextAlignment.Left:
-                        default:
-                            offsetX = 0;
-                            break;
-                    }
-
-                    for (int x = 0; x < item.Length; x++)
-                    {
-                        pixels[y, x + offsetX] = new Pixel(item[x], color);
-                    }
-
-                    for (int x = 0; x < offsetX; x++)
-                    {
-                        pixels[y, x] = new Pixel(' ', color);
-                    }
-                    for (int x = item.Length + offsetX; x < width; x++)
-                    {
-                        pixels[y, x] = new Pixel(' ', color);
-                    }
+                    pixels[y, x] = new Pixel(
+                        x >= offsetX && x < offsetX + item.Length ? item[x - offsetX] : ' ',
+                        color
+                    );
                 }
             }
-
             Pixels = pixels;
-        }
-
-        private int GetMaxItemWidth()
-        {
-            int maxWidth = 0;
-            foreach (string item in _items)
-            {
-                if (item.Length > maxWidth)
-                {
-                    maxWidth = item.Length;
-                }
-            }
-            return maxWidth;
         }
     }
 }
