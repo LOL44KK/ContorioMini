@@ -83,14 +83,10 @@ namespace CharEngine.Widgets
 
                 for (int x = 0; x < width; x++)
                 {
-                    if (x >= offsetX && x < offsetX + lineLength)
-                    {
-                        pixels[y, x] = new Pixel(lines[y][x - offsetX], textColor);
-                    }
-                    else
-                    {
-                        pixels[y, x] = Pixel.Empty;
-                    }
+                    pixels[y, x] = new Pixel(
+                        x >= offsetX && x < offsetX + lineLength ? lines[y][x - offsetX] : ' ',
+                        textColor
+                    );
                 }
             }
             return pixels;
