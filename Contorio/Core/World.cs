@@ -71,13 +71,6 @@ namespace Contorio.Core
         {
             if (ResourceManager.Instance.Researches.TryGetValue(researchName, out Research? research))
             {
-                foreach (var token in research.ResearchCost)
-                {
-                    if (_tokens.GetValueOrDefault(token.Key, 0) < token.Value)
-                    {
-                        return false;
-                    }
-                }
                 if (research.RequiredResearch != null)
                 {
                     if (!_researchSystem.Researchs.GetValueOrDefault(research.RequiredResearch, false))
@@ -85,9 +78,20 @@ namespace Contorio.Core
                         return false;
                     }
                 }
-                foreach (var token in research.ResearchCost)
+                if (research.ResearchCost != null)
                 {
-                    _tokens[token.Key] -= token.Value;
+                    foreach (var token in research.ResearchCost)
+                    {
+                        if (_tokens.GetValueOrDefault(token.Key, 0) < token.Value)
+                        {
+                            return false;
+                        }
+                    }
+
+                    foreach (var token in research.ResearchCost)
+                    {
+                        _tokens[token.Key] -= token.Value;
+                    }
                 }
                 _researchSystem.UnlockResearch(researchName);
                 return true;

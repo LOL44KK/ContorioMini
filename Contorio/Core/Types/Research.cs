@@ -5,7 +5,7 @@
         private string _name;
         private string _category;
         private string? _requiredResearch;
-        private Dictionary<string, int> _researchCost;
+        private Dictionary<string, int>? _researchCost;
 
         public string Name
         {
@@ -25,13 +25,13 @@
             init { _requiredResearch = value; }
         }
 
-        public Dictionary<string, int> ResearchCost
+        public Dictionary<string, int>? ResearchCost
         {
             get { return _researchCost; }
             init { _researchCost = value; }
         }
 
-        public Research(string name, string category, string requiredResearch, Dictionary<string, int> researchCost)
+        public Research(string name, string category, string? requiredResearch=null, Dictionary<string, int>? researchCost = null)
         {
             _name = name;
             _category = category;

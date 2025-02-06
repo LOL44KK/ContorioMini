@@ -45,7 +45,7 @@ namespace Contorio.Core
 
             foreach (var research in researchs)
             {
-                if (research.ResearchCost.Count == 0)
+                if (research.ResearchCost == null || research.ResearchCost.Count == 0)
                 {
                     _researchs[research.Name] = true;
                 }

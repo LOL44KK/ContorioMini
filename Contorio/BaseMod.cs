@@ -108,9 +108,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "drone_station",
-                    "logic",
-                    null,
-                    new Dictionary<string, int>()
+                    "logic"
                     ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 range: 4
@@ -127,9 +125,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "energy_point",
-                    "energy",
-                    null,
-                    new Dictionary<string, int>()
+                    "energy"
                     ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 range: 4
@@ -146,9 +142,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "drill",
-                    "mining",
-                    null,
-                    new Dictionary<string, int>()
+                    "mining"
                     ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 speed: 1,
@@ -207,9 +201,7 @@ namespace Contorio
                 cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } },
                 research: new Research(
                     "solar_panel",
-                    "energy",
-                    null,
-                    new Dictionary<string, int>()
+                    "energy"
                     ),
                 energyOutput: 1
                 );
@@ -263,9 +255,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "smelter-iron",
-                    "factory",
-                    null,
-                    new Dictionary<string, int>()
+                    "factory"
                     ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 energyInput: 1,
@@ -286,9 +276,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "smelter-copper",
-                    "factory",
-                    null,
-                    new Dictionary<string, int>()
+                    "factory"
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 energyInput: 1,
@@ -309,9 +297,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "cryptor-RS",
-                    "cryptors",
-                    null,
-                    new Dictionary<string, int>()
+                    "cryptors"
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 energyInput: 1,
@@ -349,9 +335,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "transfer_beacon",
-                    "logic",
-                    null,
-                    new Dictionary<string, int>()
+                    "logic"
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 } },
                 energyInput: 10,
@@ -369,9 +353,7 @@ namespace Contorio
                 }),
                 research: new Research(
                     "uran_generator",
-                    "energy",
-                    null,
-                    new Dictionary<string, int>()
+                    "energy"
                 ),
                 cost: new Dictionary<string, int>() { { "iron", 1 }, { "copper", 2 } },
                 energyOutput:3,
