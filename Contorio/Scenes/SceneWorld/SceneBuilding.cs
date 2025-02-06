@@ -55,10 +55,14 @@ namespace Contorio.Scenes.SceneWorld
             AddSprite(LabelCostBuilding);
             AddSprite(LabelPlayerResources);
 
-            //
+            // 
+            // При заходе в мир без доступных блоков краш
+            // Возможно стоит разделить стройку от выбора блока для постройки
+            // В Player добавить поле selectedBlockToBuild или что-то в это роде
+            // Сюда (отделеную от выбора блока для постройки) добавить проверку на выброный блок
+            // В меню выбора блока добавить проверку на наличие доступных блоков
             UpdateBlockCategory();
             UpdateBlockList(ItemListBlockCategory.SelectedItem);
-            _selectedBlock = ItemListBlockList.SelectedItem;
         }
 
         public override void Ready()
