@@ -6,6 +6,7 @@ using Contorio.Core.Managers;
 using Contorio.Core.Factories;
 using Contorio.Core.Interfaces;
 using Contorio.Core.Presets;
+using System;
 
 namespace Contorio.Core
 {
@@ -137,11 +138,11 @@ namespace Contorio.Core
             {
                 if (_blocks[coord] is IConnectToEnergyPoint iConnectToEnergyPoint)
                 {
-                    iConnectToEnergyPoint.EnergyPoint = SearchEnergyPoint(coord);
+                    iConnectToEnergyPoint.EnergyPoint = FindNearestBlockInRange(coord, BlockType.ENERGY_POINT);
                 }
                 if (_blocks[coord] is IConnectToDroneStation iConnectToDroneStation)
                 {
-                    iConnectToDroneStation.DroneStation = SearchDroneStation(coord);
+                    iConnectToDroneStation.DroneStation = FindNearestBlockInRange(coord, BlockType.DRONE_STATION);
                 }
             }
             return true;
@@ -180,56 +181,42 @@ namespace Contorio.Core
                 {
                     if (blockState.Value is IConnectToEnergyPoint iConnectToEnergyPoint)
                     {
-                        iConnectToEnergyPoint.EnergyPoint = SearchEnergyPoint(blockState.Key);
+                        iConnectToEnergyPoint.EnergyPoint = FindNearestBlockInRange(blockState.Key, BlockType.ENERGY_POINT);
                     }
                 }
                 else if (blockToRemove.Type == BlockType.DRONE_STATION)
                 {
                     if (blockState.Value is IConnectToDroneStation iConnectToDroneStation)
                     {
-                        iConnectToDroneStation.DroneStation = SearchDroneStation(blockState.Key);
+                        iConnectToDroneStation.DroneStation = FindNearestBlockInRange(blockState.Key, BlockType.DRONE_STATION);
                     }
                 }
             }
             return true;
         }
 
-
-        // Надо объединить методы SearchDroneStation и SearchEnergyPoint
-        private Point? SearchDroneStation(Point startCoord)
+        private Point? FindNearestBlockInRange(Point startCoord, BlockType blockType)
         {
-            ResourceManager resourceManager = ResourceManager.Instance;
-            Point? closestStation = null;
-            double closestDistance = double.MaxValue;
-            foreach (var block in _blocks)
+            switch (blockType)
             {
-                if (resourceManager.Blocks[block.Value.Name].Type == BlockType.DRONE_STATION)
-                {
-                    double distance = startCoord.DistanceTo(block.Key);
-                    int range = ((DroneStation)resourceManager.Blocks[block.Value.Name]).Range;
-
-                    if (distance < range && distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestStation = block.Key;
-                    }
-                }
+                case BlockType.ENERGY_POINT:
+                    break;
+                case BlockType.DRONE_STATION:
+                    break;
+                default:
+                    throw new ArgumentException($"Unsupported block type: {blockType}", nameof(blockType));
             }
-            return closestStation;
-        }
 
-        private Point? SearchEnergyPoint(Point startCoord)
-        {
             ResourceManager resourceManager = ResourceManager.Instance;
             Point? closestStation = null;
             double closestDistance = double.MaxValue;
             foreach (var block in _blocks)
             {
-                if (resourceManager.Blocks[block.Value.Name].Type == BlockType.ENERGY_POINT)
+                if (resourceManager.Blocks[block.Value.Name].Type == blockType)
                 {
                     double distance = startCoord.DistanceTo(block.Key);
-                    int range = ((EnergyPoint)resourceManager.Blocks[block.Value.Name]).Range;
-                    
+                    int range = ((IRanged)resourceManager.Blocks[block.Value.Name]).Range;
+
                     if (distance < range && distance < closestDistance)
                     {
                         closestDistance = distance;
