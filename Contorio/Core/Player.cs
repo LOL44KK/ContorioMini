@@ -11,7 +11,6 @@ namespace Contorio.Core
         private int _planet;
         private Dictionary<string, int> _resources;
         private bool _godMode;
-        private string? _selectedBlockToBuild;
 
         public Point Coord 
         { 
@@ -37,19 +36,12 @@ namespace Contorio.Core
             set { _godMode = value; }
         }
 
-        public string? SelectedBlockToBuild 
-        {
-            get { return _selectedBlockToBuild; }
-            set {  _selectedBlockToBuild = value; }
-        }
-
         public Player()
         {
             _coord = new Point(0, 0);
             _planet = 0;
             _resources = new Dictionary<string, int>() { { "copper", 10 }, { "iron", 10 } };
             _godMode = false;
-            _selectedBlockToBuild = null;
         }
 
         public void Move(int x, int y)

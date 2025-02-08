@@ -23,6 +23,7 @@ namespace Contorio.Scenes.SceneWorld
         
         public ItemListContainer ItemListContainer;
 
+        public string? SelectedBlockToBuild;
 
         public SceneBuildingUI(SceneWorld rootScene, World world)
         {
@@ -69,9 +70,9 @@ namespace Contorio.Scenes.SceneWorld
                 return;
             }
 
-            _player.SelectedBlockToBuild = ItemListBlockList.SelectedItem;
-            UpdateSpriteBlockPlayerSelectedBlock(_player.SelectedBlockToBuild);
-            UpdateCostBuilding(_player.SelectedBlockToBuild);
+            SelectedBlockToBuild = ItemListBlockList.SelectedItem;
+            UpdateSpriteBlockPlayerSelectedBlock(SelectedBlockToBuild);
+            UpdateCostBuilding(SelectedBlockToBuild);
         }
 
         public override void Tick()
@@ -114,9 +115,9 @@ namespace Contorio.Scenes.SceneWorld
                 UpdateBlockList(ItemListBlockCategory.SelectedItem);
             }
 
-            _player.SelectedBlockToBuild = ItemListBlockList.SelectedItem;
-            UpdateSpriteBlockPlayerSelectedBlock(_player.SelectedBlockToBuild);
-            UpdateCostBuilding(_player.SelectedBlockToBuild);
+            SelectedBlockToBuild = ItemListBlockList.SelectedItem;
+            UpdateSpriteBlockPlayerSelectedBlock(SelectedBlockToBuild);
+            UpdateCostBuilding(SelectedBlockToBuild);
         }
 
         public void UpdateBlockCategory()

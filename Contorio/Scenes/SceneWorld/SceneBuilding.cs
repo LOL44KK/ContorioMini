@@ -23,12 +23,12 @@ namespace Contorio.Scenes.SceneWorld
             switch (key)
             {
                 case ConsoleKey.Enter:
-                    if (_player.SelectedBlockToBuild == null)
+                    if (_rootScene.SceneBuildingUI.SelectedBlockToBuild == null)
                     {
                         return;
                     }
 
-                    Block block = ResourceManager.Instance.Blocks[_player.SelectedBlockToBuild];
+                    Block block = ResourceManager.Instance.Blocks[_rootScene.SceneBuildingUI.SelectedBlockToBuild];
                     if (!_world.Planets[_player.Planet].Ground.ContainsKey(_player.Coord))
                     {
                         _rootScene.MessageMessage.Show("No building here", ConsoleColor.DarkRed);
@@ -46,7 +46,7 @@ namespace Contorio.Scenes.SceneWorld
 
                     if (_player.BuildBlock(_player.Coord, block, _world.Planets[_player.Planet]))
                     {
-                        _rootScene.SceneTileMap.Map.SetCell(1, _player.Coord, ResourceManager.Instance.TileIds[_player.SelectedBlockToBuild]);
+                        _rootScene.SceneTileMap.Map.SetCell(1, _player.Coord, ResourceManager.Instance.TileIds[_rootScene.SceneBuildingUI.SelectedBlockToBuild]);
                     }
                     break;
                 case ConsoleKey.E:

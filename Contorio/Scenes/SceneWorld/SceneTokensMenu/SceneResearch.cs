@@ -110,8 +110,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
                 if (_world.StudyResearch(researchName))
                 {
                     UpdateResearchList();
-                    _rootScene.SceneBuildingUI.UpdateBlockCategory();
-                    _rootScene.SceneBuildingUI.UpdateBlockList(_rootScene.SceneBuildingUI.ItemListBlockCategory.SelectedItem);
+                    _rootScene.SceneBuildingUI.Ready();
                 }
             }
 
