@@ -30,14 +30,14 @@ namespace Contorio.Scenes.SceneWorld
             _player = world.Player;
 
             // InitializeWidgets
-            LabelPlanetResourcesToPlayer = new Label("RESOURCES", ConsoleColor.White, new Point(27, 1));
+            LabelPlanetResourcesToPlayer = new Label("PLANET RESOURCES", ConsoleColor.White, new Point(27, 1));
             ItemListPlanetResourcesToPlayer = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
                 new Point(27, 2),
                 12
             );
-            LabelPlayerResourcesToPlanet = new Label("RESOURCES", ConsoleColor.White, new Point(93 - "RESOURCES".Length, 1));
+            LabelPlayerResourcesToPlanet = new Label("PLAYER RESOURCES", ConsoleColor.White, new Point(93 - "PLAYER RESOURCES".Length, 1));
             ItemListPlayerResourcesToPlanet = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
