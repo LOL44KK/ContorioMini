@@ -133,17 +133,16 @@ namespace Contorio.Core
             if (block.Type == BlockType.ENERGY_POINT || block.Type == BlockType.DRONE_STATION)
             {
                 ConnectNearbyBlocks(coord, block);
+                return true;
             }
-            else
+
+            if (_blocks[coord] is IConnectToEnergyPoint iConnectToEnergyPoint)
             {
-                if (_blocks[coord] is IConnectToEnergyPoint iConnectToEnergyPoint)
-                {
-                    iConnectToEnergyPoint.EnergyPoint = FindNearestBlockInRange(coord, BlockType.ENERGY_POINT);
-                }
-                if (_blocks[coord] is IConnectToDroneStation iConnectToDroneStation)
-                {
-                    iConnectToDroneStation.DroneStation = FindNearestBlockInRange(coord, BlockType.DRONE_STATION);
-                }
+                iConnectToEnergyPoint.EnergyPoint = FindNearestBlockInRange(coord, BlockType.ENERGY_POINT);
+            }
+            else if (_blocks[coord] is IConnectToDroneStation iConnectToDroneStation)
+            {
+                iConnectToDroneStation.DroneStation = FindNearestBlockInRange(coord, BlockType.DRONE_STATION);
             }
             return true;
         }
