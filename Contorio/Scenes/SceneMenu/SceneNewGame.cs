@@ -45,12 +45,22 @@ namespace Contorio.Scenes.SceneMenu
 
         public override void Ready()
         {
+            if (_resourceManager.PlanetPresets.Count == 0)
+            {
+                return;
+            }
+
             UpdateItemListPlanetPreset();
             UpdateInfoWorldPreset();
         }
 
         public override void Input(ConsoleKey key)
         {
+            if (_resourceManager.PlanetPresets.Count == 0)
+            {
+                return;
+            }
+
             switch (key)
             {
                 case ConsoleKey.DownArrow:
@@ -62,6 +72,10 @@ namespace Contorio.Scenes.SceneMenu
                     UpdateInfoWorldPreset();
                     break;
                 case ConsoleKey.Enter:
+                    if (_resourceManager.PlanetPresets.Count == 0)
+                    {
+                        return;
+                    }
                     _rootScene.Choice = "new";
                     _engine.Quit();
                     break;

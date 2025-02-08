@@ -95,6 +95,11 @@ namespace CharEngine.Containers
             }
         }
 
+        public bool IsSelectedItemList(ItemList itemList)
+        {
+            return _itemLists[_selectedIndex] == itemList;
+        }
+
         private void InitializeItemListColors()
         {
             for (int i = 0; i < _itemLists.Count; i++)

@@ -18,6 +18,7 @@ namespace Contorio.Scenes.SceneWorld
         public SceneTileMap SceneTileMap;
         public ScenePlanetInfo ScenePlanetInfo;
         public SceneBuilding SceneBuilding;
+        public SceneBuildingUI SceneBuildingUI;
         public SceneTransfer SceneTransfer;
         public SceneBlockUI SceneBlockUI;
         public SceneTokensMenu.SceneTokensMenu SceneTokensMenu;
@@ -40,6 +41,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneTileMap = new SceneTileMap(_world);
             ScenePlanetInfo = new ScenePlanetInfo(_world);
             SceneBuilding = new SceneBuilding(this, _world);
+            SceneBuildingUI = new SceneBuildingUI(this, _world);
             SceneTransfer = new SceneTransfer(_world);
             SceneBlockUI = new SceneBlockUI(_world);
             SceneTokensMenu = new SceneTokensMenu.SceneTokensMenu(this, _world);
@@ -52,6 +54,7 @@ namespace Contorio.Scenes.SceneWorld
             IncludeScene(SceneTileMap);
             IncludeScene(ScenePlanetInfo);
             IncludeScene(SceneBuilding);
+            IncludeScene(SceneBuildingUI);
             IncludeScene(SceneTokensMenu);
             IncludeScene(SceneTransfer);
             IncludeScene(SceneBlockUI);
@@ -67,6 +70,7 @@ namespace Contorio.Scenes.SceneWorld
             SceneTileMap.Enable = true;
 
             SceneBuilding.Enable = false;
+            SceneBuildingUI.Enable = false;
             SceneTokensMenu.Enable = false;
             SceneTransfer.Enable = false;
             SceneBlockUI.Enable = false;
@@ -87,7 +91,7 @@ namespace Contorio.Scenes.SceneWorld
                     SceneTileMap.Enable = true;
                     ScenePlanetInfo.Enable = true;
 
-                    SceneBuilding.Enable = false;
+                    SetBuildingMode(false);
                     SceneTokensMenu.Enable = false;
                     SceneTransfer.Enable = false;
                     SceneBlockUI.Enable  = false;
@@ -97,7 +101,7 @@ namespace Contorio.Scenes.SceneWorld
                     SceneTokensMenu.Enable = !SceneTokensMenu.Enable;
                     
                     SceneTileMap.Enable  = !SceneTokensMenu.Enable;
-                    SceneBuilding.Enable = false;
+                    SetBuildingMode(false);
                     SceneTransfer.Enable = false;
                     SceneBlockUI.Enable  = false;
                     break;
@@ -106,7 +110,7 @@ namespace Contorio.Scenes.SceneWorld
                     SceneTransfer.Enable = !SceneTransfer.Enable;
 
                     SceneTileMap.Enable = !SceneTransfer.Enable;
-                    SceneBuilding.Enable = false;
+                    SetBuildingMode(false);
                     SceneTokensMenu.Enable = false;
                     SceneBlockUI.Enable  = false;
                     break;
@@ -114,14 +118,14 @@ namespace Contorio.Scenes.SceneWorld
                 case ConsoleKey.B:
                     if (SceneTileMap.Enable)
                     {
-                        SceneBuilding.Enable = !SceneBuilding.Enable;
+                        SetBuildingMode(!SceneBuilding.Enable);
                         SceneDebugUI.Enable = false;
                     }
                     break;
 
                 case ConsoleKey.F3:
                     SceneDebugUI.Enable = !SceneDebugUI.Enable;
-                    SceneBuilding.Enable = false;
+                    SetBuildingMode(false);
                     break;
                 
                 case ConsoleKey.Enter:
@@ -135,7 +139,7 @@ namespace Contorio.Scenes.SceneWorld
                     {
                         SceneTileMap.Enable  = false;
                         SceneTransfer.Enable = false;
-                        SceneBuilding.Enable = false;
+                        SetBuildingMode(false);
                         SceneTokensMenu.Enable = false;
                     }
                     break;
@@ -177,6 +181,12 @@ namespace Contorio.Scenes.SceneWorld
         private void SaveWorld()
         {
             SaveManager.SaveWorld(_world.Planets[0].Name + ".ctsave", _world);
+        }
+
+        private void SetBuildingMode(bool mode)
+        {
+            SceneBuilding.Enable = mode;
+            SceneBuildingUI.Enable = mode;
         }
     }
 }
