@@ -42,8 +42,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    // Надо добавить интерфейс IRanged
-    public class DroneStation : Block
+    public class DroneStation : Block, IRanged
     {
         private int _range;
 
@@ -55,8 +54,7 @@ namespace Contorio.Core.Types
         }
     }
 
-    // Надо добавить интерфейс IRanged
-    public class EnergyPoint : Block
+    public class EnergyPoint : Block, IRanged
     {
         private int _range;
 
