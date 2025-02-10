@@ -3,9 +3,6 @@ using System.Drawing;
 
 namespace CharEngine.Widgets
 {
-    // Добавить поле _select и _unselectItemTextColor
-    // Также методы Select и Unselect
-    // Они буду отвечать за цвет выбраного элемента 
     public class ItemList : Sprite
     {
         private List<string> _items;
