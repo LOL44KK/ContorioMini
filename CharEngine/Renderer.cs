@@ -2,15 +2,9 @@
 {
     public class Renderer
     {
-        private Scene _scene;
         private int _screenWidth;
         private int _screenHeight;
         private Pixel[,] _lastFrame;
-
-        public Scene Scene
-        {
-            get { return _scene; }
-        }
 
         public int ScreenWidth
         {
@@ -26,7 +20,6 @@
 
         public Renderer(int screenWidth, int screenHeight)
         {
-            _scene = new Scene();
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
             Console.CursorVisible = false;
@@ -42,15 +35,8 @@
             }
         }
 
-        public void SetScene(Scene scene)
+        public void Render(List<Sprite> sprites)
         {
-            _scene = scene;
-        }
-
-        public void Render()
-        {
-            var visibleSprites = _scene.Sprites.Where(s => s.Visible).OrderBy(s => s.Layer);
-
             Pixel[,] currentFrame = new Pixel[_screenHeight, _screenWidth];
             for (int y = 0; y < _screenHeight; y++)
             {
@@ -60,7 +46,7 @@
                 }
             }
 
-            foreach (var sprite in visibleSprites)
+            foreach (var sprite in sprites)
             {
                 RenderSprite(sprite, currentFrame);
             }

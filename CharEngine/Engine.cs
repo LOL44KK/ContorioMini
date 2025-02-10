@@ -50,7 +50,6 @@ namespace CharEngine
             }
 
             _scene = scene;
-            _renderer.SetScene(scene);
             InputManager.Instance.InputHandlers += scene.RaiseInput;
         }
 
@@ -85,7 +84,13 @@ namespace CharEngine
                     sprite.Tick();
                 }
 
-                _renderer.Render();
+                _renderer.Render(_scene.Sprites
+                    // Отображается только видимые спрайты
+                    // Желательно вынести в отдельную функцию
+                    .Where(s => s.Visible)
+                    .OrderBy(s => s.Layer)
+                    .ToList()
+                );
 
 
                 double elapsed = stopwatch.Elapsed.TotalMilliseconds;
