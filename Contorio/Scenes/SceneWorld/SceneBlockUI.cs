@@ -9,6 +9,10 @@ using Contorio.Core.Managers;
 
 namespace Contorio.Scenes.SceneWorld
 {
+    // При добавление нового блока разделить на под сцены
+    // SceneTransferBeacon
+    // SceneNewBlock
+    // и так далее...
     public class SceneBlockUI : Scene
     {
         private World _world;
