@@ -148,11 +148,11 @@ namespace Contorio.Scenes.SceneMenu
         {
             if (SceneLoadGame.SavesPath.Length == 0 && ItemListMenu.SelectedItem == "LOAD GAME")
             {
-                ItemListMenu.SelectedItemColor = ConsoleColor.DarkRed;
+                ItemListMenu.SelectedItemTextColor = ConsoleColor.DarkRed;
             }
             else
             {
-                ItemListMenu.SelectedItemColor = ConsoleColor.DarkGreen;
+                ItemListMenu.SelectedItemTextColor = ConsoleColor.DarkGreen;
             }
         }
     }

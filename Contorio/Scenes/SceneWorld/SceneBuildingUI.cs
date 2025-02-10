@@ -36,11 +36,13 @@ namespace Contorio.Scenes.SceneWorld
             ItemListBlockCategory = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
+                ConsoleColor.Blue,
                 new Point(95, 5),
                 9
             );
             ItemListBlockList = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.Blue,
                 new Point(105, 5),
                 9

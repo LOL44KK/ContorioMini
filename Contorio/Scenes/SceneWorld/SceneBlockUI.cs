@@ -43,12 +43,14 @@ namespace Contorio.Scenes.SceneWorld
             ItemListTransferBeaconMenuPlanetList = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
+                ConsoleColor.Blue,
                 new Point(60, 8),
                 1
             );
             LabelTransferBeaconMenuResource = new Label("resource: ", ConsoleColor.White, new Point(50, 9));
             ItemListTransferBeaconMenuResourcesList = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.Blue,
                 new Point(60, 9),
                 1
@@ -56,6 +58,7 @@ namespace Contorio.Scenes.SceneWorld
             LabelTransferBeaconMenuCount = new Label("count: ", ConsoleColor.White, new Point(50, 10));
             ItemListTransferBeaconMenuCount = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.Blue,
                 new Point(60, 10),
                 1

@@ -12,8 +12,10 @@ namespace CharEngine.Widgets
         private int _selectedIndex;
         private int _scrollOffset;
         private int _visibleItemCount;
+        private bool _selected;
         private ConsoleColor _textColor;
         private ConsoleColor _selectedItemTextColor;
+        private ConsoleColor _unselectItemTextColor;
         private TextAlignment _textAlignment;
 
         public int SelectedIndex
@@ -62,12 +64,22 @@ namespace CharEngine.Widgets
             }
         }
 
-        public ConsoleColor SelectedItemColor
+        public ConsoleColor SelectedItemTextColor
         {
             get { return _selectedItemTextColor; }
             set
             {
                 _selectedItemTextColor = value;
+                UpdatePixels();
+            }
+        }
+
+        public ConsoleColor UnselectItemTextColor
+        {
+            get { return _unselectItemTextColor; }
+            set
+            {
+                _unselectItemTextColor = value;
                 UpdatePixels();
             }
         }
@@ -82,21 +94,68 @@ namespace CharEngine.Widgets
             }
         }
 
+        public bool Selected
+        {
+            get { return _selected; }
+            set
+            {
+                _selected = value;
+                UpdatePixels();
+            }
+        }
+
         public ReadOnlyCollection<string> Items
         {
             get { return new ReadOnlyCollection<string>(_items); }
         }
 
-        public ItemList(ConsoleColor textColor, ConsoleColor selectedItemColor, Point position, int visibleItemCount, int layer = 0, bool visible = true, Alignment alignment = Alignment.Left, TextAlignment textAlignment = TextAlignment.Left)
-            : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
+        public ItemList(
+            ConsoleColor textColor,
+            ConsoleColor selectedItemTextColor,
+            ConsoleColor unselectedItemTextColor,
+            Point position,
+            int visibleItemCount,
+            bool selected = true,
+            int layer = 0,
+            bool visible = true,
+            Alignment alignment = Alignment.Left,
+            TextAlignment textAlignment = TextAlignment.Left
+        )
+        : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
         {
             _items = new List<string>();
             _textColor = textColor;
-            _selectedItemTextColor = selectedItemColor;
+            _selectedItemTextColor = selectedItemTextColor;
+            _unselectItemTextColor = unselectedItemTextColor;
             _selectedIndex = 0;
             _scrollOffset = 0;
             _visibleItemCount = visibleItemCount;
             _textAlignment = textAlignment;
+            _selected = true;
+        }
+
+        public ItemList(
+            ConsoleColor textColor,
+            ConsoleColor selectedItemTextColor,
+            Point position,
+            int visibleItemCount,
+            bool selected = true,
+            int layer = 0,
+            bool visible = true,
+            Alignment alignment = Alignment.Left,
+            TextAlignment textAlignment = TextAlignment.Left
+        )
+            : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
+        {
+            _items = new List<string>();
+            _textColor = textColor;
+            _selectedItemTextColor = selectedItemTextColor;
+            _unselectItemTextColor = selectedItemTextColor;
+            _selectedIndex = 0;
+            _scrollOffset = 0;
+            _visibleItemCount = visibleItemCount;
+            _textAlignment = textAlignment;
+            _selected = true;
         }
 
         public void AddItem(string item)
@@ -161,6 +220,16 @@ namespace CharEngine.Widgets
             }
         }
 
+        public void Select()
+        {
+            Selected = true;
+        }
+
+        public void Unselect()
+        {
+            Selected = false;
+        }
+
         private void EnsureItemVisible()
         {
             if (_selectedIndex < _scrollOffset)
@@ -183,7 +252,8 @@ namespace CharEngine.Widgets
                 int itemIndex = y + _scrollOffset;
 
                 string item = (itemIndex < _items.Count) ? _items[itemIndex] : new string(' ', width);
-                ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemTextColor : _textColor;
+                // блять
+                ConsoleColor color = itemIndex == _selectedIndex ? _selected ? _selectedItemTextColor : _unselectItemTextColor : _textColor;
 
                 int offsetX = 0;
                 switch (_textAlignment)

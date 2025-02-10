@@ -39,26 +39,23 @@ namespace CharEngine.Containers
             }
         }
 
-        public ItemListContainer(List<ItemList> itemLists, ConsoleColor activeListSelectedItemColor, ConsoleColor inactiveListSelectedItemColor)
+        public ItemListContainer(List<ItemList> itemLists)
         {
             _itemLists = itemLists;
             _selectedIndex = 0;
-            _activeListSelectedItemColor = activeListSelectedItemColor;
-            _inactiveListSelectedItemColor = inactiveListSelectedItemColor;
         }
 
-        public ItemListContainer(ConsoleColor activeListSelectedItemColor = ConsoleColor.DarkBlue, ConsoleColor inactiveListSelectedItemColor = ConsoleColor.Blue) : this(new List<ItemList>(), activeListSelectedItemColor, inactiveListSelectedItemColor) { }
+        public ItemListContainer() : this(new List<ItemList>()) { }
 
         public void AddItemList(ItemList itemList)
         {
-            itemList.SelectedItemColor = _inactiveListSelectedItemColor;
             if (_selectedIndex == _itemLists.Count)
             {
-                itemList.SelectedItemColor = _activeListSelectedItemColor;
+                itemList.Select();
             }
             else
             {
-                itemList.SelectedItemColor = _inactiveListSelectedItemColor;
+                itemList.Unselect();
             }
             _itemLists.Add(itemList);
         }
@@ -66,7 +63,6 @@ namespace CharEngine.Containers
         public void RemoveItemList(ItemList itemList)
         {
             _itemLists.Remove(itemList);
-            itemList.SelectedItemColor = _activeListSelectedItemColor;
         }
 
         public void PreviousItem()
@@ -106,11 +102,11 @@ namespace CharEngine.Containers
             {
                 if (i == _selectedIndex)
                 {
-                    _itemLists[i].SelectedItemColor = _activeListSelectedItemColor;
+                    _itemLists[i].Select();
                 }
                 else
                 {
-                    _itemLists[i].SelectedItemColor = _inactiveListSelectedItemColor;
+                    _itemLists[i].Unselect();
                 }
             }
         }

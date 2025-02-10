@@ -34,12 +34,14 @@ namespace Contorio.Scenes.SceneWorld
             ItemListPlanetResourcesToPlayer = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.DarkBlue,
+                ConsoleColor.Blue,
                 new Point(27, 2),
                 12
             );
             LabelPlayerResourcesToPlanet = new Label("PLAYER RESOURCES", ConsoleColor.White, new Point(93, 1), alignment:Alignment.Right);
             ItemListPlayerResourcesToPlanet = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.Blue,
                 new Point(93, 2),
                 12,
@@ -50,6 +52,7 @@ namespace Contorio.Scenes.SceneWorld
             LabelTransfer = new Label("transfer: ", ConsoleColor.White, new Point(120 / 2, 2), alignment:Alignment.Center);
             ItemListResourcesToPlayerCount = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.Blue,
                 new Point((120 / 2 ) + (LabelTransfer.Width / 2) + 2, 2),
                 1,

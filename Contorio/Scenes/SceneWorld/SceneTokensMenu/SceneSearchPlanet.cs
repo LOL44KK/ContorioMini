@@ -48,6 +48,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             LabelPlanetPreset = new Label("Preset: ", ConsoleColor.White, new Point(60, 5));
             ItemListPlanetPresets = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.White,
                 new Point(68, 5),
                 1
@@ -56,6 +57,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             LabelPlanetSize = new Label("Size: ", ConsoleColor.White, new Point(60, 6));
             ItemListPlanetSize = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.White,
                 new Point(66, 6),
                 1
@@ -65,6 +67,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             LabelOreName = new Label("Ore name: ", ConsoleColor.White, new Point(60, 7));
             ItemListOreName = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.White,
                 new Point(70, 7),
                 1
@@ -73,6 +76,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             LabelOreChance = new Label("Chance: ", ConsoleColor.White, new Point(60, 8));
             ItemListOreChance = new ItemList(
                 ConsoleColor.White,
+                ConsoleColor.DarkBlue,
                 ConsoleColor.White,
                 new Point(68, 8),
                 1
@@ -84,7 +88,7 @@ namespace Contorio.Scenes.SceneWorld.SceneTokensMenu
             LabelPressGtoSearchPlanet = new Label("Press G to search", ConsoleColor.White, new Point(60, 11));
 
             // ItemListContainer
-            ItemListContainer = new ItemListContainer(inactiveListSelectedItemColor: ConsoleColor.White);
+            ItemListContainer = new ItemListContainer();
             ItemListContainer.AddItemList(ItemListPlanetPresets);
             ItemListContainer.AddItemList(ItemListPlanetSize);
             ItemListContainer.AddItemList(ItemListOreName);
