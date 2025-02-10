@@ -145,19 +145,20 @@ namespace CharEngine.Widgets
             Alignment alignment = Alignment.Left,
             TextAlignment textAlignment = TextAlignment.Left
         )
-            : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
-        {
-            _items = new List<string>();
-            _textColor = textColor;
-            _selectedItemTextColor = selectedItemTextColor;
-            _unselectItemTextColor = selectedItemTextColor;
-            _selectedIndex = 0;
-            _scrollOffset = 0;
-            _visibleItemCount = visibleItemCount;
-            _textAlignment = textAlignment;
-            _selected = true;
-        }
-
+            : this(
+                  textColor,
+                  selectedItemTextColor,
+                  selectedItemTextColor,
+                  position,
+                  visibleItemCount,
+                  selected,
+                  layer,
+                  visible,
+                  alignment,
+                  textAlignment
+            )
+        { }
+        
         public void AddItem(string item)
         {
             _items.Add(item);
