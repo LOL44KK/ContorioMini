@@ -37,7 +37,7 @@ namespace Contorio.Scenes.SceneWorld
                 new Point(27, 2),
                 12
             );
-            LabelPlayerResourcesToPlanet = new Label("PLAYER RESOURCES", ConsoleColor.White, new Point(93 - "PLAYER RESOURCES".Length, 1));
+            LabelPlayerResourcesToPlanet = new Label("PLAYER RESOURCES", ConsoleColor.White, new Point(93, 1), alignment:Alignment.Right);
             ItemListPlayerResourcesToPlanet = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
@@ -46,18 +46,19 @@ namespace Contorio.Scenes.SceneWorld
                 alignment: Alignment.Right,
                 textAlignment: TextAlignment.Right
             );
-            LabelCountResource = new Label("Count: 0", ConsoleColor.White, new Point((120 / 2) - ("Count: 0".Length / 2), 1));
-            LabelTransfer = new Label("transfer: ", ConsoleColor.White, new Point((120 / 2) - ("transfer: ".Length / 2), 2));
+            LabelCountResource = new Label("Count: 0", ConsoleColor.White, new Point(120 / 2, 1), alignment: Alignment.Center);
+            LabelTransfer = new Label("transfer: ", ConsoleColor.White, new Point(120 / 2, 2), alignment:Alignment.Center);
             ItemListResourcesToPlayerCount = new ItemList(
                 ConsoleColor.White,
                 ConsoleColor.Blue,
-                new Point(((120 / 2) - (1 / 2)) + "transfer: ".Length / 2, 2),
-                1
+                new Point((120 / 2 ) + (LabelTransfer.Width / 2) + 2, 2),
+                1,
+                alignment:Alignment.Center
             );
             for (int i = 1; i < 10000; i *= 2) ItemListResourcesToPlayerCount.AddItem("" + i);
 
-            LabelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point((120 / 2) - ("Prees E to transfer to player".Length / 2), 3));
-            LabelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point((120 / 2) - ("Prees F to transfer to planet".Length / 2), 4));
+            LabelPreesEToTransferPlayer = new Label("Prees E to transfer to player", ConsoleColor.White, new Point(120 / 2, 3), alignment:Alignment.Center);
+            LabelPreesFToTransferPlanet = new Label("Prees F to transfer to planet", ConsoleColor.White, new Point(120 / 2, 4), alignment: Alignment.Center);
 
             // ItemListContainer
             ItemListContainer = new ItemListContainer();
@@ -187,7 +188,6 @@ namespace Contorio.Scenes.SceneWorld
         private void UpdateCountTransferResources()
         {
             LabelCountResource.Text = _world.Planets[_player.Planet].Resources.GetValueOrDefault(ItemListPlanetResourcesToPlayer.SelectedItem ?? "", 0) + "|" + _player.Resources.GetValueOrDefault(ItemListPlayerResourcesToPlanet.SelectedItem ?? "", 0);
-            LabelCountResource.Position = new Point((120 / 2) - (LabelCountResource.Width / 2), LabelCountResource.Position.Y);
         }
     }
 }
