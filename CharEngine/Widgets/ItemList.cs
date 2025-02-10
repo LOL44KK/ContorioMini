@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace CharEngine.Widgets
 {
+    // Добавить поле _select и _unselectItemTextColor
+    // Также методы Select и Unselect
+    // Они буду отвечать за цвет выбраного элемента 
     public class ItemList : Sprite
     {
         private List<string> _items;
@@ -10,7 +13,7 @@ namespace CharEngine.Widgets
         private int _scrollOffset;
         private int _visibleItemCount;
         private ConsoleColor _textColor;
-        private ConsoleColor _selectedItemColor;
+        private ConsoleColor _selectedItemTextColor;
         private TextAlignment _textAlignment;
 
         public int SelectedIndex
@@ -61,10 +64,10 @@ namespace CharEngine.Widgets
 
         public ConsoleColor SelectedItemColor
         {
-            get { return _selectedItemColor; }
+            get { return _selectedItemTextColor; }
             set
             {
-                _selectedItemColor = value;
+                _selectedItemTextColor = value;
                 UpdatePixels();
             }
         }
@@ -89,7 +92,7 @@ namespace CharEngine.Widgets
         {
             _items = new List<string>();
             _textColor = textColor;
-            _selectedItemColor = selectedItemColor;
+            _selectedItemTextColor = selectedItemColor;
             _selectedIndex = 0;
             _scrollOffset = 0;
             _visibleItemCount = visibleItemCount;
@@ -180,7 +183,7 @@ namespace CharEngine.Widgets
                 int itemIndex = y + _scrollOffset;
 
                 string item = (itemIndex < _items.Count) ? _items[itemIndex] : new string(' ', width);
-                ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemColor : _textColor;
+                ConsoleColor color = itemIndex == _selectedIndex ? _selectedItemTextColor : _textColor;
 
                 int offsetX = 0;
                 switch (_textAlignment)
