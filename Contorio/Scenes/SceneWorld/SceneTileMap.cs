@@ -38,7 +38,7 @@ namespace Contorio.Scenes.SceneWorld
                 cellPaddingBottom: 1
             );
             LabelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
-            SpriteBlockPlayerCoord = new Sprite(_resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
+            SpriteBlockPlayerCoord = new Sprite(_resourceManager.TileSet.Tiles[0].Pixels, new Point(95, 1));
 
             // AddSprite
             AddSprite(Map);
