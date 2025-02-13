@@ -32,12 +32,11 @@ namespace Contorio.Scenes.SceneWorld
                 66,
                 30,
                 _resourceManager.TileSet,
+                2,
                 new Point(27, 1),
                 cellPaddingRight: 2,
                 cellPaddingBottom: 1
             );
-            Map.AddLayer(LayerGround);
-            Map.AddLayer(LayerBlock);
             LabelPlayerCoord = new Label("X|Y", ConsoleColor.White, new Point(95, 0));
             SpriteBlockPlayerCoord = new Sprite(_resourceManager.TileSet.Tiles[0].Pixels, position: new Point(95, 1));
 

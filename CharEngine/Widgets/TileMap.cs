@@ -42,6 +42,7 @@ namespace CharEngine.Widgets
             int width,
             int height,
             TileSet tileSet,
+            int countLayer,
             Point position,
             int cellPaddingRight = 0,
             int cellPaddingBottom = 0
@@ -49,12 +50,16 @@ namespace CharEngine.Widgets
             : base(new Pixel[height, width], position)
         {
             _tileSet = tileSet;
-            _cells = new List<Dictionary<Point, Cell>>();
             _cellPaddingRight = cellPaddingRight;
             _cellPaddingBottom = cellPaddingBottom;
+            _cells = new List<Dictionary<Point, Cell>>();
+            for (int i = 0; i < countLayer; i++)
+            {
+                AddLayer();
+            }
         }
 
-        public void AddLayer(int index)
+        public void AddLayer()
         {
             _cells.Add(new Dictionary<Point, Cell>());
         }
