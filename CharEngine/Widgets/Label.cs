@@ -21,7 +21,7 @@ namespace CharEngine.Widgets
             set
             {
                 _text = value;
-                UpdatePixels();
+                Pixels = CreatePixelsFromText(_text, _textColor, _textAlignment);
             }
         }
 
@@ -31,7 +31,7 @@ namespace CharEngine.Widgets
             set
             {
                 _textColor = value;
-                UpdatePixels();
+                Pixels = CreatePixelsFromText(_text, _textColor, _textAlignment);
             }
         }
 
@@ -41,26 +41,35 @@ namespace CharEngine.Widgets
             set
             {
                 _textAlignment = value;
-                UpdatePixels();
+                Pixels = CreatePixelsFromText(_text, _textColor, _textAlignment);
             }
         }
 
-        public Label(string text, ConsoleColor textColor, Point position, int layer = 0, bool visible = true, Alignment alignment = Alignment.Left, TextAlignment textAlignment = TextAlignment.Left)
-            : base(CreatePixelsFromText(text, textColor, textAlignment), layer, visible, position, alignment)
+        public Label(
+            string text,
+            ConsoleColor textColor,
+            Point position,
+            int layer = 0,
+            bool visible = true,
+            Alignment alignment = Alignment.Left,
+            TextAlignment textAlignment = TextAlignment.Left
+        )
+            : base(
+                  CreatePixelsFromText(text, textColor, textAlignment),
+                  position,
+                  layer,
+                  visible,
+                  alignment
+            )
         {
             _text = text;
             _textColor = textColor;
             _textAlignment = textAlignment;
         }
 
-        private void UpdatePixels()
-        {
-            Pixels = CreatePixelsFromText(_text, _textColor, _textAlignment);
-        }
-
         private static Pixel[,] CreatePixelsFromText(string text, ConsoleColor textColor, TextAlignment alignment)
         {
-            var lines = text.Split(new[] { '\n' }, StringSplitOptions.None);
+            var lines = text.Split(['\n'], StringSplitOptions.None);
             int width = lines.Max(line => line.Length);
             int height = lines.Length;
 

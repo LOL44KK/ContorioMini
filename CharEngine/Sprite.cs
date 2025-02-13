@@ -51,12 +51,12 @@ namespace CharEngine
             set { _alignment = value; }
         }
 
-        public Sprite(Pixel[,] pixels, int layer = 0, bool visible = true, Point? position = null, Alignment alignment = Alignment.Left)
+        public Sprite(Pixel[,] pixels, Point? position = null, int layer = 0, bool visible = true, Alignment alignment = Alignment.Left)
         {
             _pixels = pixels;
+            _position = position ?? new Point(0, 0);
             _layer = layer;
             _visible = visible;
-            _position = position ?? new Point(0, 0);
             _alignment = alignment;
         }
 

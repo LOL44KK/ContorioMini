@@ -38,8 +38,15 @@ namespace CharEngine.Widgets
             set { _cellPaddingBottom = value; }
         }
 
-        public TileMap(int width, int height, TileSet tileSet, Point position, int cellPaddingRight = 0, int cellPaddingBottom = 0) 
-            : base(new Pixel[height, width], position:position)
+        public TileMap(
+            int width,
+            int height,
+            TileSet tileSet,
+            Point position,
+            int cellPaddingRight = 0,
+            int cellPaddingBottom = 0
+        ) 
+            : base(new Pixel[height, width], position)
         {
             _tileSet = tileSet;
             _cells = new Dictionary<int, Dictionary<Point, Cell>>();

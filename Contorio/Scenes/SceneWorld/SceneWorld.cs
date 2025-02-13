@@ -35,7 +35,7 @@ namespace Contorio.Scenes.SceneWorld
             _worldHandler = new WorldHandler(_world);
 
             // InitializeWidgets
-            MessageMessage = new Message(60, 29);
+            MessageMessage = new Message(new Point(60, 29));
 
             // InitializeScene
             SceneTileMap = new SceneTileMap(_world);

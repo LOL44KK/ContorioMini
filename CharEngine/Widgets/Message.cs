@@ -14,8 +14,22 @@ namespace CharEngine.Widgets
             set { _showMessageTime = value; }
         }
 
-        public Message(int positionX, int positionY, int showMessageTime = 1000, int layer = 10)
-            : base("NONE", ConsoleColor.Red, new Point(positionX, positionY), layer, false, Alignment.Center, TextAlignment.Center)
+        public Message(
+            Point position,
+            int showMessageTime = 1000,
+            int layer = 10,
+            Alignment alignment = Alignment.Center,
+            TextAlignment textAlignment = TextAlignment.Center
+        )
+            : base(
+                  "NONE",
+                  ConsoleColor.Red,
+                  position,
+                  layer,
+                  false,
+                  alignment,
+                  textAlignment
+            )
         {
             _stopwatch = new Stopwatch();
             _showMessageTime = showMessageTime;

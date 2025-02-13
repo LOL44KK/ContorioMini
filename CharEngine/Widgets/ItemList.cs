@@ -118,7 +118,7 @@ namespace CharEngine.Widgets
             Alignment alignment = Alignment.Left,
             TextAlignment textAlignment = TextAlignment.Left
         )
-        : base(new Pixel[visibleItemCount, 0], layer, visible, position, alignment)
+        : base(new Pixel[visibleItemCount, 0], position, layer, visible, alignment)
         {
             _items = new List<string>();
             _textColor = textColor;
