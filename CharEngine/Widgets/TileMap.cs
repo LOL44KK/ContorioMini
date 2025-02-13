@@ -15,7 +15,7 @@ namespace CharEngine.Widgets
     public class TileMap : Sprite
     {
         private TileSet _tileSet;
-        private Dictionary<int, Dictionary<Point, Cell>> _cells;
+        private List<Dictionary<Point, Cell>> _cells;
 
         private int _cellPaddingRight;
         private int _cellPaddingBottom;
@@ -49,14 +49,14 @@ namespace CharEngine.Widgets
             : base(new Pixel[height, width], position)
         {
             _tileSet = tileSet;
-            _cells = new Dictionary<int, Dictionary<Point, Cell>>();
+            _cells = new List<Dictionary<Point, Cell>>();
             _cellPaddingRight = cellPaddingRight;
             _cellPaddingBottom = cellPaddingBottom;
         }
 
         public void AddLayer(int index)
         {
-            _cells[index] = new Dictionary<Point, Cell>();
+            _cells.Add(new Dictionary<Point, Cell>());
         }
 
         public void SetCell(int layer, Point coord, int tileId)
@@ -80,7 +80,7 @@ namespace CharEngine.Widgets
 
         public void Clear()
         {
-            foreach (var cell in _cells.Values) 
+            foreach (var cell in _cells) 
             {
                 cell.Clear();
             }
@@ -94,8 +94,8 @@ namespace CharEngine.Widgets
             int finishY = (int)Math.Ceiling(coord.Y + (Height / 2.0) / (TileSet.TileHeight + _cellPaddingBottom));
             int startX = (int)Math.Ceiling(coord.X - (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
             int finishX = (int)Math.Ceiling(coord.X + (Width / 2.0) / (TileSet.TileWidth + _cellPaddingRight));
-
-            foreach (int layer in _cells.Keys)
+            
+            for (int layer = 0; layer < _cells.Count; layer++)
             {
                 RenderLayer(layer, startY, finishY, startX, finishX);
             }
