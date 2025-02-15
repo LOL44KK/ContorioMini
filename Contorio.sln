@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contorio", "Contorio\Contorio.csproj", "{0B930049-EDA0-43A6-A4A3-873FFE196DFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharEngine1", "CharEngine\CharEngine1.csproj", "{A52B3AC6-023E-43F9-BB44-C1F0B8C8B73C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharEngine", "CharEngine\CharEngine.csproj", "{A52B3AC6-023E-43F9-BB44-C1F0B8C8B73C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
